@@ -492,6 +492,15 @@ body.hq-details-active #propertyDetails{display:flex!important;flex-direction:co
  body.hq-details-active .master-grade-result .hq-mobile-grade-select select option{color:#f0f3ed;background:#26372e}
  body.hq-details-active .master-grade-result .grade-reset{font-size:11px;white-space:nowrap;padding:7px 6px;min-width:0;max-width:none}
 }
+/* Mobile: number-sized closed grade selector; native opened menu keeps full rubrics. */
+@media(max-width:700px){
+ body.hq-details-active .master-grade-result .score-controls{display:flex;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:6px;width:100%;min-width:0}
+ body.hq-details-active .master-grade-result .score-origin{flex:0 0 auto;font-size:10px;max-width:112px}
+ body.hq-details-active .master-grade-result .hq-mobile-grade-select{flex:0 0 69px;width:69px;min-width:69px;max-width:69px;height:36px}
+ body.hq-details-active .master-grade-result .hq-mobile-grade-select::after{left:7px;right:17px;text-align:center;font-size:11px}
+ body.hq-details-active .master-grade-result .hq-mobile-grade-select select{width:69px!important;min-width:69px!important;max-width:69px!important;flex:none!important;padding:5px 13px 5px 3px}
+ body.hq-details-active .master-grade-result .grade-reset{flex:0 0 auto;font-size:11px;padding:7px 6px;white-space:nowrap}
+}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
