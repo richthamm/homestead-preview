@@ -412,6 +412,13 @@ body.hq-details-active #propertyDetails{display:flex!important;flex-direction:co
 #cards .hq-property-info>.alert-label{display:table;margin:9px 0 4px}
 #cards .hq-property-info>.flagbrief{margin-top:3px}
 @media(max-width:650px){#cards .hq-address-row{align-items:flex-start}#cards .hq-address-row h3{flex-basis:160px}}
+
+/* Card vertical tightening: bring address/classification nearer the top edge. */
+#cards>.card>.cardmain{padding-top:7px}
+#cards .hq-address-row{margin-top:2px;margin-bottom:2px;gap:7px}
+#cards .hq-property-info>.topline{margin-bottom:0;min-height:0}
+#cards .hq-property-info>.topline:empty{display:none}
+#cards .hq-address-row h3{line-height:1.2}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
