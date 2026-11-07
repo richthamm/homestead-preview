@@ -336,6 +336,26 @@ body.hq-grade-dialog-open{overflow:hidden!important}
 #cards>.card>.cardmain>.property-overview>.hq-class-row select{background:#263630;color:#e5f0e7;border:1px solid #55725d;border-radius:7px;padding:7px 10px;max-width:165px;font-size:12px;cursor:pointer}
 #cards>.card>.cardmain>.property-overview .topline{padding-right:172px;min-height:25px}
 @media(max-width:650px){#cards>.card>.cardmain>.property-overview .topline{padding-right:0;padding-top:37px}}
+
+ /* Personal notes: compact shared read-only digest + separate account-owned editors */
+ #cards>.card>.cardmain>.property-overview.hq-overview-with-notes{display:grid;grid-template-columns:minmax(0,1fr) minmax(185px,.8fr);gap:12px;align-items:start}
+ #cards .hq-property-info,#cards .hq-notes-column{min-width:0}
+ #cards .hq-notes-column .notesgrid{display:flex;flex-direction:column;gap:8px;margin:0!important}
+ #cards .hq-notes-column .notesgrid>div{min-width:0}
+ #cards .hq-notes-column .notesgrid label{font-size:11px;display:block;margin-bottom:3px}
+ #cards .hq-notes-column .notesgrid textarea{width:100%;box-sizing:border-box;min-height:85px;max-height:155px;resize:vertical;font-size:12px}
+ #cards .hq-notes-column .notesgrid textarea[readonly]{opacity:.85}
+ #cards .hq-notes-summary{margin-top:9px;border:1px solid #45554b;border-radius:7px;padding:7px 8px;background:rgba(17,29,23,.45);font-size:11px}
+ #cards .hq-notes-summary-title{font-weight:700;margin-bottom:5px;color:#d9e7dc}
+ #cards .hq-notes-summary-row{display:flex;align-items:flex-start;gap:6px;margin:3px 0}
+ #cards .hq-note-initial{flex:0 0 19px;height:19px;display:inline-flex;align-items:center;justify-content:center;border-radius:5px;font-size:11px;font-weight:800}
+ #cards .hq-note-initial.rich{background:#274c68;color:#cbe8ff}
+ #cards .hq-note-initial.tiffany{background:#5d385e;color:#ffe1fa}
+ #cards .hq-note-text{white-space:pre-wrap;overflow-wrap:anywhere;max-height:46px;overflow:auto;flex:1;line-height:1.3}
+ #cards .hq-notes-empty{color:#a6b4a9;font-style:italic}
+ #cards .hq-property-info>.hq-class-row{position:absolute;right:0;top:0}
+ @media(max-width:1250px){#cards>.card>.cardmain>.property-overview.hq-overview-with-notes{grid-template-columns:minmax(0,1fr)}#cards .hq-notes-column .notesgrid{display:grid;grid-template-columns:1fr 1fr}}
+ @media(max-width:700px){#cards .hq-notes-column .notesgrid{display:flex}}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
@@ -1348,7 +1368,7 @@ function render(){if(!ready)return;
  let s=$('sort').value;let score=(p)=>s==='mine'?rankOf(mine,p.id):s==='other'?rankOf(other,p.id):s==='combined'?combined(p.id):null;
  list.sort((a,b)=>s==='priceasc'?(a.price??Infinity)-(b.price??Infinity):s==='pricedesc'?(b.price||0)-(a.price||0):s==='acres'?(b.acres||0)-(a.acres||0):['mine','other','combined'].includes(s)?(score(a)??Infinity)-(score(b)??Infinity)||priority(a)-priority(b):s==='grade'?allTopicStats(b).matchPct-allTopicStats(a).matchPct:priority(a)-priority(b));
  let active=shared.filter(p=>(p.decision||'Active')==='Active');$('total').textContent=active.length;$('serious').textContent=active.filter(p=>hqClass(p)==='Serious inquiry').length;$('fresh').textContent=active.filter(discoveryPending).length;$('land').textContent=active.filter(p=>p.acres>=10).length;$('count').textContent=list.length+' showing · '+shared.filter(p=>p.decision==='Rejected').length+' archived';
- $('cards').innerHTML=list.length?list.map(p=>{let r=rankOf(mine,p.id),o=rankOf(other,p.id),c=combined(p.id),at=allTopicStats(p);return `<article class="card ${alertInfo(p)?'alert-'+alertInfo(p).level:''}"><div class="art ${boundaryRings(p).length||!p.photoUrl?'aerial-art':''}">${boundaryRings(p).length?cardAerial(p):p.photoUrl?`<img class="propertyphoto" src="${esc(p.photoUrl)}" alt="Property" loading="lazy" onerror="this.style.display='none'">`:cardAerial(p)}</div><div class="cardmain"><div class="property-overview"><div class="hq-class-row"><select aria-label="HQ classification" title="HQ classification" data-hqclass="${esc(p.id)}"><option value="Watchlist" ${hqClass(p)==='Watchlist'?'selected':''}>Watchlist</option><option value="Favorite" ${hqClass(p)==='Favorite'?'selected':''}>Favorite</option><option value="Serious inquiry" ${hqClass(p)==='Serious inquiry'?'selected':''}>Serious inquiry</option></select></div><div class="topline">${(p.groups||[]).filter(x=>!['Watchlist','Favorite','Serious inquiry'].includes(x) && !(x==='New discovery'&&!discoveryPending(p))).map(x=>`<span class="tag">${esc(x)}</span>`).join('')+ (hqClass(p)==='Watchlist'?'':`<span class="tag">HQ: ${esc(hqClass(p))}</span>`)}${discoveryTagged(p)&&!discoveryPending(p)&&(p.decision||'Active')==='Active'?`<span class="tag">Review complete ✓</span>`:''}${p.decision&&p.decision!=='Active'?`<span class="statuspill ${p.decision==='Rejected'?'rejected':'hold'}">${esc(p.decision)}</span>`:''}</div>${alertBadge(p)}<h3>${esc(p.address)}</h3><div class="city">${esc(p.city)}, Texas</div><div class="card-meta">${listingStatusLabel(p)}<span class="mini-chip">${esc(ageClocks(p))}</span>${p.priceReduced?'<span class="mini-chip">↓ Price reduced</span>':''}</div><div class="listingmeta">Listed: ${esc(listedOn(p)||'Unverified')} · Last verified: ${esc(verifiedDate(p)||'Unverified')}</div><div class="card-price-row"><div class="price">${money(p.price)}</div><span class="mini-chip hoa-chip">${hoaSummary(p)}</span></div><div class="card-restrictions">${restrictionsSummary(p)}</div><div class="facts"><span>🌲 ${fmt(p.acres)} ac</span><span>⌂ ${fmt(p.beds)} bd / ${fmt(p.baths)} ba</span><span>${fmt(p.sqft)} sq ft</span></div>${p.features?.length?`<p class="note">${p.features.map(esc).join(' · ')}</p>`:''}${p.notes?`<p class="note">${esc(p.notes)}</p>`:''}${p.risk?`<p class="risk">⚑ ${esc(p.risk)}</p>`:''}${p.decisionReason?`<p class="reason">Shared decision: ${esc(p.decisionReason)}</p>`:''}${flagSummary(p)}</div>${dualBars(at,p)}<div class="rankgrid"><div class="rankbox">Rich<strong>${me.uid===OWNER?(r?'#'+r:'—'):(o?'#'+o:'—')}</strong></div><div class="rankbox">Tiffany<strong>${me.uid===OWNER?(o?'#'+o:'—'):(r?'#'+r:'—')}</strong></div><div class="rankbox">Combined<strong>${c===null?'—':'#'+c.toFixed(1)}</strong></div></div><div class="rankrow"><label for="rank-${esc(p.id)}">My rank</label><input id="rank-${esc(p.id)}" class="rankinput" data-rank="${esc(p.id)}" type="number" min="1" max="${shared.length}" value="${r??''}" placeholder="Unranked"><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="up" title="Unranked: next top rank; ranked: move higher">↑</button><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="down" title="Unranked: next bottom rank; ranked: move lower">↓</button><button class="btn rankbtn" data-unrank="${esc(p.id)}">Clear</button></div>${discoveryTagged(p)?`<div class="reviewrow"><span class="small ${richReviewed(p)&&tiffanyReviewed(p)?'review-complete':'review-waiting'}">${esc(reviewStatus(p))}</span><button class="btn" type="button" data-reviewed="${esc(p.id)}">${mine.reviewed?.[p.id]===true?'Undo my reviewed mark':'Mark reviewed / pass'}</button></div>`:''}<div class="card-evidence-box">
+ $('cards').innerHTML=list.length?list.map(p=>{let r=rankOf(mine,p.id),o=rankOf(other,p.id),c=combined(p.id),at=allTopicStats(p);return `<article data-rich-note="${esc(me.uid===OWNER?notesOf(mine,p.id):notesOf(other,p.id))}" data-tiffany-note="${esc(me.uid===OWNER?notesOf(other,p.id):notesOf(mine,p.id))}" class="card ${alertInfo(p)?'alert-'+alertInfo(p).level:''}"><div class="art ${boundaryRings(p).length||!p.photoUrl?'aerial-art':''}">${boundaryRings(p).length?cardAerial(p):p.photoUrl?`<img class="propertyphoto" src="${esc(p.photoUrl)}" alt="Property" loading="lazy" onerror="this.style.display='none'">`:cardAerial(p)}</div><div class="cardmain"><div class="property-overview"><div class="hq-class-row"><select aria-label="HQ classification" title="HQ classification" data-hqclass="${esc(p.id)}"><option value="Watchlist" ${hqClass(p)==='Watchlist'?'selected':''}>Watchlist</option><option value="Favorite" ${hqClass(p)==='Favorite'?'selected':''}>Favorite</option><option value="Serious inquiry" ${hqClass(p)==='Serious inquiry'?'selected':''}>Serious inquiry</option></select></div><div class="topline">${(p.groups||[]).filter(x=>!['Watchlist','Favorite','Serious inquiry'].includes(x) && !(x==='New discovery'&&!discoveryPending(p))).map(x=>`<span class="tag">${esc(x)}</span>`).join('')+ (hqClass(p)==='Watchlist'?'':`<span class="tag">HQ: ${esc(hqClass(p))}</span>`)}${discoveryTagged(p)&&!discoveryPending(p)&&(p.decision||'Active')==='Active'?`<span class="tag">Review complete ✓</span>`:''}${p.decision&&p.decision!=='Active'?`<span class="statuspill ${p.decision==='Rejected'?'rejected':'hold'}">${esc(p.decision)}</span>`:''}</div>${alertBadge(p)}<h3>${esc(p.address)}</h3><div class="city">${esc(p.city)}, Texas</div><div class="card-meta">${listingStatusLabel(p)}<span class="mini-chip">${esc(ageClocks(p))}</span>${p.priceReduced?'<span class="mini-chip">↓ Price reduced</span>':''}</div><div class="listingmeta">Listed: ${esc(listedOn(p)||'Unverified')} · Last verified: ${esc(verifiedDate(p)||'Unverified')}</div><div class="card-price-row"><div class="price">${money(p.price)}</div><span class="mini-chip hoa-chip">${hoaSummary(p)}</span></div><div class="card-restrictions">${restrictionsSummary(p)}</div><div class="facts"><span>🌲 ${fmt(p.acres)} ac</span><span>⌂ ${fmt(p.beds)} bd / ${fmt(p.baths)} ba</span><span>${fmt(p.sqft)} sq ft</span></div>${p.features?.length?`<p class="note">${p.features.map(esc).join(' · ')}</p>`:''}${p.notes?`<p class="note">${esc(p.notes)}</p>`:''}${p.risk?`<p class="risk">⚑ ${esc(p.risk)}</p>`:''}${p.decisionReason?`<p class="reason">Shared decision: ${esc(p.decisionReason)}</p>`:''}${flagSummary(p)}</div>${dualBars(at,p)}<div class="rankgrid"><div class="rankbox">Rich<strong>${me.uid===OWNER?(r?'#'+r:'—'):(o?'#'+o:'—')}</strong></div><div class="rankbox">Tiffany<strong>${me.uid===OWNER?(o?'#'+o:'—'):(r?'#'+r:'—')}</strong></div><div class="rankbox">Combined<strong>${c===null?'—':'#'+c.toFixed(1)}</strong></div></div><div class="rankrow"><label for="rank-${esc(p.id)}">My rank</label><input id="rank-${esc(p.id)}" class="rankinput" data-rank="${esc(p.id)}" type="number" min="1" max="${shared.length}" value="${r??''}" placeholder="Unranked"><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="up" title="Unranked: next top rank; ranked: move higher">↑</button><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="down" title="Unranked: next bottom rank; ranked: move lower">↓</button><button class="btn rankbtn" data-unrank="${esc(p.id)}">Clear</button></div>${discoveryTagged(p)?`<div class="reviewrow"><span class="small ${richReviewed(p)&&tiffanyReviewed(p)?'review-complete':'review-waiting'}">${esc(reviewStatus(p))}</span><button class="btn" type="button" data-reviewed="${esc(p.id)}">${mine.reviewed?.[p.id]===true?'Undo my reviewed mark':'Mark reviewed / pass'}</button></div>`:''}<div class="card-evidence-box">
   <div class="card-evidence-controls">
     <button type="button" class="card-evidence-toggle" data-card-evidence="${esc(p.id)}:wishlist" aria-expanded="${openCardEvidence.has(p.id+':wishlist')?'true':'false'}" aria-controls="card-wishlist-${esc(p.id)}">⚔️ Master Grades</button>
   </div>
@@ -1360,7 +1380,28 @@ function render(){if(!ready)return;
  document.querySelectorAll('#cards > .card').forEach(card=>{
    const main=card.querySelector('.cardmain'),overview=main?.querySelector('.property-overview');
    if(!main||!overview)return;
-   for(const cls of ['notesgrid']){const el=main.querySelector(':scope > .'+cls);if(el)overview.appendChild(el)}
+   // Keep personal note editors beside the property information; the combined
+   // summary is display-only and never modifies either person's stored notes.
+   const editors=main.querySelector(':scope > .notesgrid');
+   if(editors){
+     const info=document.createElement('div');info.className='hq-property-info';
+     while(overview.firstChild)info.appendChild(overview.firstChild);
+     const notesColumn=document.createElement('div');notesColumn.className='hq-notes-column';
+     const summary=document.createElement('div');summary.className='hq-notes-summary';
+     const richText=card.dataset.richNote||'';
+     const tiffanyText=card.dataset.tiffanyNote||'';
+     summary.innerHTML='<div class="hq-notes-summary-title">Notes at a glance</div>'+
+       (richText?'<div class="hq-notes-summary-row"><span class="hq-note-initial rich">R</span><span class="hq-note-text"></span></div>':'')+
+       (tiffanyText?'<div class="hq-notes-summary-row"><span class="hq-note-initial tiffany">T</span><span class="hq-note-text"></span></div>':'')+
+       (!richText&&!tiffanyText?'<div class="hq-notes-empty">No personal notes yet.</div>':'');
+     const rows=summary.querySelectorAll('.hq-note-text');
+     let row=0;if(richText)rows[row++].textContent=richText;
+     if(tiffanyText)rows[row++].textContent=tiffanyText;
+     info.appendChild(summary);
+     notesColumn.appendChild(editors);
+     overview.append(info,notesColumn);
+     overview.classList.add('hq-overview-with-notes');
+   }
    const right=document.createElement('div');right.className='card-rank-column';
    for(const cls of ['rankgrid','rankrow','coveragewrap','matchwrap','hq-class-row','reviewrow','card-evidence-box']){
      const el=main.querySelector(':scope > .'+cls);if(el){if(cls==='coveragewrap'||cls==='matchwrap')el.classList.add('card-progress');right.appendChild(el)}
@@ -1370,7 +1411,7 @@ function render(){if(!ready)return;
    main.appendChild(right);
    // Compact left column: image, Details + listing, Compare, then property actions.
    const art=card.querySelector(':scope > .art'),foot=card.querySelector(':scope > .cardfoot');
-   const actions=main.querySelector(':scope > .actionline')||overview.querySelector(':scope > .actionline');
+   const actions=right.querySelector(':scope > .actionline') || main.querySelector(':scope > .actionline') || overview.querySelector(':scope > .actionline');
    if(art&&foot){
      const left=document.createElement('div');left.className='hq-card-left';
      card.insertBefore(left,art);left.appendChild(art);left.appendChild(foot);
@@ -1402,7 +1443,21 @@ function render(){if(!ready)return;
    function onKey(e){if(e.key==='Escape')close()}
    backdrop.addEventListener('click',close);closeBtn.addEventListener('click',close);document.addEventListener('keydown',onKey);popup.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});closeBtn.focus();
  });
- document.querySelectorAll('[data-map-focus]').forEach(el=>el.onclick=()=>openParcelExplorer(el.dataset.mapFocus));document.querySelectorAll('[data-hqclass]').forEach(el=>el.onchange=()=>setHQClassification(el.dataset.hqclass,el.value));document.querySelectorAll('[data-open-details]').forEach(el=>el.onclick=()=>openPropertyDetails(el.dataset.openDetails));document.querySelectorAll('[data-rank]').forEach(el=>el.onchange=()=>setRank(el.dataset.rank,el.value));document.querySelectorAll('[data-nudge]').forEach(el=>el.onclick=()=>nudgeRank(el.dataset.nudge,el.dataset.dir));document.querySelectorAll('[data-unrank]').forEach(el=>el.onclick=()=>setRank(el.dataset.unrank,''));document.querySelectorAll('[data-reviewed]').forEach(el=>el.onclick=()=>setReviewed(el.dataset.reviewed));document.querySelectorAll('[data-notes]').forEach(el=>el.oninput=()=>setNotes(el.dataset.notes,el.value));document.querySelectorAll('[data-decision]').forEach(el=>el.onclick=()=>setDecision(el.dataset.id,el.dataset.decision));document.querySelectorAll('[data-research]').forEach(el => {
+ document.querySelectorAll('[data-map-focus]').forEach(el=>el.onclick=()=>openParcelExplorer(el.dataset.mapFocus));document.querySelectorAll('[data-hqclass]').forEach(el=>el.onchange=()=>setHQClassification(el.dataset.hqclass,el.value));document.querySelectorAll('[data-open-details]').forEach(el=>el.onclick=()=>openPropertyDetails(el.dataset.openDetails));document.querySelectorAll('[data-rank]').forEach(el=>el.onchange=()=>setRank(el.dataset.rank,el.value));document.querySelectorAll('[data-nudge]').forEach(el=>el.onclick=()=>nudgeRank(el.dataset.nudge,el.dataset.dir));document.querySelectorAll('[data-unrank]').forEach(el=>el.onclick=()=>setRank(el.dataset.unrank,''));document.querySelectorAll('[data-reviewed]').forEach(el=>el.onclick=()=>setReviewed(el.dataset.reviewed));document.querySelectorAll('[data-notes]').forEach(el=>el.oninput=()=>{
+   setNotes(el.dataset.notes,el.value);
+   const card=el.closest('.card');if(!card)return;
+   const isRich=me.uid===OWNER;
+   card.dataset[isRich?'richNote':'tiffanyNote']=el.value;
+   const summary=card.querySelector('.hq-notes-summary');
+   if(!summary)return;
+   const r=card.dataset.richNote||'',t=card.dataset.tiffanyNote||'';
+   summary.innerHTML='<div class="hq-notes-summary-title">Notes at a glance</div>'+
+     (r?'<div class="hq-notes-summary-row"><span class="hq-note-initial rich">R</span><span class="hq-note-text"></span></div>':'')+
+     (t?'<div class="hq-notes-summary-row"><span class="hq-note-initial tiffany">T</span><span class="hq-note-text"></span></div>':'')+
+     (!r&&!t?'<div class="hq-notes-empty">No personal notes yet.</div>':'');
+   let i=0;const spans=summary.querySelectorAll('.hq-note-text');
+   if(r)spans[i++].textContent=r;if(t)spans[i++].textContent=t;
+ });document.querySelectorAll('[data-decision]').forEach(el=>el.onclick=()=>setDecision(el.dataset.id,el.dataset.decision));document.querySelectorAll('[data-research]').forEach(el => {
   el.onclick = () => {
     const p = shared.find(x => x.id === el.dataset.research);
     if (!p) return;
