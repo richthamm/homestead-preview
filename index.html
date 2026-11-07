@@ -501,6 +501,20 @@ body.hq-details-active #propertyDetails{display:flex!important;flex-direction:co
  body.hq-details-active .master-grade-result .hq-mobile-grade-select select{width:69px!important;min-width:69px!important;max-width:69px!important;flex:none!important;padding:5px 13px 5px 3px}
  body.hq-details-active .master-grade-result .grade-reset{flex:0 0 auto;font-size:11px;padding:7px 6px;white-space:nowrap}
 }
+
+/* Phone-only: equal-height independent detail panes, split at viewport midpoint. */
+@media (max-width:700px){
+ body.hq-details-active #propertyDetails{height:100%;min-height:0;flex:1 1 0}
+ body.hq-details-active #propertyDetails>.hq-detail-fixed{
+   flex:0 0 50%!important;height:50%!important;max-height:50%!important;
+   min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;
+   overscroll-behavior:contain;
+ }
+ body.hq-details-active #propertyDetails>.hq-detail-scroll{
+   flex:1 1 50%!important;height:50%!important;min-height:0!important;
+   overflow-y:auto!important;overflow-x:hidden!important;
+ }
+}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
