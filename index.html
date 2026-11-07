@@ -297,16 +297,24 @@
 #cards>.card>.cardmain .card-evidence-box{order:6;margin:0;border:0;background:none;padding:0}
 #cards>.card>.cardmain .card-evidence-controls{display:block}
 #cards>.card>.cardmain .card-evidence-toggle{font-size:14px;font-weight:700;padding:11px 17px;min-height:43px;width:100%;text-align:center}
-#cards>.card>.cardfoot{grid-column:2;grid-row:2;justify-content:flex-end;flex-wrap:wrap;padding:9px 16px}
+#cards>.card>.cardfoot{grid-column:1;grid-row:2;justify-content:flex-start;flex-wrap:wrap;padding:8px 10px;gap:7px;border-top:1px solid #40574b;align-self:start}
+#cards>.card>.cardfoot .btn{padding:7px 11px}
+#cards>.card>.cardmain>.card-rank-column .actionline{order:7;display:flex;flex-wrap:wrap;gap:7px;margin-top:3px}
+#cards>.card>.cardmain>.card-rank-column .actionline .btn{flex:0 1 auto}
+#cards>.card>.cardmain>.property-overview .notesgrid{margin-top:10px}
+#cards>.card>.cardmain>.property-overview .notesgrid textarea{min-height:68px}
+#cards>.card>.cardmain{grid-row:1 / 3}
+#cards>.card>.art{grid-row:1}
 #cards>.card h3{margin-top:8px}
 #cards>.card .price{margin:8px 0 4px}
-.hq-grade-popover{position:fixed;z-index:10020;top:50%;left:50%;transform:translate(-50%,-50%);width:min(900px,calc(100vw - 40px));max-height:min(82vh,900px);overflow:auto;background:#192923;border:1px solid #6c9476;border-radius:14px;box-shadow:0 24px 75px #000b;padding:20px}
+.hq-grade-popover{position:fixed;z-index:10020;top:50%;left:50%;transform:translate(-50%,-50%);width:min(900px,calc(100vw - 40px));height:auto;max-height:calc(100dvh - 48px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;scrollbar-gutter:stable;background:#192923;border:1px solid #6c9476;border-radius:14px;box-shadow:0 24px 75px #000b;padding:20px}
 .hq-grade-popover .card-evidence-panel{display:block!important;max-height:none!important;overflow:visible!important}
+body.hq-grade-dialog-open{overflow:hidden!important}
 .hq-grade-popover-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:16px;font-weight:700}
 .hq-grade-popover-close{font-size:14px;padding:7px 13px}
 .hq-grade-backdrop{position:fixed;inset:0;background:#0009;z-index:10019}
 @media(max-width:1000px){#cards>.card>.cardmain{grid-template-columns:minmax(0,1fr)}#cards>.card>.cardmain>.property-overview{grid-column:1;grid-row:auto}#cards>.card>.cardmain>.card-rank-column{grid-column:1;grid-row:auto;margin-top:14px}}
-@media(max-width:650px){#cards>.card{display:flex;flex-direction:column}#cards>.card>.art{width:100%;height:175px!important}#cards>.card>.art .aerial-card,#cards>.card>.art .propertyphoto{height:175px!important;max-height:175px!important}#cards>.card>.cardmain{display:block;width:100%}#cards>.card>.cardfoot{justify-content:space-between}}
+@media(max-width:650px){#cards>.card{display:flex;flex-direction:column}#cards>.card>.art{width:100%;height:175px!important}#cards>.card>.art .aerial-card,#cards>.card>.art .propertyphoto{height:175px!important;max-height:175px!important}#cards>.card>.cardmain{display:block;width:100%}#cards>.card>.cardfoot{justify-content:flex-start;width:100%}}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
@@ -1331,14 +1339,19 @@ function render(){if(!ready)return;
  document.querySelectorAll('#cards > .card').forEach(card=>{
    const main=card.querySelector('.cardmain'),overview=main?.querySelector('.property-overview');
    if(!main||!overview)return;
-   for(const cls of ['notesgrid','actionline']){const el=main.querySelector(':scope > .'+cls);if(el)overview.appendChild(el)}
+   for(const cls of ['notesgrid']){const el=main.querySelector(':scope > .'+cls);if(el)overview.appendChild(el)}
    const right=document.createElement('div');right.className='card-rank-column';
    for(const cls of ['rankgrid','rankrow','coveragewrap','matchwrap','hq-class-row','reviewrow','card-evidence-box']){
      const el=main.querySelector(':scope > .'+cls);if(el){if(cls==='coveragewrap'||cls==='matchwrap')el.classList.add('card-progress');right.appendChild(el)}
    }
    // Any remaining score-bar elements also belong with the right-column metrics.
    [...main.children].filter(el=>el!==overview&&el!==right).forEach(el=>{el.classList.add('card-progress');right.appendChild(el)});
+   const actions=main.querySelector(':scope > .actionline')||overview.querySelector(':scope > .actionline');
+   if(actions)right.appendChild(actions);
    main.appendChild(right);
+   // Keep listing actions immediately beneath the thumbnail.
+   const art=card.querySelector(':scope > .art'),foot=card.querySelector(':scope > .cardfoot');
+   if(art&&foot)art.insertAdjacentElement('afterend',foot);
  });
  // Master Grades opens as an overlay instead of stretching the card.
  document.querySelectorAll('#cards [data-card-evidence]').forEach(button=>button.onclick=()=>{
@@ -1351,11 +1364,11 @@ function render(){if(!ready)return;
    const closeBtn=document.createElement('button');closeBtn.type='button';closeBtn.className='btn hq-grade-popover-close';closeBtn.textContent='✕ Close';
    head.append(title,closeBtn);popup.append(head);
    const parent=panel.parentNode,after=panel.nextSibling;
-   panel.hidden=false;popup.appendChild(panel);document.body.append(backdrop,popup);
+   panel.hidden=false;popup.appendChild(panel);document.body.append(backdrop,popup);document.body.classList.add('hq-grade-dialog-open');popup.scrollTop=0;
    button.setAttribute('aria-expanded','true');
-   function close(){if(!popup.isConnected)return;if(after&&after.parentNode===parent)parent.insertBefore(panel,after);else if(parent.isConnected)parent.appendChild(panel);panel.hidden=true;popup.remove();backdrop.remove();button.setAttribute('aria-expanded','false');document.removeEventListener('keydown',onKey)}
+   function close(){if(!popup.isConnected)return;if(after&&after.parentNode===parent)parent.insertBefore(panel,after);else if(parent.isConnected)parent.appendChild(panel);panel.hidden=true;popup.remove();backdrop.remove();document.body.classList.remove('hq-grade-dialog-open');button.setAttribute('aria-expanded','false');document.removeEventListener('keydown',onKey)}
    function onKey(e){if(e.key==='Escape')close()}
-   backdrop.addEventListener('click',close);closeBtn.addEventListener('click',close);document.addEventListener('keydown',onKey);closeBtn.focus();
+   backdrop.addEventListener('click',close);closeBtn.addEventListener('click',close);document.addEventListener('keydown',onKey);popup.addEventListener('wheel',e=>e.stopPropagation(),{passive:true});closeBtn.focus();
  });
  document.querySelectorAll('[data-map-focus]').forEach(el=>el.onclick=()=>openParcelExplorer(el.dataset.mapFocus));document.querySelectorAll('[data-hqclass]').forEach(el=>el.onchange=()=>setHQClassification(el.dataset.hqclass,el.value));document.querySelectorAll('[data-open-details]').forEach(el=>el.onclick=()=>openPropertyDetails(el.dataset.openDetails));document.querySelectorAll('[data-rank]').forEach(el=>el.onchange=()=>setRank(el.dataset.rank,el.value));document.querySelectorAll('[data-nudge]').forEach(el=>el.onclick=()=>nudgeRank(el.dataset.nudge,el.dataset.dir));document.querySelectorAll('[data-unrank]').forEach(el=>el.onclick=()=>setRank(el.dataset.unrank,''));document.querySelectorAll('[data-reviewed]').forEach(el=>el.onclick=()=>setReviewed(el.dataset.reviewed));document.querySelectorAll('[data-notes]').forEach(el=>el.oninput=()=>setNotes(el.dataset.notes,el.value));document.querySelectorAll('[data-decision]').forEach(el=>el.onclick=()=>setDecision(el.dataset.id,el.dataset.decision));document.querySelectorAll('[data-research]').forEach(el => {
   el.onclick = () => {
