@@ -439,6 +439,20 @@ body.hq-details-active #propertyDetails{display:flex!important;flex-direction:co
 .hq-detail-right .matchlabel strong{flex-shrink:0}
 .hq-detail-right .matchtrack{width:100%;max-width:100%}
 @media(max-width:900px){.hq-detail-fixed{grid-template-columns:minmax(0,1fr)}.hq-detail-right{width:100%}}
+
+/* Mobile detail header: stack notes and progress in normal flow; never overlap. */
+@media(max-width:900px){
+ .hq-detail-fixed{display:flex;flex-direction:column;align-items:stretch;max-height:68dvh;overflow-y:auto;overflow-x:hidden;gap:12px;flex:0 0 auto}
+ .hq-detail-info,.hq-detail-right{width:100%;min-width:0;flex:none;position:static}
+ .hq-detail-right{display:flex;flex-direction:column;gap:12px;overflow:visible;align-items:stretch}
+ .hq-detail-right .hq-detail-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;position:static;width:100%;height:auto;min-height:0}
+ .hq-detail-right .hq-detail-notes>div{min-width:0;height:auto;display:flex;flex-direction:column}
+ .hq-detail-right .hq-detail-notes textarea{display:block;position:static;height:82px!important;min-height:82px!important;max-height:110px!important;flex:0 0 auto;width:100%;resize:vertical}
+ .hq-detail-right .hq-detail-progress{display:block;position:static!important;flex:0 0 auto;clear:both;margin:0;width:100%;height:auto;min-height:0;overflow:visible;padding:10px 0 0;border-top:1px solid #3c5145}
+ .hq-detail-right .hq-detail-progress .coveragewrap,.hq-detail-right .hq-detail-progress .matchwrap{position:static;width:100%;max-width:100%;margin:0 0 10px}
+ .hq-detail-scroll{flex:1 1 0;min-height:0;overflow-y:auto}
+}
+@media(max-width:400px){.hq-detail-right .hq-detail-notes{grid-template-columns:minmax(0,1fr)}.hq-detail-right .hq-detail-notes textarea{height:72px!important;min-height:72px!important}}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
