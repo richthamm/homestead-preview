@@ -356,7 +356,26 @@ body.hq-grade-dialog-open{overflow:hidden!important}
  #cards .hq-property-info>.hq-class-row{position:absolute;right:0;top:0}
  @media(max-width:1250px){#cards>.card>.cardmain>.property-overview.hq-overview-with-notes{grid-template-columns:minmax(0,1fr)}#cards .hq-notes-column .notesgrid{display:grid;grid-template-columns:1fr 1fr}}
  @media(max-width:700px){#cards .hq-notes-column .notesgrid{display:flex}}
-</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
+
+/* v3.3 details workspace: stationary information header and independent assessment scrolling */
+body.hq-details-active{height:100dvh;overflow:hidden}
+body.hq-details-active>header{display:none}
+body.hq-details-active main.shell{height:100dvh;max-width:none;padding:12px 18px;display:flex;flex-direction:column;overflow:hidden}
+body.hq-details-active .memberbar,body.hq-details-active #admin,body.hq-details-active #hqDisclaimer,body.hq-details-active .metrics,body.hq-details-active #researchImportPanel,body.hq-details-active #backupstatus,body.hq-details-active .hq-menu,body.hq-details-active .hq-filter-panel,body.hq-details-active #propertyMapPage,body.hq-details-active #warCouncil,body.hq-details-active .footer{display:none!important}
+body.hq-details-active #propertyDetails{display:flex!important;flex-direction:column;flex:1;min-height:0;width:100%;max-width:1360px;margin:0 auto;overflow:hidden}
+.hq-detail-fixed{flex:none;padding:4px 2px 11px;border-bottom:1px solid #496052;display:grid;grid-template-columns:minmax(300px,1fr) minmax(300px,1fr);gap:22px;align-items:start}
+.hq-detail-fixed .details-top{margin-bottom:14px}
+.hq-detail-fixed .detail-actions{margin:10px 0 0}
+.hq-detail-fixed .detail-meta{margin:9px 0}
+.hq-detail-fixed .hq-detail-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-self:stretch}
+.hq-detail-notes label{display:block;font-size:12px;font-weight:750;margin-bottom:5px}
+.hq-detail-notes .hq-note-rich label{color:#b7ddff}.hq-detail-notes .hq-note-tiffany label{color:#f3c6ee}
+.hq-detail-notes textarea{display:block;width:100%;height:100%;min-height:135px;max-height:225px;resize:vertical;background:#263630;color:#f0f5ed;border:1px solid #54715f;border-radius:8px;padding:10px;font-size:13px}
+.hq-detail-notes textarea[readonly]{opacity:.83}
+.hq-detail-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:1px 5px 28px 2px;scrollbar-gutter:stable}
+@media(max-width:900px){.hq-detail-fixed{grid-template-columns:1fr;gap:10px}.hq-detail-notes textarea{min-height:80px;max-height:130px}.hq-detail-fixed .details-top{margin-bottom:7px}}
+@media(max-height:680px){.hq-detail-notes textarea{min-height:65px;max-height:90px}}
+#cards>.card>.cardmain>.property-overview.hq-overview-with-notes{display:block!important}</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -1398,8 +1417,8 @@ function render(){if(!ready)return;
      let row=0;if(richText)rows[row++].textContent=richText;
      if(tiffanyText)rows[row++].textContent=tiffanyText;
      info.appendChild(summary);
-     notesColumn.appendChild(editors);
-     overview.append(info,notesColumn);
+     editors.remove();
+     overview.append(info);
      overview.classList.add('hq-overview-with-notes');
    }
    const right=document.createElement('div');right.className='card-rank-column';
@@ -2012,12 +2031,13 @@ function renderPropertyDetails() {
   const openMasterSections = sameProperty
     ? Array.from(root.querySelectorAll('details.master-category'), section => section.open)
     : null;
-  const previousScrollY = sameProperty ? window.scrollY : null;
+  const previousScrollY = sameProperty ? root.querySelector("#detailAssessmentScroll")?.scrollTop ?? 0 : null;
   const d=p.details||{}, scores=myRatings?.ratings?.[p.id]||{}, ms=matchStats(p);
   const rich=rankOf(me.uid===OWNER?mine:other,p.id),tiffany=rankOf(me.uid===OWNER?other:mine,p.id);
   const fieldBlocks=detailFieldGroups.map(([key,title,items])=>`<details class="details-section"><summary>${title}</summary><div class="details-body"><div class="details-fields">${items.map(([field,label])=>`<label>${esc(label)}<textarea data-detail-group="${key}" data-detail-key="${field}" placeholder="Not yet researched">${esc(key==='structures'?structureNotes(p,field):d[key]?.[field]||'')}</textarea></label>`).join('')}</div><p class="detail-help">Shared notes and researched facts appear together in each topic. Changes to the notes do not delete the original source evidence. Listing claims are not independently verified.</p></div></details>`);
   const photos=Array.isArray(d.photos)?d.photos:[];
   root.innerHTML=`
+    <div class="hq-detail-fixed"><div class="hq-detail-info">
     <div class="details-top"><button class="btn" id="detailBack" type="button">← Back to ${detailReturnView==='council'?'War Council':'Properties'}</button>${p.decision&&p.decision!=='Active'?`<span class="tag">${esc(p.decision)}</span>`:''}<span class="tag">${esc(councilTier(p.id))}</span></div>
     <h2 style="font-size:clamp(25px,3vw,37px);margin:0">${esc(p.address)}</h2>${alertBadge(p)}
     <div class="city">${esc(p.city)}, Texas · ${esc(listingStatus(p))}</div>
@@ -2025,6 +2045,7 @@ function renderPropertyDetails() {
     ${alertInfo(p)?`<div class="alert-panel ${esc(alertInfo(p).level)}"><strong>⚠ Research alert — ${alertInfo(p).level==='critical'?'Major conflict':'Minor conflict'}</strong><p>${esc(alertInfo(p).reason)}</p><p class="small">Source: ${esc(alertInfo(p).source||'Research import')}. This alert concerns conflicting information, not routine unverified listing claims.</p><button class="btn" type="button" id="resolveAlert">✓ Mark resolved with evidence</button></div>`:p.researchAlert?.resolved?`<div class="alert-panel"><strong>✓ Research alert resolved</strong><p>${esc(p.researchAlert.reason||'')}</p><p class="small">${esc(p.researchAlert.resolution||'')} · ${esc(p.researchAlert.resolvedAt||'')}</p><button class="btn" id="reopenAlert" type="button">Reopen alert</button></div>`:''}
     ${pilotResearch[p.id]?`<div class="notice"><strong>Research pilot available:</strong> Reviewed listing information for this Serious Inquiry. <button class="btn primary" id="applyPilotResearch" type="button">📋 Populate Researched Details</button><div class="small">Adds only missing fields; never overwrites your existing entries or manual scores. Review before relying on any listing claims.</div></div>`:''}
     <div class="detail-actions"><a class="btn primary" href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">Open Original Listing ↗</a><button class="btn" type="button" id="detailResearch">${p.deepResearch?'🔎 Remove Research Flag':'🔎 Mark for Deep Research'}</button></div>
+    </div><div class="hq-detail-notes"><div class="hq-note-rich"><label>R · Rich's notes ${me.uid===OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid===OWNER?'id="detailMyNotes"':'readonly'} placeholder="Rich's observations…">${esc(notesOf(me.uid===OWNER?mine:other,p.id))}</textarea></div><div class="hq-note-tiffany"><label>T · Tiffany's notes ${me.uid!==OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid!==OWNER?'id="detailMyNotes"':'readonly'} placeholder="Tiffany's observations…">${esc(notesOf(me.uid===OWNER?other:mine,p.id))}</textarea></div></div></div><div class="hq-detail-scroll" id="detailAssessmentScroll">
     <details class="details-section"><summary>🏡 Property Overview</summary><div class="details-body"><div class="small" style="margin-bottom:7px">Shared overview / observations · read only</div><div class="overview-readonly">${esc(d.overview?.summary||'No shared overview recorded.')}</div></div></details>
     <details class="details-section"><summary>⚔️ Master Property Assessment — 72 entries</summary><div class="details-body">
       <p class="detail-help">49 scored criteria (0–5) and 23 informational assessments, grouped interior → exterior → land → location → finance. Auto-grades require rubric-specific evidence; missing information is Not Assessed, not 0. Personal grades are private to each account. Historical evidence remains preserved internally; it is not separately scored.</p>
@@ -2037,11 +2058,10 @@ function renderPropertyDetails() {
     <details class="details-section"><summary>🚗 Travel & Commute</summary><div class="details-body"><p class="small">Calculate road-based distance and a no-live-traffic driving estimate with Google Maps Routes. API usage may be billed. Use a browser-referrer-restricted Google Maps Platform key (Maps JavaScript API + Routes API); it is saved only in this browser, never to Firebase. Rates reflect a routing estimate, not a guaranteed commute.</p><div class="route-setup"><label>Google Maps browser API key <input id="hqRoutesKey" type="password" autocomplete="off" placeholder="Paste restricted browser key" value="${esc(getRoutesKey())}"></label><div class="actionline"><button class="btn" id="hqRoutesSaveKey" type="button">Save key on this device</button><button class="btn archive" id="hqRoutesForgetKey" type="button">Forget key</button><button class="btn primary" id="hqRoutesCompute" type="button">🚗 Calculate routes for this property</button></div><div id="hqRoutesStatus" class="small" aria-live="polite"></div></div>${tripSection(p)}</div></details>
     <details class="details-section"><summary>📅 Listing History & HOA</summary><div class="details-body"><p class="small">Status: ${esc(listingStatus(p))} · Age: ${esc(ageClocks(p))} · Last verified: ${esc(verifiedDate(p)||'Unverified')}</p><label class="meta-field">Known listing start date <input id="detailListedOn" type="date" value="${esc(listedOn(p))}"></label><p class="small">Only enter a date supported by the original listing or MLS. A new date doesn't create a historical event.</p><p><strong>${hoaSummary(p)}</strong> · ${restrictionsSummary(p)||'Restrictions not verified'}</p>${historyHtml(p)}</div></details>
     ${fieldBlocks.slice(1).join('')}
-    <details class="details-section"><summary>📝 Personal Evaluations</summary><div class="details-body"><div class="notesgrid"><label>My private notes (editable)<textarea id="detailMyNotes" placeholder="My observations…">${esc(notesOf(mine,p.id))}</textarea></label><label>${me.uid===OWNER?'Tiffany':'Rich'}'s notes (read only)<textarea readonly>${esc(notesOf(other,p.id))}</textarea></label></div></div></details>
     <details class="details-section"><summary>⚔️ War Council</summary><div class="details-body"><div class="rankgrid"><div class="rankbox">Rich<strong>${rich?'#'+rich:'—'}</strong></div><div class="rankbox">Tiffany<strong>${tiffany?'#'+tiffany:'—'}</strong></div><div class="rankbox">Combined<strong>${combined(p.id)===null?'—':'#'+combined(p.id).toFixed(1)}</strong></div></div><p class="small">Tier: ${esc(councilTier(p.id))}</p><label>My rank <input id="detailMyRank" class="rankinput" type="number" min="1" max="${shared.length}" value="${rankOf(mine,p.id)??''}" placeholder="Unranked"></label><button class="btn rankbtn direction" id="detailRankUp" type="button">↑ Top / Up</button><button class="btn rankbtn direction" id="detailRankDown" type="button">↓ Bottom / Down</button><button class="btn" type="button" id="detailClearRank">Clear rank</button>${discoveryTagged(p)?`<div class="reviewrow"><span class="small ${richReviewed(p)&&tiffanyReviewed(p)?'review-complete':'review-waiting'}">${esc(reviewStatus(p))} · Ranking counts as reviewed.</span><button class="btn" type="button" id="detailReviewed">${mine.reviewed?.[p.id]===true?'Undo my reviewed mark':'Mark reviewed / pass'}</button></div>`:''}</div></details>
     <details class="details-section"><summary>🔎 Research Discussion</summary><div class="details-body">${p.deepResearch?`<div id="detailResearchComments"><p class="small">Loading comments…</p></div><textarea id="detailResearchInput" maxlength="5000" placeholder="Share a research finding or question…"></textarea><button class="btn" id="detailPostComment" type="button">Post Comment</button>`:'<p class="small">Mark this property for Deep Research to enable shared comments.</p>'}</div></details>
     <details class="details-section"><summary>📸 Optional Serious-Contender Photos</summary><div class="details-body"><p class="detail-help">Optional direct image URLs with captions. No uploads or Firebase Storage setup required.</p><div class="details-photos">${photos.map((photo,i)=>`<div class="details-photo-item"><img src="${safeUrl(photo.url)}" alt="${esc(photo.caption||'Property photo')}" loading="lazy"><p class="small">${esc(photo.caption||'Property photo')}</p><button class="btn archive" type="button" data-remove-photo="${i}">Remove</button></div>`).join('')}</div><div class="details-fields"><label>Image URL<input id="detailPhotoUrl" type="url" placeholder="https://..."></label><label>Caption<input id="detailPhotoCaption" placeholder="Workshop, porch, guest house…"></label></div><button class="btn" id="detailAddPhoto" type="button">Add Photo URL</button></div></details>
-    <div class="detail-actions"><button class="btn" id="detailBackBottom" type="button">← Back to ${detailReturnView==='council'?'War Council':'Properties'}</button></div>`;
+    <div class="detail-actions"><button class="btn" id="detailBackBottom" type="button">← Back to ${detailReturnView==='council'?'War Council':'Properties'}</button></div></div>`;
   root.dataset.renderedPropertyId=String(openPropertyId);
   if(openPanels){
     root.querySelectorAll('details.details-section').forEach((section,index)=>{
@@ -2054,10 +2074,10 @@ function renderPropertyDetails() {
     }
     // Replacing the details DOM can shift the viewport. Restore immediately
     // and on the next frame after layout has settled.
-    window.scrollTo({top:previousScrollY,behavior:'instant'});
+    if(root.querySelector('#detailAssessmentScroll'))root.querySelector('#detailAssessmentScroll').scrollTop=previousScrollY;
     requestAnimationFrame(()=>{
       if(root.dataset.renderedPropertyId===String(openPropertyId))
-        window.scrollTo({top:previousScrollY,behavior:'instant'});
+        if(root.querySelector('#detailAssessmentScroll'))root.querySelector('#detailAssessmentScroll').scrollTop=previousScrollY;
     });
   }
   const back=()=>{openPropertyId=null;switchView(detailReturnView);restoreDetailReturnPosition()};
@@ -2070,7 +2090,7 @@ function renderPropertyDetails() {
     const resize=()=>{el.style.height='auto';el.style.height=Math.max(34,el.scrollHeight)+'px'};
     resize();el.oninput=()=>{p.assessmentComments??={};p.assessmentComments[el.dataset.assessmentComment]=el.value;resize();queue('shared')};
   });
-  $('detailMyNotes').oninput=el=>setNotes(p.id,el.target.value);
+  if($('detailMyNotes'))$('detailMyNotes').oninput=el=>setNotes(p.id,el.target.value);
   if($('detailOpenMap'))$('detailOpenMap').onclick=()=>showPropertyMap(p.id);
   if($('detailParcelLookup'))$('detailParcelLookup').onclick=()=>findParcelCandidate(p.id,$('detailParcelResult'));
   if($('hqRoutesSaveKey'))$('hqRoutesSaveKey').onclick=()=>{const value=$('hqRoutesKey').value.trim();const box=$('hqRoutesStatus');if(!value){box.textContent='Enter a browser key first.';return}if(!setRoutesKey(value)){box.textContent='Browser storage is blocked; cannot save key.';return}box.textContent='Key saved on this device only. Google Cloud billing and API restrictions must already be configured.'};
@@ -2108,6 +2128,7 @@ function switchView(view) {
 
   const showingCouncil = view === 'council';
   const showingDetails = view === 'details';
+  document.body.classList.toggle('hq-details-active', showingDetails);
   $('propertyDetails').classList.toggle('hidden', !showingDetails);
   $('myPropertiesSection').classList.toggle('hidden', showingCouncil || showingDetails || mapActive);
   $('showProperties').classList.toggle('primary', view === 'properties');
