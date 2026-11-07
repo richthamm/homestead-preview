@@ -279,31 +279,34 @@
 @media(max-width:650px){.council-accordion>summary{align-items:flex-start}.council-criteria{flex-basis:100%;padding-left:18px}.council-count{margin-left:auto}}
 .grade-reset{font-size:12px;padding:7px 10px;white-space:nowrap}.grade-reset:disabled{opacity:.45;cursor:default}
 
-/* EXPERIMENTAL PREVIEW — horizontal property cards only; all other cards unchanged. */
+/* HORIZONTAL PROPERTY CARD REFINEMENT — PREVIEW */
 #cards.grid{grid-template-columns:minmax(0,1fr);gap:13px}
-#cards>.card{display:grid;grid-template-columns:minmax(205px,27%) minmax(0,1fr);grid-template-rows:auto auto;align-items:stretch}
-#cards>.card>.art{grid-column:1;grid-row:1 / 3;height:auto!important;min-height:260px}
-#cards>.card>.art .aerial-card,#cards>.card>.art .propertyphoto{height:100%;min-height:260px;object-fit:cover}
-#cards>.card>.cardmain{grid-column:2;grid-row:1;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(245px,1fr);column-gap:18px;align-content:start;padding:15px 17px}
-#cards>.card>.cardmain>.property-overview{grid-column:1;grid-row:1 / span 14;min-width:0}
-#cards>.card>.cardmain>:not(.property-overview){grid-column:2;min-width:0}
-#cards>.card>.cardmain .rankgrid{margin:6px 0}
-#cards>.card>.cardmain .card-evidence-box{margin:8px 0}
+#cards>.card{display:grid;grid-template-columns:clamp(185px,23%,250px) minmax(0,1fr);grid-template-rows:auto auto;align-items:start;overflow:visible}
+#cards>.card>.art{grid-column:1;grid-row:1 / 3;height:235px!important;min-height:0!important;align-self:start;overflow:hidden;border-radius:10px 0 10px 0}
+#cards>.card>.art .aerial-card,#cards>.card>.art .propertyphoto{height:235px!important;min-height:0!important;max-height:235px!important;object-fit:cover}
+#cards>.card>.cardmain{grid-column:2;grid-row:1;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(255px,1fr);gap:0 20px;align-content:start;padding:15px 17px}
+#cards>.card>.cardmain>.property-overview{grid-column:1;grid-row:1 / span 12;min-width:0}
+#cards>.card>.cardmain>.property-overview .notesgrid{margin-top:15px}
+#cards>.card>.cardmain>.property-overview .actionline{margin-top:10px}
+#cards>.card>.cardmain>.card-rank-column{grid-column:2;grid-row:1;min-width:0;display:flex;flex-direction:column;gap:9px}
+#cards>.card>.cardmain .rankgrid{order:1;margin:0}
+#cards>.card>.cardmain .rankrow{order:2;margin:0}
+#cards>.card>.cardmain .card-progress{order:3}
+#cards>.card>.cardmain .hq-class-row{order:4}
+#cards>.card>.cardmain .reviewrow{order:5}
+#cards>.card>.cardmain .card-evidence-box{order:6;margin:0;border:0;background:none;padding:0}
+#cards>.card>.cardmain .card-evidence-controls{display:block}
+#cards>.card>.cardmain .card-evidence-toggle{font-size:14px;font-weight:700;padding:11px 17px;min-height:43px;width:100%;text-align:center}
 #cards>.card>.cardfoot{grid-column:2;grid-row:2;justify-content:flex-end;flex-wrap:wrap;padding:9px 16px}
 #cards>.card h3{margin-top:8px}
 #cards>.card .price{margin:8px 0 4px}
-@media(max-width:1000px){
- #cards>.card>.cardmain{grid-template-columns:minmax(0,1fr)}
- #cards>.card>.cardmain>.property-overview{grid-column:1;grid-row:auto}
- #cards>.card>.cardmain>:not(.property-overview){grid-column:1}
-}
-@media(max-width:650px){
- #cards>.card{display:flex;flex-direction:column}
- #cards>.card>.art{height:175px!important;min-height:175px}
- #cards>.card>.art .aerial-card,#cards>.card>.art .propertyphoto{min-height:175px}
- #cards>.card>.cardmain{display:block}
- #cards>.card>.cardfoot{justify-content:space-between}
-}
+.hq-grade-popover{position:fixed;z-index:10020;top:50%;left:50%;transform:translate(-50%,-50%);width:min(900px,calc(100vw - 40px));max-height:min(82vh,900px);overflow:auto;background:#192923;border:1px solid #6c9476;border-radius:14px;box-shadow:0 24px 75px #000b;padding:20px}
+.hq-grade-popover .card-evidence-panel{display:block!important;max-height:none!important;overflow:visible!important}
+.hq-grade-popover-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:16px;font-weight:700}
+.hq-grade-popover-close{font-size:14px;padding:7px 13px}
+.hq-grade-backdrop{position:fixed;inset:0;background:#0009;z-index:10019}
+@media(max-width:1000px){#cards>.card>.cardmain{grid-template-columns:minmax(0,1fr)}#cards>.card>.cardmain>.property-overview{grid-column:1;grid-row:auto}#cards>.card>.cardmain>.card-rank-column{grid-column:1;grid-row:auto;margin-top:14px}}
+@media(max-width:650px){#cards>.card{display:flex;flex-direction:column}#cards>.card>.art{width:100%;height:175px!important}#cards>.card>.art .aerial-card,#cards>.card>.art .propertyphoto{height:175px!important;max-height:175px!important}#cards>.card>.cardmain{display:block;width:100%}#cards>.card>.cardfoot{justify-content:space-between}}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
@@ -1320,17 +1323,39 @@ function render(){if(!ready)return;
   <div class="card-evidence-controls">
     <button type="button" class="card-evidence-toggle" data-card-evidence="${esc(p.id)}:wishlist" aria-expanded="${openCardEvidence.has(p.id+':wishlist')?'true':'false'}" aria-controls="card-wishlist-${esc(p.id)}">⚔️ Master Grades</button>
   </div>
-  ${wishlistEvidenceCard(p,openCardEvidence)}
+  ${wishlistEvidenceCard(p,new Set())}
 </div><div class="notesgrid"><div><label>My personal notes (editable)</label><textarea data-notes="${esc(p.id)}" placeholder="Your impressions, visit notes, questions…">${esc(notesOf(mine,p.id))}</textarea></div><div><label>${me.uid===OWNER?'Tiffany':'Rich'}'s notes (read only)</label><textarea readonly>${esc(notesOf(other,p.id))}</textarea></div></div><div class="actionline">${p.decision==='Active'?`<button class="btn" data-decision="On Hold" data-id="${esc(p.id)}">On hold</button><button class="btn archive" data-decision="Rejected" data-id="${esc(p.id)}">Reject / archive</button>`:`<button class="btn" data-decision="Active" data-id="${esc(p.id)}">Restore to active</button>`}<button class="btn" data-research="${esc(p.id)}">
   ${p.deepResearch ? '🔎 Remove Research Flag' : '🔎 Deep Research'}
 </button><button class="btn" data-photo="${esc(p.id)}">Set photo URL</button></div></div><div class="cardfoot"><button class="btn" type="button" data-open-details="${esc(p.id)}">Details</button><label class="small"><input class="compare" type="checkbox" data-id="${esc(p.id)}" ${chosen.has(p.id)?'checked':''}> Compare</label><a href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">Original listing ↗</a></div></article>`}).join(''):'<div class="empty">No properties match these filters.</div>';
- // Toggle evidence panels independently. Keep both buttons together even when expanded.
+ // Organize horizontal cards: notes/actions in the property column; rankings above progress in the right column.
+ document.querySelectorAll('#cards > .card').forEach(card=>{
+   const main=card.querySelector('.cardmain'),overview=main?.querySelector('.property-overview');
+   if(!main||!overview)return;
+   for(const cls of ['notesgrid','actionline']){const el=main.querySelector(':scope > .'+cls);if(el)overview.appendChild(el)}
+   const right=document.createElement('div');right.className='card-rank-column';
+   for(const cls of ['rankgrid','rankrow','coveragewrap','matchwrap','hq-class-row','reviewrow','card-evidence-box']){
+     const el=main.querySelector(':scope > .'+cls);if(el){if(cls==='coveragewrap'||cls==='matchwrap')el.classList.add('card-progress');right.appendChild(el)}
+   }
+   // Any remaining score-bar elements also belong with the right-column metrics.
+   [...main.children].filter(el=>el!==overview&&el!==right).forEach(el=>{el.classList.add('card-progress');right.appendChild(el)});
+   main.appendChild(right);
+ });
+ // Master Grades opens as an overlay instead of stretching the card.
  document.querySelectorAll('#cards [data-card-evidence]').forEach(button=>button.onclick=()=>{
-   const expanded=button.getAttribute('aria-expanded')==='true';
    const panel=document.getElementById(button.getAttribute('aria-controls'));
    if(!panel)return;
-   button.setAttribute('aria-expanded',String(!expanded));
-   panel.hidden=expanded;
+   const backdrop=document.createElement('div');backdrop.className='hq-grade-backdrop';
+   const popup=document.createElement('div');popup.className='hq-grade-popover';popup.setAttribute('role','dialog');popup.setAttribute('aria-modal','true');popup.setAttribute('aria-label','Master Grades');
+   const head=document.createElement('div');head.className='hq-grade-popover-head';
+   const title=document.createElement('span');title.textContent='⚔️ Master Grades';
+   const closeBtn=document.createElement('button');closeBtn.type='button';closeBtn.className='btn hq-grade-popover-close';closeBtn.textContent='✕ Close';
+   head.append(title,closeBtn);popup.append(head);
+   const parent=panel.parentNode,after=panel.nextSibling;
+   panel.hidden=false;popup.appendChild(panel);document.body.append(backdrop,popup);
+   button.setAttribute('aria-expanded','true');
+   function close(){if(!popup.isConnected)return;if(after&&after.parentNode===parent)parent.insertBefore(panel,after);else if(parent.isConnected)parent.appendChild(panel);panel.hidden=true;popup.remove();backdrop.remove();button.setAttribute('aria-expanded','false');document.removeEventListener('keydown',onKey)}
+   function onKey(e){if(e.key==='Escape')close()}
+   backdrop.addEventListener('click',close);closeBtn.addEventListener('click',close);document.addEventListener('keydown',onKey);closeBtn.focus();
  });
  document.querySelectorAll('[data-map-focus]').forEach(el=>el.onclick=()=>openParcelExplorer(el.dataset.mapFocus));document.querySelectorAll('[data-hqclass]').forEach(el=>el.onchange=()=>setHQClassification(el.dataset.hqclass,el.value));document.querySelectorAll('[data-open-details]').forEach(el=>el.onclick=()=>openPropertyDetails(el.dataset.openDetails));document.querySelectorAll('[data-rank]').forEach(el=>el.onchange=()=>setRank(el.dataset.rank,el.value));document.querySelectorAll('[data-nudge]').forEach(el=>el.onclick=()=>nudgeRank(el.dataset.nudge,el.dataset.dir));document.querySelectorAll('[data-unrank]').forEach(el=>el.onclick=()=>setRank(el.dataset.unrank,''));document.querySelectorAll('[data-reviewed]').forEach(el=>el.onclick=()=>setReviewed(el.dataset.reviewed));document.querySelectorAll('[data-notes]').forEach(el=>el.oninput=()=>setNotes(el.dataset.notes,el.value));document.querySelectorAll('[data-decision]').forEach(el=>el.onclick=()=>setDecision(el.dataset.id,el.dataset.decision));document.querySelectorAll('[data-research]').forEach(el => {
   el.onclick = () => {
