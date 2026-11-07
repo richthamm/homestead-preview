@@ -426,6 +426,19 @@ body.hq-details-active #propertyDetails{display:flex!important;flex-direction:co
 .hq-detail-progress .matchlabel{margin-bottom:3px}
 .hq-detail-progress .coveragelegend{margin-top:3px}
 @media(max-width:900px){.hq-detail-progress{padding-top:6px}}
+
+/* Detail fixed header: two columns; notes and progress share the right column. */
+.hq-detail-fixed{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.hq-detail-info,.hq-detail-right{min-width:0;max-width:100%}
+.hq-detail-right{display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.hq-detail-right .hq-detail-notes{width:100%;min-width:0;align-self:auto}
+.hq-detail-right .hq-detail-progress{grid-column:auto;width:100%;max-width:100%;min-width:0;overflow:hidden;padding-top:9px}
+.hq-detail-right .coveragewrap,.hq-detail-right .matchwrap{min-width:0;max-width:100%}
+.hq-detail-right .matchlabel{min-width:0;align-items:baseline}
+.hq-detail-right .matchlabel span{min-width:0;overflow-wrap:anywhere}
+.hq-detail-right .matchlabel strong{flex-shrink:0}
+.hq-detail-right .matchtrack{width:100%;max-width:100%}
+@media(max-width:900px){.hq-detail-fixed{grid-template-columns:minmax(0,1fr)}.hq-detail-right{width:100%}}
 </style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
@@ -2106,7 +2119,7 @@ function renderPropertyDetails() {
     ${alertInfo(p)?`<div class="alert-panel ${esc(alertInfo(p).level)}"><strong>⚠ Research alert — ${alertInfo(p).level==='critical'?'Major conflict':'Minor conflict'}</strong><p>${esc(alertInfo(p).reason)}</p><p class="small">Source: ${esc(alertInfo(p).source||'Research import')}. This alert concerns conflicting information, not routine unverified listing claims.</p><button class="btn" type="button" id="resolveAlert">✓ Mark resolved with evidence</button></div>`:p.researchAlert?.resolved?`<div class="alert-panel"><strong>✓ Research alert resolved</strong><p>${esc(p.researchAlert.reason||'')}</p><p class="small">${esc(p.researchAlert.resolution||'')} · ${esc(p.researchAlert.resolvedAt||'')}</p><button class="btn" id="reopenAlert" type="button">Reopen alert</button></div>`:''}
     ${pilotResearch[p.id]?`<div class="notice"><strong>Research pilot available:</strong> Reviewed listing information for this Serious Inquiry. <button class="btn primary" id="applyPilotResearch" type="button">📋 Populate Researched Details</button><div class="small">Adds only missing fields; never overwrites your existing entries or manual scores. Review before relying on any listing claims.</div></div>`:''}
     <div class="detail-actions"><a class="btn primary" href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">Open Original Listing ↗</a><button class="btn" type="button" id="detailResearch">${p.deepResearch?'🔎 Remove Research Flag':'🔎 Mark for Deep Research'}</button></div>
-    </div><div class="hq-detail-notes"><div class="hq-note-rich"><label>R · Rich's notes ${me.uid===OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid===OWNER?'id="detailMyNotes"':'readonly'} placeholder="Rich's observations…">${esc(notesOf(me.uid===OWNER?mine:other,p.id))}</textarea></div><div class="hq-note-tiffany"><label>T · Tiffany's notes ${me.uid!==OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid!==OWNER?'id="detailMyNotes"':'readonly'} placeholder="Tiffany's observations…">${esc(notesOf(me.uid===OWNER?other:mine,p.id))}</textarea></div></div><div class="hq-detail-progress">${dualBars(allTopicStats(p),p)}</div></div></div><div class="hq-detail-scroll" id="detailAssessmentScroll">
+    </div><div class="hq-detail-right"><div class="hq-detail-notes"><div class="hq-note-rich"><label>R · Rich's notes ${me.uid===OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid===OWNER?'id="detailMyNotes"':'readonly'} placeholder="Rich's observations…">${esc(notesOf(me.uid===OWNER?mine:other,p.id))}</textarea></div><div class="hq-note-tiffany"><label>T · Tiffany's notes ${me.uid!==OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid!==OWNER?'id="detailMyNotes"':'readonly'} placeholder="Tiffany's observations…">${esc(notesOf(me.uid===OWNER?other:mine,p.id))}</textarea></div></div><div class="hq-detail-progress">${dualBars(allTopicStats(p),p)}</div></div></div></div><div class="hq-detail-scroll" id="detailAssessmentScroll">
     <details class="details-section"><summary>⚔️ Master Property Assessment — 72 entries</summary><div class="details-body">
       <div class="detail-meta"><strong id="detailScoreTotal">—</strong><span id="detailScoreCount"></span></div>
       ${masterGradeSections(p,scores)}
