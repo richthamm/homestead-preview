@@ -375,7 +375,31 @@ body.hq-details-active #propertyDetails{display:flex!important;flex-direction:co
 .hq-detail-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:1px 5px 28px 2px;scrollbar-gutter:stable}
 @media(max-width:900px){.hq-detail-fixed{grid-template-columns:1fr;gap:10px}.hq-detail-notes textarea{min-height:80px;max-height:130px}.hq-detail-fixed .details-top{margin-bottom:7px}}
 @media(max-height:680px){.hq-detail-notes textarea{min-height:65px;max-height:90px}}
-#cards>.card>.cardmain>.property-overview.hq-overview-with-notes{display:block!important}</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
+#cards>.card>.cardmain>.property-overview.hq-overview-with-notes{display:block!important}
+/* v3.2.1: prevent note editor from exceeding fixed header on narrow screens. */
+.hq-detail-notes>div{min-width:0;display:flex;flex-direction:column}
+.hq-detail-notes textarea{height:145px;flex:none;box-sizing:border-box}
+@media(max-width:900px){
+ .hq-detail-fixed{min-height:0;max-height:68dvh;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+ .hq-detail-fixed .hq-detail-notes{align-self:auto;min-height:0}
+ .hq-detail-notes textarea{height:90px;min-height:70px;max-height:110px}
+ .hq-detail-scroll{min-height:0;flex:1 1 0}
+}
+@media(max-width:560px){
+ body.hq-details-active main.shell{padding:8px 10px}
+ .hq-detail-fixed{gap:8px;padding-bottom:8px}
+ .hq-detail-fixed .hq-detail-notes{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+ .hq-detail-notes textarea{height:80px;min-height:65px;max-height:105px;font-size:12px}
+}
+
+/* Details header: view-only individual ranks and conditional tier explanation. */
+.hq-detail-rank-summary{display:grid;grid-template-columns:repeat(3,minmax(72px,1fr));gap:6px;align-items:stretch}
+.hq-detail-rank-summary .rankbox{padding:5px 9px;min-width:72px;line-height:1.25;margin:0;font-size:11px}
+.hq-detail-rank-summary .rankbox strong{font-size:15px;margin-top:2px}
+.hq-detail-tier{white-space:nowrap}
+.hq-rank-wait-note{font-size:11px;color:var(--muted);max-width:230px;line-height:1.35}
+@media(max-width:650px){.hq-detail-rank-summary{grid-template-columns:repeat(3,minmax(65px,1fr))}.hq-detail-rank-summary .rankbox{min-width:0;padding:5px 7px}.hq-rank-wait-note{max-width:100%;flex-basis:100%}}
+</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -2038,7 +2062,7 @@ function renderPropertyDetails() {
   const photos=Array.isArray(d.photos)?d.photos:[];
   root.innerHTML=`
     <div class="hq-detail-fixed"><div class="hq-detail-info">
-    <div class="details-top"><button class="btn" id="detailBack" type="button">← Back to ${detailReturnView==='council'?'War Council':'Properties'}</button>${p.decision&&p.decision!=='Active'?`<span class="tag">${esc(p.decision)}</span>`:''}<span class="tag">${esc(councilTier(p.id))}</span></div>
+    <div class="details-top"><button class="btn" id="detailBack" type="button">← Back to ${detailReturnView==='council'?'War Council':'Properties'}</button>${p.decision&&p.decision!=='Active'?`<span class="tag">${esc(p.decision)}</span>`:''}<div class="hq-detail-rank-summary" aria-label="Property rankings"><div class="rankbox">Rich<strong>${rich===null?'—':'#'+rich}</strong></div><div class="rankbox">Tiffany<strong>${tiffany===null?'—':'#'+tiffany}</strong></div><div class="rankbox">Combined<strong>${combined(p.id)===null?'—':'#'+combined(p.id).toFixed(1)}</strong></div></div><span class="tag hq-detail-tier">${esc(councilTier(p.id))}</span>${councilTier(p.id)==='Unranked'?`<span class="hq-rank-wait-note">Tier updates once both Rich and Tiffany have ranked this property.</span>`:''}</div>
     <h2 style="font-size:clamp(25px,3vw,37px);margin:0">${esc(p.address)}</h2>${alertBadge(p)}
     <div class="city">${esc(p.city)}, Texas · ${esc(listingStatus(p))}</div>
     <p class="small">Research last checked: ${esc(p.researchLastChecked?new Date(p.researchLastChecked).toLocaleString():'Not recorded')}</p><div class="card-meta">${listingStatusLabel(p)}<span class="mini-chip">${esc(ageClocks(p))}</span><span class="mini-chip">${hoaSummary(p)}</span>${restrictionsSummary(p)}</div><div class="detail-meta"><strong>${money(p.price)}</strong><span>🌲 ${fmt(p.acres)} acres</span><span>${fmt(p.beds)} beds / ${fmt(p.baths)} baths</span><span>${fmt(p.sqft)} sq ft</span></div>
