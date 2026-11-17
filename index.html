@@ -630,7 +630,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .card .hq-personal-choice select{width:138px;max-width:138px}
 @media(max-width:740px){.card .hq-address-status-row .hq-personal-controls{align-items:flex-start;margin-left:0}.card .hq-address-status-row{gap:8px}}
 
-/* v3.7.24 — prominent personal classification icons floating over rank corners */
+/* v3.7.27 — prominent personal classification icons floating over rank corners */
 .card .hq-personal-icon{display:none!important}
 .card .hq-card-rankgrid{padding-top:9px;overflow:visible}
 .card .hq-status-rankbox{position:relative;overflow:visible}
@@ -639,7 +639,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .card .hq-rank-status-icon.star{color:#ffc72c;font-size:36px}
 .card .hq-rank-status-icon.dollar{color:#42ec6a;font-size:34px}
 
-/* v3.7.24 — keep address at its natural top; status selectors align with rank boxes.
+/* v3.7.27 — keep address at its natural top; status selectors align with rank boxes.
    Remove the tall flex row that previously pushed the entire middle column down. */
 #cards>.card>.cardmain>.property-overview{position:relative}
 #cards .hq-address-status-row{display:block!important;position:static!important;margin:0 0 5px!important;min-height:0!important}
@@ -653,7 +653,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
  #cards .hq-address-status-row h3{padding-right:0!important}
 }
 
-/* v3.7.24: Restore grade-source key and improve AUTO/MANUAL distinction. */
+/* v3.7.27: Restore grade-source key and improve AUTO/MANUAL distinction. */
 .card-grade-legend{display:flex;align-items:center;flex-wrap:wrap;gap:7px 9px;margin:8px 0 12px;padding:10px 12px;border:1px solid #597369;border-radius:8px;background:#13251f;color:#e5eee9;font-size:12px;font-weight:600}
 .card-grade-origin{display:inline-flex;align-items:center;justify-content:center;min-width:64px;padding:4px 8px;border-radius:5px;border:1px solid transparent;font-size:11px;font-weight:900;letter-spacing:.055em}
 .card-grade-origin.auto{background:#164b70;color:#e8f8ff;border-color:#58c7ff}
@@ -852,18 +852,29 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 @media(max-width:650px){.hq-quick-criterion{grid-template-columns:minmax(0,1fr) auto auto}.hq-quick-criterion .card-grade-description{grid-column:1/-1;grid-row:2}.hq-quick-criterion .hq-quick-icons{grid-column:3;grid-row:1}}
 .hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
 </style>
-<style id="hq-v3724-comment-alignment">
-/* Keep the shared criterion comment immediately below the grading/evidence panel.
-   Flame controls and their note editor retain a full-width, left-aligned row. */
-body.hq-details-active .master-grade-row:not(.informational){display:grid;grid-template-columns:minmax(160px,0.9fr) minmax(280px,1.7fr);align-items:start;column-gap:12px;row-gap:7px}
-body.hq-details-active .master-grade-row:not(.informational)>.master-grade-title{grid-column:1;grid-row:1}
-body.hq-details-active .master-grade-row:not(.informational)>.master-grade-result{grid-column:2;grid-row:1;min-width:0}
-body.hq-details-active .master-grade-row:not(.informational)>.flame-controls{grid-column:1/-1;grid-row:2;justify-content:flex-start;width:100%;box-sizing:border-box}
-body.hq-details-active .master-grade-row:not(.informational) .master-item-comment{display:block;width:100%;margin-top:7px;box-sizing:border-box}
-@media(max-width:700px){body.hq-details-active .master-grade-row:not(.informational){grid-template-columns:minmax(0,1fr)}body.hq-details-active .master-grade-row:not(.informational)>.master-grade-title{grid-column:1;grid-row:1}body.hq-details-active .master-grade-row:not(.informational)>.master-grade-result{grid-column:1;grid-row:2}body.hq-details-active .master-grade-row:not(.informational)>.flame-controls{grid-column:1;grid-row:3}}
+<style id="hq-v3725-card-quick-comment-layout">
+/* Card Master Grades popup only. The general comment sits immediately below its grade.
+   Flame icon remains in the rightmost cell; expanded flame editor remains left-aligned. */
+.card-evidence-panel .wishlist-evidence-row.hq-quick-criterion{grid-template-columns:minmax(130px,1fr) 64px minmax(120px,1fr) 40px;grid-template-rows:auto auto;align-items:start}
+.card-evidence-panel .hq-quick-criterion>.wishlist-feature-name{grid-column:1;grid-row:1}
+.card-evidence-panel .hq-quick-criterion>.wishlist-evidence-score{grid-column:2;grid-row:1}
+.card-evidence-panel .hq-quick-criterion>.card-grade-description{grid-column:3;grid-row:1}
+.card-evidence-panel .hq-quick-criterion>.hq-quick-general-comment{grid-column:2;grid-row:2;position:relative;justify-self:center;align-self:start}
+.card-evidence-panel .hq-quick-criterion>.hq-quick-icons{grid-column:1;grid-row:2;justify-self:start;align-self:start}
+.card-evidence-panel .hq-quick-criterion>.hq-quick-flame-editor{grid-column:1/-1;grid-row:3;justify-self:stretch;text-align:left}
+.card-evidence-panel .hq-quick-general-comment .hq-quick-tip{left:0;right:auto;width:min(340px,65vw)}
+@media(max-width:650px){.card-evidence-panel .wishlist-evidence-row.hq-quick-criterion{grid-template-columns:minmax(0,1fr) 64px 40px}.card-evidence-panel .hq-quick-criterion>.card-grade-description{grid-column:1;grid-row:2}.card-evidence-panel .hq-quick-criterion>.hq-quick-icons{grid-column:1;grid-row:3}.card-evidence-panel .hq-quick-criterion>.hq-quick-general-comment{grid-column:2;grid-row:2}.card-evidence-panel .hq-quick-criterion>.hq-quick-flame-editor{grid-row:4}}
+</style>
+<style id="hq-v3727-personal-flame-buttons">
+/* Card Master Grades popup: individually identified flames, both on left. */
+.card-evidence-panel .hq-quick-criterion>.hq-quick-icons{display:flex;flex-wrap:wrap;gap:6px;max-width:100%;align-items:center}
+.card-evidence-panel .hq-quick-icons .hq-quick-flame{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;font-size:12px;line-height:1.3;white-space:nowrap}
+.card-evidence-panel .hq-flame-owner{font-size:11px;font-weight:700;color:#f5f5ed}
+.card-evidence-panel .hq-quick-flame-partner{background:#26302d;border-color:#61736b}
+.card-evidence-panel .hq-quick-flame-own{border-color:#a18b64}
 </style>
 </head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></div><div class="hq-header-data" role="group" aria-label="Data tools"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div></div></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button>
-     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.24     </span><span title="v3.7: Sold Archive, refresh notifications, lightweight main photo, mobile details scrolling, research pilot removed" style="font-size:11px;color:#d3e3d4">What’s new: legacy icons restored · safe Rich classification migration</span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
+     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.27     </span><span title="v3.7: Sold Archive, refresh notifications, lightweight main photo, mobile details scrolling, research pilot removed" style="font-size:11px;color:#d3e3d4">What’s new: legacy icons restored · safe Rich classification migration</span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -2589,9 +2600,10 @@ function wishlistEvidenceCard(p, openCardEvidence){
       <span class="wishlist-feature-name">${esc(e.label)}</span>
       <span class="wishlist-evidence-score${e.overridden?' overridden':''}">${e.grade===null?'N/A':e.grade+'/5'}</span>
       <span class="card-grade-description">${e.grade===null?'Comment / highlight only':esc(masterGradeDescription(criterionByKey[e.key],e.grade))}</span>
+      ${e.comment?`<span class="hq-quick-general-comment"><button type="button" class="hq-quick-icon" data-quick-comment title="${esc(e.comment)}" aria-label="Read general comment for ${esc(e.label)}">💬</button><span class="hq-quick-tip" role="tooltip">${esc(e.comment)}</span></span>`:''}
       <span class="hq-quick-icons">
-        ${e.comment?`<button type="button" class="hq-quick-icon" data-quick-comment title="${esc(e.comment)}" aria-label="Read general comment for ${esc(e.label)}">💬</button><span class="hq-quick-tip" role="tooltip">${esc(e.comment)}</span>`:''}
-        <button type="button" class="hq-quick-icon hq-quick-flame" data-quick-flame="${esc(e.key)}" title="${esc((e.own.note||e.partner.note||'Add or edit your flame highlight'))}" aria-label="Edit your flame highlight for ${esc(e.label)}">${e.own.level?'🔥'.repeat(e.own.level):hasFlame?'🔥':'♢'}</button>
+        <button type="button" class="hq-quick-icon hq-quick-flame hq-quick-flame-own" data-quick-flame="${esc(e.key)}" title="${esc(ownName)} — edit your flame highlight${e.own.note?' · '+esc(e.own.note):''}" aria-label="${esc(ownName)} flame highlight for ${esc(e.label)}; editable"><span class="hq-flame-owner">${esc(ownName)}</span> <span data-quick-own-icon="${esc(e.key)}">${e.own.level?'🔥'.repeat(e.own.level):'♢'}</span></button>
+        <button type="button" class="hq-quick-icon hq-quick-flame hq-quick-flame-partner" data-quick-partner-flame="${esc(e.key)}" title="${esc(partnerName)} — ${e.partner.note?esc(e.partner.note):'View flame highlight (read only)'}" aria-label="${esc(partnerName)} flame highlight for ${esc(e.label)}; read only"><span class="hq-flame-owner">${esc(partnerName)}</span> ${e.partner.level?'🔥'.repeat(e.partner.level):'♢'}</button>
       </span>
       <div class="hq-quick-flame-editor" data-quick-editor="${esc(e.key)}" hidden>
         <div class="hq-quick-flame-summary"><strong>${esc(ownName)}:</strong> <span data-quick-own-level="${esc(e.key)}">${e.own.level?'🔥'.repeat(e.own.level):'No flames'}</span>${e.own.note?` · ${esc(e.own.note)}`:''}</div>
@@ -2609,13 +2621,15 @@ function wireQuickAssessment(panel,p){
     if(comment){comment.classList.toggle('hq-quick-tip-open');return;}
     const flame=e.target.closest('[data-quick-flame]');
     if(flame){const editor=panel.querySelector('[data-quick-editor="'+flame.dataset.quickFlame+'"]');if(editor)editor.hidden=!editor.hidden;return;}
+    const partnerFlame=e.target.closest('[data-quick-partner-flame]');
+    if(partnerFlame){const editor=panel.querySelector('[data-quick-editor="'+partnerFlame.dataset.quickPartnerFlame+'"]');if(editor)editor.hidden=!editor.hidden;return;}
     const cycle=e.target.closest('[data-quick-cycle]');
     if(cycle){
       const key=cycle.dataset.quickCycle,level=(flameData(mine,p.id,key).level+1)%3;
       updateFlame(p.id,key,{level});
       const label=panel.querySelector('[data-quick-own-level="'+key+'"]');
       if(label)label.textContent=level?'🔥'.repeat(level):'No flames';
-      const icon=panel.querySelector('[data-quick-flame="'+key+'"]');
+      const icon=panel.querySelector('[data-quick-own-icon="'+key+'"]');
       if(icon)icon.textContent=level?'🔥'.repeat(level):'♢';
     }
   });
