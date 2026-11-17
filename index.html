@@ -630,7 +630,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .card .hq-personal-choice select{width:138px;max-width:138px}
 @media(max-width:740px){.card .hq-address-status-row .hq-personal-controls{align-items:flex-start;margin-left:0}.card .hq-address-status-row{gap:8px}}
 
-/* v3.7.27 — prominent personal classification icons floating over rank corners */
+/* v3.7.28 — prominent personal classification icons floating over rank corners */
 .card .hq-personal-icon{display:none!important}
 .card .hq-card-rankgrid{padding-top:9px;overflow:visible}
 .card .hq-status-rankbox{position:relative;overflow:visible}
@@ -639,7 +639,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .card .hq-rank-status-icon.star{color:#ffc72c;font-size:36px}
 .card .hq-rank-status-icon.dollar{color:#42ec6a;font-size:34px}
 
-/* v3.7.27 — keep address at its natural top; status selectors align with rank boxes.
+/* v3.7.28 — keep address at its natural top; status selectors align with rank boxes.
    Remove the tall flex row that previously pushed the entire middle column down. */
 #cards>.card>.cardmain>.property-overview{position:relative}
 #cards .hq-address-status-row{display:block!important;position:static!important;margin:0 0 5px!important;min-height:0!important}
@@ -653,13 +653,31 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
  #cards .hq-address-status-row h3{padding-right:0!important}
 }
 
-/* v3.7.27: Restore grade-source key and improve AUTO/MANUAL distinction. */
+/* v3.7.28: Restore grade-source key and improve AUTO/MANUAL distinction. */
 .card-grade-legend{display:flex;align-items:center;flex-wrap:wrap;gap:7px 9px;margin:8px 0 12px;padding:10px 12px;border:1px solid #597369;border-radius:8px;background:#13251f;color:#e5eee9;font-size:12px;font-weight:600}
 .card-grade-origin{display:inline-flex;align-items:center;justify-content:center;min-width:64px;padding:4px 8px;border-radius:5px;border:1px solid transparent;font-size:11px;font-weight:900;letter-spacing:.055em}
 .card-grade-origin.auto{background:#164b70;color:#e8f8ff;border-color:#58c7ff}
 .card-grade-origin.manual{background:#704016;color:#fff1d7;border-color:#ffb84d}
 .card-evidence-panel .wishlist-evidence-score{color:#75d5ff;background:#103a51;border:1px solid #4ca9d8;border-radius:5px;padding:3px 7px;font-weight:900}
 .card-evidence-panel .wishlist-evidence-score.overridden{color:#ffd18a;background:#593511;border-color:#f5a83b}
+
+/* Tiffany's intentionally simpler, photo-forward dashboard */
+#tiffanyDashboard .t-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 24px}
+#tiffanyDashboard .t-summary>div{background:#20322c;border:1px solid #496a59;border-radius:12px;padding:14px}
+#tiffanyDashboard .t-summary strong{display:block;font-size:26px;color:#e9e2b9}
+#tiffanyDashboard .t-section{margin:22px 0 30px}
+#tiffanyDashboard .t-section h3{margin:0 0 12px;font-size:20px}
+#tiffanyDashboard .t-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:14px}
+#tiffanyDashboard .t-card{background:#1b2b26;border:1px solid #567364;border-radius:13px;overflow:hidden;display:flex;flex-direction:column}
+#tiffanyDashboard .t-card img{width:100%;height:185px;object-fit:cover;background:#263c35}
+#tiffanyDashboard .t-card-body{padding:13px;display:flex;flex-direction:column;gap:7px;flex:1}
+#tiffanyDashboard .t-card h4{margin:0;font-size:18px;color:#f3f0df}
+#tiffanyDashboard .t-card .t-price{font-size:23px;font-weight:800;color:#e8e1b5}
+#tiffanyDashboard .t-card .t-notes{font-size:12px;color:#d5e3d9;border-left:3px solid #6b8f80;padding-left:9px;max-height:70px;overflow:auto}
+#tiffanyDashboard .t-card button{margin-top:auto;align-self:flex-start}
+#tiffanyDashboard .t-empty{padding:16px;border:1px dashed #5c7768;border-radius:10px;color:#b7c9bd}
+#tiffanyDashboard .t-badge{font-size:12px;color:#f1d7aa}
+@media(max-width:650px){#tiffanyDashboard .t-summary{grid-template-columns:1fr 1fr}#tiffanyDashboard .t-grid{grid-template-columns:1fr}}
 </style><style id="card-flame-preview-styles">
 .card-price-row .card-flame-highlights{display:flex;gap:7px;align-items:center;margin-left:auto;flex-wrap:wrap;min-width:0}
 .card-flame-person{position:relative;display:inline-flex;align-items:center;gap:4px;border:1px solid #80633b;border-radius:7px;padding:4px 7px;background:#302b21;color:#f8e3ae;font-size:11px;font-weight:700;cursor:help;outline-offset:3px}
@@ -874,7 +892,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .card-evidence-panel .hq-quick-flame-own{border-color:#a18b64}
 </style>
 </head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></div><div class="hq-header-data" role="group" aria-label="Data tools"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div></div></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button>
-     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.27     </span><span title="v3.7: Sold Archive, refresh notifications, lightweight main photo, mobile details scrolling, research pilot removed" style="font-size:11px;color:#d3e3d4">What’s new: legacy icons restored · safe Rich classification migration</span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
+     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.28     </span><span title="v3.7: Sold Archive, refresh notifications, lightweight main photo, mobile details scrolling, research pilot removed" style="font-size:11px;color:#d3e3d4">What’s new: legacy icons restored · safe Rich classification migration</span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -882,6 +900,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
   <div class="hq-menu-row" role="group" aria-label="Dashboard views">
     <span class="hq-menu-label">Views</span>
     <button class="btn primary" id="showProperties" type="button">🏡 My Properties</button>
+    <button class="btn" id="showTiffany" type="button">🌿 Tiffany Dashboard</button>
     <button class="btn" id="showWarCouncil" type="button">⚔️ War Council</button>
     <button class="btn" id="showCollections" type="button">♥ Collections</button>
   </div>
@@ -911,6 +930,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
   <div class="hq-search-row"><input id="search" type="search" placeholder="Search address, town, features, notes…" aria-label="Search address and property details"></div>
 </div>
 
+<section id="tiffanyDashboard" class="workspace-panel hidden" aria-label="Tiffany streamlined dashboard"><div class="sectionbar"><h2>🌿 Tiffany’s Homestead View</h2><div><span id="tiffanyPreviewFlag" class="small"></span> <button class="btn" id="closeTiffany" type="button">← Full dashboard</button></div></div><p class="small">A simplified view of the same live property records. Preview mode is read-only; no changes to Tiffany’s rankings, notes, or decisions can be made here.</p><div id="tiffanyDashboardContent"></div></section>
 <section id="collectionsPage" class="workspace-panel hidden" aria-label="Property collections overview"><div class="sectionbar"><h2>♥ Collections</h2><button class="btn" id="closeCollections" type="button">← Back to properties</button></div><p class="small">Favorites, serious inquiries, and price watches side by side. Select a property to open its full details. Rejected and archived properties are excluded.</p><div id="collectionsColumns" class="hq-collections-grid"></div></section>
 <section id="propertyMapPage" class="hidden" aria-label="Lightweight regional property map"><div class="sectionbar"><h2>🗺️ Property Map</h2><button class="btn" id="closeMap" type="button">← Back to properties</button></div><div class="small">Interactive regional road map: zoom and drag to separate property markers. Nearby properties group into numbered clusters; click a cluster to zoom in. If the interactive map cannot load, HQ restores the previous static map. Coordinates are approximate, not legal boundaries.</div><div class="offline-map-legend"><span><i class="legend-dot watchlist"></i> Watchlist</span><span><i class="legend-dot favorite"></i> HQ Favorite</span><span><i class="legend-dot serious"></i> Serious Inquiry</span></div><div class="offline-map-toolbar"><button class="btn" id="offlineMapZoomOut" type="button" aria-label="Zoom out">−</button><button class="btn" id="offlineMapZoomIn" type="button" aria-label="Zoom in">＋</button><button class="btn" id="offlineMapReset" type="button">Show all properties</button><button class="btn primary" id="autoFindParcels" type="button">🔎 Auto-find missing parcels</button><label class="map-boundary-toggle"><input id="mapBoundaryToggle" type="checkbox"> Show parcel boundaries</label><span class="small" id="offlineMapZoomLabel">100%</span></div><div id="propertyMapCanvas" class="offline-map-canvas" aria-label="Central Texas map with interactive property locations"></div><div id="parcelBatchStatus" class="small" role="status" aria-live="polite"></div><div id="offlineMapSelection" class="offline-map-selection small" aria-live="polite">Select a pin to see property details. Listing status describes market availability, not pin accuracy.</div><p id="mapNeedsLocation" class="small"></p><div id="mapLocationFallback" class="small" aria-live="polite"></div></section><section id="warCouncil" class="workspace-panel hidden" aria-label="War Council">
   <div class="sectionbar">
@@ -2065,11 +2085,28 @@ function renderCollections(){
  }).join('');
  root.querySelectorAll('[data-collection-open]').forEach(b=>b.onclick=()=>openPropertyDetails(b.dataset.collectionOpen));
 }
+function renderTiffanyDashboard(){
+ const target=$('tiffanyDashboardContent');if(!target||!ready)return;
+ const t=tiffanyAccount(),r=richAccount();
+ const active=shared.filter(p=>(p.decision||'Active')==='Active');
+ const rank=p=>rankOf(t,p.id);
+ const discoveries=active.filter(p=>discoveryPending(p)&&!(rank(p)!==null||t?.reviewed?.[p.id]===true||personalClass(t,p.id)!=='Watchlist'));
+ const top=active.filter(p=>rank(p)!==null).sort((a,b)=>rank(a)-rank(b)).slice(0,10);
+ const favorites=active.filter(p=>personalClass(t,p.id)==='Favorite'&&personalClass(r,p.id)==='Favorite');
+ const card=p=>{const tr=rank(p),rr=rankOf(r,p.id),note=notesOf(r,p.id)||'';
+  const photo=p.photoUrl&&/^https:\/\//i.test(p.photoUrl)?`<img src="${safeUrl(p.photoUrl)}" alt="Property photo" loading="lazy" onerror="this.style.display='none'">`:'';
+  return `<article class="t-card">${photo}<div class="t-card-body"><h4>${esc(p.address)}</h4><div class="small">${esc(p.city)}, Texas</div><div class="t-price">${money(p.price)}</div><div class="small">${fmt(p.acres)} acres · ${fmt(p.beds)} bd / ${fmt(p.baths)} ba · ${fmt(p.sqft)} sq ft</div><div class="t-badge">Tiffany: ${esc(personalClass(t,p.id))}${tr!==null?' · #'+tr:''} · Rich: ${esc(personalClass(r,p.id))}${rr!==null?' · #'+rr:''}</div>${note?`<div class="t-notes"><strong>Rich's notes:</strong> ${esc(note)}</div>`:''}<button class="btn" type="button" data-tiffany-open="${esc(p.id)}">View full details</button></div></article>`;
+ };
+ const section=(title,items,empty)=>`<section class="t-section"><h3>${title} <span class="small">(${items.length})</span></h3>${items.length?`<div class="t-grid">${items.map(card).join('')}</div>`:`<div class="t-empty">${empty}</div>`}</section>`;
+ target.innerHTML=`<div class="t-summary"><div><strong>${discoveries.length}</strong>Awaiting Tiffany's review</div><div><strong>${top.length}</strong>Ranked top picks</div><div><strong>${favorites.length}</strong>Mutual favorites</div></div>`+section('✨ New Discoveries',discoveries,'No new properties waiting for Tiffany.')+section('🏆 My Top 10',top,'Tiffany has not ranked any active properties yet.')+section('♥ Our Favorites',favorites,'No properties marked Favorite by both people yet.');
+ target.querySelectorAll('[data-tiffany-open]').forEach(b=>b.onclick=()=>openPropertyDetails(b.dataset.tiffanyOpen));
+ const flag=$('tiffanyPreviewFlag');if(flag)flag.textContent=me?.uid===OWNER?'Rich viewing as Tiffany · read-only preview':'Tiffany’s dashboard';
+}
 function render(){if(!ready)return;
  if(hqTextEditorActive()){hqRenderDeferredWhileEditing=true;return;}
 
  const openCardEvidence=new Set(Array.from(document.querySelectorAll('#cards [data-card-evidence]')).filter(node=>node.getAttribute('aria-expanded')==='true').map(node=>node.dataset.cardEvidence));
- renderWarCouncil();renderCollections();if(openPropertyId)renderPropertyDetails();let q=$('search').value.toLowerCase().trim(),g=$('group').value,d=$('decisionfilter').value,f=$('rankfilter').value;
+ renderWarCouncil();renderCollections();renderTiffanyDashboard();if(openPropertyId)renderPropertyDetails();let q=$('search').value.toLowerCase().trim(),g=$('group').value,d=$('decisionfilter').value,f=$('rankfilter').value;
  let list=shared.filter(p=>{let dec=p.decision||'Active';if(!(d==='all'?dec!=='Rejected'&&dec!=='Sold Archive'&&dec!=='Manual Archive':(d==='tracking'?dec==='Active':dec===d)))return false;if(g!=='all'&&!(['Watchlist','Favorite','Serious inquiry','Price Watch'].includes(g)?personalClass(me.uid===OWNER?mine:other,p.id)===g:g==='New discovery'?discoveryPending(p):(p.groups||[]).includes(g)))return false;if(f==='mine-unranked'&&rankOf(mine,p.id)!==null)return false;if(f==='mine-ranked'&&rankOf(mine,p.id)===null)return false;if(f==='other-unranked'&&rankOf(other,p.id)!==null)return false;if(f==='other-ranked'&&rankOf(other,p.id)===null)return false;if(f==='both-ranked'&&combined(p.id)===null)return false;return[p.address,p.city,p.notes,p.risk,p.decisionReason,notesOf(mine,p.id),notesOf(other,p.id),...(p.features||[])].join(' ').toLowerCase().includes(q)});
  let s=$('sort').value, direction=$('sortDirection').value;
  const sortValue=p=>{
@@ -2916,12 +2953,15 @@ let currentView = 'properties';
 function switchView(view) {
   currentView = view;
 
+  const showingTiffany = view === 'tiffany';
   const showingCouncil = view === 'council';
   const showingCollections = view === 'collections';
   const showingDetails = view === 'details';
   document.body.classList.toggle('hq-details-active', showingDetails);
   $('propertyDetails').classList.toggle('hidden', !showingDetails);
-  $('myPropertiesSection').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails || mapActive);
+  $('myPropertiesSection').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails || showingTiffany || mapActive);
+  $('tiffanyDashboard').classList.toggle('hidden', !showingTiffany);
+  $('showTiffany').classList.toggle('primary', showingTiffany);
   $('showProperties').classList.toggle('primary', view === 'properties');
   $('showWarCouncil').classList.toggle('primary', showingCouncil);
   $('showCollections').classList.toggle('primary', showingCollections);
@@ -2932,8 +2972,8 @@ function switchView(view) {
   
 
   // Hide the property grid and its heading while viewing the Council.
-  $('cards').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails);
-  $('count').parentElement.classList.toggle('hidden', showingCouncil || showingCollections || showingDetails);
+  $('cards').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails || showingTiffany);
+  $('count').parentElement.classList.toggle('hidden', showingCouncil || showingCollections || showingDetails || showingTiffany);
 
   // Keep the comparison panel out of the Council view.
   $('comparepanel').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails); if (!showingCouncil && !showingCollections && !showingDetails) compare();
@@ -3167,6 +3207,8 @@ document.addEventListener('keydown',e=>{
  const p=e.target.closest('[data-mapselect]');if(p&&(e.key==='Enter'||e.key===' ')){e.preventDefault();selectOfflinePin(p.dataset.mapselect)}
 });
 
+$('showTiffany').onclick=()=>{if(mapActive)closePropertyMap();openPropertyId=null;renderTiffanyDashboard();switchView('tiffany')};
+$('closeTiffany').onclick=()=>switchView('properties');
 $('showProperties').onclick = () => {if(mapActive)closePropertyMap();openPropertyId=null;switchView('properties')};
 $('showWarCouncil').onclick = () => {if(mapActive)closePropertyMap();openPropertyId=null;switchView('council')};
 $('showCollections').onclick = () => {if(mapActive)closePropertyMap();openPropertyId=null;switchView('collections')};
