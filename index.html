@@ -553,8 +553,265 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .hq-search-row{margin-top:11px}
 @media(max-width:950px){.hq-filter-layout{grid-template-columns:minmax(0,1fr)}.hq-filter-controls{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:520px){.hq-filter-controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.hq-filter-controls #decisionfilter{grid-column:1 / -1}.hq-sort-controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.hq-filter-field select{font-size:11px;padding:8px 5px}}
-</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></div><div class="hq-header-data" role="group" aria-label="Data tools"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div></div></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button>
-     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.2     </span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
+
+/* Classification indicators only; preserve current horizontal card layout and details workspace. */
+#cards>.card{position:relative}
+#cards>.card>.hq-class-badge{position:absolute;top:8px;right:9px;z-index:9;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:24px;font-weight:800;line-height:1;pointer-events:none;text-shadow:0 1px 3px #000}
+#cards>.card>.hq-class-badge.favorite{color:#ff9ab8;background:#462538e8}
+#cards>.card>.hq-class-badge.serious{color:#ffe092;background:#514124e8}
+#cards>.card>.hq-class-badge.price-watch{color:#ffe15b;background:#50451be8;font-size:23px}
+
+/* v3.3: compact detail alerts, full evidence only in floating dialog */
+.hq-detail-alert-trigger{display:inline-flex;align-items:center;width:max-content;margin:6px 0 2px;padding:5px 10px;font-size:12px;font-weight:800;line-height:1.3}
+.hq-detail-alert-trigger.caution{border-color:#dfb64d;background:#4c3e21;color:#ffe5a2}
+.hq-detail-alert-trigger.critical{border-color:#ef746e;background:#5d2927;color:#ffe4e2}
+.hq-detail-alert-trigger.resolved{border-color:#6f9e80;color:#d0edda}
+.hq-detail-alert-overlay{position:fixed;inset:0;z-index:12000;background:#000b;display:flex;align-items:center;justify-content:center;padding:18px}
+.hq-detail-alert-dialog{width:min(620px,100%);max-height:calc(100dvh - 36px);overflow:hidden;display:flex;flex-direction:column;background:#1b2924;color:var(--text);border:1px solid #718a77;border-radius:13px;box-shadow:0 22px 75px #000c}
+.hq-detail-alert-dialog.critical{border-color:#ef746e}.hq-detail-alert-dialog.caution{border-color:#dfb64d}
+.hq-detail-alert-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 17px;border-bottom:1px solid #45594a;flex-shrink:0}
+.hq-detail-alert-head h3{margin:0;font-size:19px}.hq-detail-alert-body{padding:15px 18px 19px;overflow-y:auto;overscroll-behavior:contain}
+.hq-detail-alert-reason{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;margin:0 0 14px}
+.hq-detail-alert-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+
+/* Details collection control: compact and always accessible in the fixed header. */
+.hq-detail-class-picker{display:inline-flex;align-items:center;gap:8px;color:#d9e8d9;font-size:12px;font-weight:750}
+.hq-detail-class-picker select{background:#263630;color:#f0f5ed;border:1px solid #54715f;border-radius:7px;padding:8px;max-width:165px}
+<style id="collections-view-styles">/* Compact three-column collections overview */
+.hq-collections-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:start}
+.hq-collection-column{min-width:0;border:1px solid var(--line);border-radius:12px;background:#17241f;padding:12px}
+.hq-collection-heading{margin:0 0 12px;font-size:16px;display:flex;align-items:center;justify-content:space-between;gap:7px}
+.hq-collection-heading .count{font-size:12px;color:var(--muted)}
+.hq-mini-property{width:100%;display:block;text-align:left;cursor:pointer;background:#22342b;color:var(--text);border:1px solid #4b6454;border-radius:9px;padding:10px;margin-bottom:8px;transition:background .15s,border-color .15s}
+.hq-mini-property:hover,.hq-mini-property:focus-visible{background:#2b4637;border-color:#9ab58e}
+.hq-mini-top{display:flex;justify-content:space-between;gap:6px;align-items:start;font-size:13px;font-weight:750;overflow-wrap:anywhere}
+.hq-mini-price{color:#d5e6c7;font-weight:800;margin-top:5px;font-size:15px}
+.hq-mini-meta{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.45}
+.hq-mini-ranks{font-size:11px;color:#d7e0d4;margin-top:6px}
+.hq-mini-status{font-size:10px;color:#e9c67d;margin-top:4px}
+@media(max-width:850px){.hq-collections-grid{grid-template-columns:1fr}.hq-collection-column{padding:11px}}
+
+
+/* v3.7.5: compact two-column mobile actions above the research scroll. */
+@media(max-width:700px){
+ .hq-detail-toolbar{padding:7px 0 8px;max-height:none;overflow:visible}
+ .hq-detail-toolbar .detail-actions{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:7px 9px!important;align-items:stretch!important;width:100%!important}
+ .hq-detail-toolbar .hq-detail-class-picker{display:flex;flex-direction:column;align-items:stretch;gap:3px;min-width:0;font-size:11px;line-height:1.2}
+ .hq-detail-toolbar .hq-detail-class-picker select{width:100%;max-width:none;min-width:0;height:35px;margin:0;padding:5px 8px;font-size:13px}
+ .hq-detail-toolbar .detail-actions>.btn{display:flex;align-items:center;justify-content:center;width:100%!important;min-width:0;min-height:38px;padding:7px 5px;font-size:11px;line-height:1.2;text-align:center;white-space:normal}
+}
+
+/* v3.7.12 — generic route estimates; no browser API key needed */
+.hq-commute-summary{font-weight:700;margin-bottom:12px}
+.hq-commute-row{display:grid;grid-template-columns:minmax(140px,1.3fr) minmax(120px,1fr) auto;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line,#444)}
+.hq-commute-pill{display:inline-block;border-radius:20px;padding:2px 9px;font-size:12px;margin-top:4px;background:#7773;color:inherit}
+.hq-commute-pill.good{background:#237a4933;color:#7bdda0}.hq-commute-pill.near{background:#b18a2433;color:#f1cc69}.hq-commute-pill.long{background:#a42b3533;color:#ff9a9a}.hq-commute-pill.unverified{background:#7773;color:#aaa}
+@media(max-width:650px){.hq-commute-row{grid-template-columns:1fr 1fr}.hq-commute-row>div:last-child{grid-column:1/-1}}
+
+/* v3.7.13 — HOA classification restored */
+.hoa-chip.hoa-unknown{background:#555b66!important;color:#fff!important;border-color:#777f8c!important}
+.hoa-chip.hoa-none{background:#185b3c!important;color:#eafff1!important;border-color:#2b9b62!important}
+.hoa-chip.hoa-low{background:#756014!important;color:#fff5c2!important;border-color:#c9a62b!important}
+.hoa-chip.hoa-high{background:#782b30!important;color:#ffe5e5!important;border-color:#d4565e!important}
+
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+
+</style><style id="card-flame-preview-styles">
+.card-price-row .card-flame-highlights{display:flex;gap:7px;align-items:center;margin-left:auto;flex-wrap:wrap;min-width:0}
+.card-flame-person{position:relative;display:inline-flex;align-items:center;gap:4px;border:1px solid #80633b;border-radius:7px;padding:4px 7px;background:#302b21;color:#f8e3ae;font-size:11px;font-weight:700;cursor:help;outline-offset:3px}
+.card-flame-person .card-flame-popup{visibility:hidden;opacity:0;pointer-events:none;position:absolute;z-index:60;right:0;top:calc(100% + 7px);width:min(330px,78vw);max-height:300px;overflow:auto;padding:11px 13px;border:1px solid #a98854;border-radius:10px;background:#1c2923;color:#f0eee4;box-shadow:0 12px 30px #000b;text-align:left;font-weight:400;line-height:1.5;transition:opacity .12s}
+.card-flame-person:hover .card-flame-popup,.card-flame-person:focus .card-flame-popup,.card-flame-person:focus-within .card-flame-popup{visibility:visible;opacity:1;pointer-events:auto}
+.card-flame-popup strong{display:block;margin-bottom:6px;color:#f8e3ae;font-size:12px}.card-flame-popup .card-flame-entry{border-top:1px solid #405348;padding:6px 0;overflow-wrap:anywhere}.card-flame-popup .card-flame-reason{display:block;color:#cdd6cd;margin-top:3px}
+@media(max-width:650px){.card-price-row .card-flame-highlights{margin-left:0}.card-flame-person .card-flame-popup{right:auto;left:0;width:min(290px,78vw)}}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style><style id="criterion-flames-styles">
+.flame-controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:9px;padding:8px 10px;border-top:1px solid var(--line);font-size:12px}.flame-cycle,.flame-note-toggle{border:1px solid #80633b;border-radius:8px;background:#302b21;color:#f8e3ae;cursor:pointer;padding:5px 9px}.flame-cycle span{font-size:11px}.flame-partner{color:var(--muted)}.flame-note-editor{width:100%;flex-basis:100%}.flame-note-editor[hidden]{display:none}.flame-note-editor textarea{width:100%;min-height:55px;resize:vertical;margin-top:5px}.flame-other-note{flex-basis:100%;color:var(--muted);font-style:italic}.flame-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.flame-summary-column{min-width:0}.flame-summary-item{padding:9px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.flame-summary-item p{margin:4px 0 0 23px;color:var(--muted);font-size:13px}@media(max-width:700px){.flame-summary-grid{grid-template-columns:1fr}}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style>
+<style>
+/* v3.7: lightweight, URL-only main listing thumbnail. */
+.hq-detail-fixed{position:relative}
+.hq-detail-info{padding-right:clamp(220px,22vw,310px);min-width:0}
+.hq-detail-photo{position:absolute;left:calc(50% - clamp(190px,20vw,280px) - 22px);top:65px;width:clamp(190px,20vw,280px);aspect-ratio:16/10;border:1px solid #4d695a;border-radius:11px;overflow:hidden;background:#1a2924;display:flex;flex-direction:column;align-items:stretch;justify-content:center}
+.hq-detail-photo img{width:100%;height:100%;object-fit:cover;min-height:0}
+.hq-photo-placeholder{display:flex;align-items:center;justify-content:center;flex:1;color:#b5c6ba;font-size:12px}
+.hq-photo-placeholder[hidden]{display:none}
+.hq-photo-caption{position:absolute;bottom:0;left:0;right:0;background:#101716d9;color:#d8e5d9;font-size:10px;padding:3px 7px}
+.hq-sold-banner{font-size:14px;font-weight:900;letter-spacing:.045em;background:#6b262b;border:1px solid #d4777a;color:#fff0ec;padding:8px 11px;border-radius:7px;margin:8px 0}
+.statuspill.sold{background:#6b262b;color:#ffe6e1}
+.hq-archive-notice{border:1px solid #9a6b70;border-radius:10px;padding:12px;margin-top:12px;background:#322329}
+@media(max-width:1100px){.hq-detail-info{padding-right:0}.hq-detail-photo{position:static;width:min(100%,300px);aspect-ratio:16/10;margin:6px 0}.hq-detail-fixed{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.hq-detail-photo{grid-column:1;grid-row:2}.hq-detail-right{grid-column:2;grid-row:1 / span 2}}
+@media(max-width:900px){.hq-detail-fixed{display:flex;flex-direction:column}.hq-detail-photo{order:1;width:min(100%,360px);margin:0 auto 8px}.hq-detail-info{order:0;width:100%}.hq-detail-right{order:2;width:100%}}
+@media(max-width:700px){body.hq-details-active #propertyDetails>.hq-detail-fixed{flex:0 0 50%!important;height:50%!important;max-height:50%!important;overflow-y:auto!important}body.hq-details-active #propertyDetails>.hq-detail-scroll{flex:1 1 50%!important;min-height:0!important;overflow-y:auto!important}}
+
+/* v3.7.1: thumbnail aligned to the far right of the property-info column,
+   with a real text gutter; never intrude into Rich/Tiffany notes. */
+@media(min-width:1101px){
+ .hq-detail-fixed{column-gap:22px}
+ .hq-detail-info{padding-right:clamp(235px,22vw,320px)}
+ .hq-detail-info h2{overflow-wrap:anywhere}
+ .hq-detail-photo{left:calc(50% - 22px - clamp(190px,20vw,280px));top:65px}
+}
+.hq-detail-class-picker select{max-width:100%}
+
+/* v3.7.2: photo and four controls form one compact media column. */
+@media(min-width:1101px){
+ .hq-detail-fixed{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:22px;align-items:start}
+ .hq-detail-info{padding-right:clamp(255px,22vw,310px)}
+ .hq-detail-media{position:absolute;top:4px;left:calc(50% - 22px - clamp(235px,20vw,280px));width:clamp(235px,20vw,280px);display:flex;flex-direction:column;gap:10px}
+ .hq-detail-media .hq-detail-photo{position:relative;inset:auto;width:100%;margin:0;aspect-ratio:16/10;flex:none}
+ .hq-detail-media .detail-actions{display:grid;grid-template-columns:1fr;gap:7px;margin:0}
+ .hq-detail-media .detail-actions .hq-detail-class-picker{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+ .hq-detail-media .detail-actions .hq-detail-class-picker select{width:65%;min-width:0}
+ .hq-detail-media .detail-actions .btn{width:100%;text-align:center;justify-content:center}
+ .hq-detail-fixed{min-height:330px}
+}
+@media(min-width:901px) and (max-width:1100px){
+ .hq-detail-media{grid-column:1;grid-row:2;min-width:0}
+ .hq-detail-media .hq-detail-photo{position:relative;width:min(100%,300px)}
+ .hq-detail-media .detail-actions{display:flex;flex-wrap:wrap;gap:8px}
+ .hq-detail-right{grid-column:2;grid-row:1 / span 2}
+}
+@media(max-width:900px){
+ .hq-detail-media{order:1;width:100%;display:flex;flex-direction:column;align-items:center;gap:8px}
+ .hq-detail-media .hq-detail-photo{position:relative;inset:auto;width:min(100%,360px);margin:0}
+ .hq-detail-media .detail-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:100%;margin:0}
+ .hq-detail-right{order:2}
+}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style>
+<style id="hq-v373-layout">
+/* v3.7.3: listing cover on cards; listing + preserved GIS aerial in details. */
+.hq-detail-fixed{position:relative;min-height:0!important}
+.hq-detail-media{gap:9px!important}
+.hq-detail-media .hq-detail-photo{aspect-ratio:16/9!important}
+.hq-detail-aerial{min-width:0}
+.hq-detail-aerial-label{font-size:11px;color:#d2e2d5;margin:0 0 4px}
+.hq-detail-aerial .aerial-card{display:block;width:100%;height:118px;min-height:118px;position:relative;overflow:hidden;border:1px solid #4d695a;border-radius:9px;padding:0}
+.hq-detail-aerial .aerial-card>img{width:100%;height:100%;object-fit:cover}
+.hq-detail-aerial .map-preview{min-height:100px;border:1px solid #4d695a;border-radius:9px;display:grid;place-items:center}
+.hq-detail-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;padding:9px 2px 11px;border-bottom:1px solid #496052;flex:none}
+.hq-detail-toolbar .detail-actions{display:flex!important;flex-wrap:wrap!important;align-items:center;gap:9px!important;margin:0!important;width:100%;grid-template-columns:none!important}
+.hq-detail-toolbar .hq-detail-class-picker{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.hq-detail-toolbar .hq-detail-class-picker select{width:auto;min-width:120px;max-width:180px}
+.hq-detail-toolbar .btn{width:auto!important;white-space:normal}
+@media(min-width:1101px){
+ .hq-detail-info{padding-right:clamp(255px,22vw,310px)}
+ .hq-detail-media{top:4px!important;position:absolute;left:calc(50% - 22px - clamp(235px,20vw,280px));width:clamp(235px,20vw,280px)}
+}
+@media(min-width:901px) and (max-width:1100px){.hq-detail-media{grid-column:1;grid-row:2}.hq-detail-right{grid-column:2;grid-row:1 / span 2}}
+@media(max-width:900px){.hq-detail-media{order:1;width:100%;max-width:360px;align-self:center}.hq-detail-aerial{width:100%}.hq-detail-toolbar .detail-actions{justify-content:flex-start}}
+@media(max-width:700px){.hq-detail-toolbar{flex:none;max-height:25dvh;overflow-y:auto}.hq-detail-toolbar .detail-actions{gap:7px}.hq-detail-toolbar .btn{font-size:12px}.hq-detail-toolbar .hq-detail-class-picker select{min-width:105px}}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style>
+<style id="hq-v376-upper-pane-actions">
+/* v3.7.12: actions belong to the upper scrolling pane, not a third locked pane. */
+.hq-detail-fixed>.hq-detail-toolbar{grid-column:1 / -1;min-width:0;width:100%;box-sizing:border-box}
+@media(max-width:900px){.hq-detail-fixed>.hq-detail-toolbar{order:3;align-self:stretch}}
+@media(max-width:700px){
+ body.hq-details-active #propertyDetails>.hq-detail-fixed{flex:0 0 50%!important;height:50%!important;max-height:50%!important;overflow-y:auto!important}
+ body.hq-details-active #propertyDetails>.hq-detail-scroll{flex:1 1 50%!important;height:50%!important;min-height:0!important}
+ .hq-detail-fixed>.hq-detail-toolbar{flex:0 0 auto;max-height:none!important;overflow:visible!important;padding:8px 2px 10px}
+ .hq-detail-fixed>.hq-detail-toolbar .detail-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;align-items:stretch}
+ .hq-detail-fixed>.hq-detail-toolbar .hq-detail-class-picker{display:flex;flex-direction:column;align-items:stretch;gap:4px;white-space:normal;min-width:0}
+ .hq-detail-fixed>.hq-detail-toolbar .hq-detail-class-picker select{width:100%!important;min-width:0!important;max-width:none!important;margin:0;height:36px}
+ .hq-detail-fixed>.hq-detail-toolbar .detail-actions>.btn{width:100%!important;min-width:0!important;min-height:38px;display:flex;align-items:center;justify-content:center;font-size:11px;text-align:center;padding:7px 5px}
+}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style>
+<style id="hq-v3710-tall-aerial">
+/* Desktop only: fill the unused vertical room in the image column without widening it. */
+@media(min-width:1101px){
+ .hq-detail-fixed>.hq-detail-media{align-self:stretch!important;height:100%!important;min-height:0!important}
+ .hq-detail-fixed>.hq-detail-media .hq-detail-photo{flex:0 0 auto!important}
+ .hq-detail-fixed>.hq-detail-media .hq-detail-aerial{flex:1 1 auto!important;min-height:165px!important;display:flex!important;flex-direction:column!important}
+ .hq-detail-fixed>.hq-detail-media .hq-detail-aerial .aerial-card{flex:1 1 auto!important;height:100%!important;min-height:165px!important;aspect-ratio:auto!important}
+ .hq-detail-fixed>.hq-detail-media .hq-detail-aerial .aerial-card .aerial-tag{left:6px!important;right:6px!important;bottom:5px!important;padding:3px 5px!important;font-size:10px!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style>
+<style id="hq-v378-compact-desktop">
+/* Desktop: genuine three-column grid, no absolute media or reserved whitespace. */
+@media(min-width:1101px){
+ body.hq-details-active #propertyDetails>.hq-detail-fixed{
+  display:grid!important;
+  grid-template-columns:minmax(215px,.88fr) minmax(210px,.72fr) minmax(440px,2.05fr)!important;
+  grid-template-rows:auto auto!important;
+  gap:10px 18px!important;
+  align-items:start!important;
+  min-height:0!important;
+  padding:3px 2px 8px!important;
+ }
+ .hq-detail-fixed>.hq-detail-info{
+  grid-column:1!important;grid-row:1!important;
+  padding-right:0!important;min-width:0;
+ }
+ .hq-detail-fixed>.hq-detail-info h2{
+  font-size:clamp(22px,2.1vw,31px)!important;
+  line-height:1.12!important;margin:10px 0 8px!important;
+ }
+ .hq-detail-fixed>.hq-detail-info .details-top{margin-bottom:7px!important}
+ .hq-detail-fixed>.hq-detail-info .detail-meta{margin:5px 0!important}
+ .hq-detail-fixed>.hq-detail-media{
+  position:static!important;inset:auto!important;
+  grid-column:2!important;grid-row:1!important;
+  width:100%!important;min-width:0!important;
+  display:flex!important;flex-direction:column!important;
+  gap:7px!important;margin:0!important;
+ }
+ .hq-detail-fixed>.hq-detail-media .hq-detail-photo{
+  position:relative!important;inset:auto!important;
+  width:100%!important;aspect-ratio:16/9!important;
+  max-height:150px!important;margin:0!important;
+ }
+ .hq-detail-fixed>.hq-detail-media .hq-detail-aerial .aerial-card{
+  height:auto!important;min-height:0!important;aspect-ratio:1 / 1!important;
+ }
+ .hq-detail-fixed>.hq-detail-right{
+  grid-column:3!important;grid-row:1!important;
+  min-width:0!important;width:auto!important;
+ }
+ .hq-detail-fixed>.hq-detail-right .hq-detail-notes textarea{
+  min-height:86px!important;max-height:112px!important;
+ }
+ .hq-detail-fixed>.hq-detail-right .hq-detail-progress{margin-top:8px!important}
+ .hq-detail-fixed>.hq-detail-toolbar{
+  grid-column:1 / -1!important;grid-row:2!important;
+  margin:0!important;padding:7px 0 3px!important;
+  border-top:1px solid #354b3d;border-bottom:0!important;
+ }
+ .hq-detail-fixed>.hq-detail-toolbar .detail-actions{
+  gap:8px!important;flex-wrap:wrap!important;
+ }
+ .hq-detail-fixed>.hq-detail-toolbar .hq-detail-class-picker select{
+  min-width:110px!important;
+ }
+}
+@media(min-width:901px) and (max-width:1100px){
+ .hq-detail-fixed>.hq-detail-info{padding-right:0!important}
+ .hq-detail-fixed>.hq-detail-toolbar{grid-column:1 / -1!important}
+}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style>
+
+<style id="hq-quick-assessment-comments">
+.hq-quick-criterion{position:relative;display:grid;grid-template-columns:minmax(130px,1fr) auto minmax(120px,1fr) auto;gap:8px;align-items:center}
+.hq-quick-icons{display:inline-flex;align-items:center;gap:5px;position:relative}
+.hq-quick-icon{border:1px solid #526d5e;background:#24392e;color:#f5e5bb;border-radius:6px;cursor:pointer;padding:4px 7px;font-size:14px}
+.hq-quick-tip{display:none;position:absolute;right:0;top:100%;z-index:25;width:min(340px,75vw);max-height:180px;overflow:auto;padding:10px;background:#14251e;border:1px solid #8ca28b;border-radius:8px;box-shadow:0 8px 20px #000a;white-space:pre-wrap;overflow-wrap:anywhere}
+.hq-quick-icon:hover + .hq-quick-tip,.hq-quick-icon:focus + .hq-quick-tip,.hq-quick-icon.hq-quick-tip-open + .hq-quick-tip{display:block}
+.hq-quick-flame-editor{grid-column:1/-1;padding:10px;border:1px solid #536d5c;border-radius:8px;background:#20352a}
+.hq-quick-flame-editor[hidden]{display:none}
+.hq-quick-flame-summary{margin-bottom:6px;font-size:12px}
+.hq-quick-flame-editor label{display:block;margin-top:9px;font-size:12px}
+.hq-quick-flame-editor textarea{width:100%;min-height:62px;margin-top:5px;resize:vertical}
+@media(max-width:650px){.hq-quick-criterion{grid-template-columns:minmax(0,1fr) auto auto}.hq-quick-criterion .card-grade-description{grid-column:1/-1;grid-row:2}.hq-quick-criterion .hq-quick-icons{grid-column:3;grid-row:1}}
+.hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
+</style>
+</head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></div><div class="hq-header-data" role="group" aria-label="Data tools"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div></div></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button>
+     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.17     </span><span title="v3.7: Sold Archive, refresh notifications, lightweight main photo, mobile details scrolling, research pilot removed" style="font-size:11px;color:#d3e3d4">What’s new: individual R/T statuses and owner Review Together editing</span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -563,6 +820,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
     <span class="hq-menu-label">Views</span>
     <button class="btn primary" id="showProperties" type="button">🏡 My Properties</button>
     <button class="btn" id="showWarCouncil" type="button">⚔️ War Council</button>
+    <button class="btn" id="showCollections" type="button">♥ Collections</button>
   </div>
   <div class="hq-menu-row" role="group" aria-label="Map and property actions">
     <span class="hq-menu-label">Explore</span>
@@ -575,9 +833,9 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
   <div class="hq-filter-layout">
     <div class="hq-filter-field"><div class="hq-field-heading">Filter</div>
       <div class="hq-filter-controls">
-        <select id="group" aria-label="Collections"><option value="all">Collections: All</option><option value="Serious inquiry">Serious inquiries</option><option value="Favorite">Favorites</option><option value="New discovery">New discoveries</option><option value="Watchlist">Watchlist</option></select>
+        <select id="group" aria-label="Collections"><option value="all">Collections: All</option><option value="Serious inquiry">Serious inquiries</option><option value="Favorite">Favorites</option><option value="New discovery">New discoveries</option><option value="Watchlist">Watchlist</option><option value="Price Watch">Price Watch</option></select>
         <select id="rankfilter" aria-label="Ranked status"><option value="all">Ranked Status: All</option><option value="mine-unranked">Unranked by me</option><option value="mine-ranked">Ranked by me</option><option value="other-unranked">Unranked by partner</option><option value="other-ranked">Ranked by partner</option><option value="both-ranked">Ranked by both</option></select>
-        <select id="decisionfilter" aria-label="Listing status"><option value="all">Status: ALL</option><option value="Active">Active</option><option value="On Hold">On hold</option><option value="Rejected">Rejected / archive</option></select>
+        <select id="decisionfilter" aria-label="Listing status"><option value="all">Status: ALL</option><option value="Active">Active</option><option value="On Hold">On hold</option><option value="Rejected">Rejected</option><option value="Sold Archive">Property Archive · Sold</option><option value="Manual Archive">Property Archive · Manual</option></select>
       </div>
     </div>
     <div class="hq-filter-field"><div class="hq-field-heading">Sort By</div>
@@ -590,6 +848,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
   <div class="hq-search-row"><input id="search" type="search" placeholder="Search address, town, features, notes…" aria-label="Search address and property details"></div>
 </div>
 
+<section id="collectionsPage" class="workspace-panel hidden" aria-label="Property collections overview"><div class="sectionbar"><h2>♥ Collections</h2><button class="btn" id="closeCollections" type="button">← Back to properties</button></div><p class="small">Favorites, serious inquiries, and price watches side by side. Select a property to open its full details. Rejected and archived properties are excluded.</p><div id="collectionsColumns" class="hq-collections-grid"></div></section>
 <section id="propertyMapPage" class="hidden" aria-label="Lightweight regional property map"><div class="sectionbar"><h2>🗺️ Property Map</h2><button class="btn" id="closeMap" type="button">← Back to properties</button></div><div class="small">Interactive regional road map: zoom and drag to separate property markers. Nearby properties group into numbered clusters; click a cluster to zoom in. If the interactive map cannot load, HQ restores the previous static map. Coordinates are approximate, not legal boundaries.</div><div class="offline-map-legend"><span><i class="legend-dot watchlist"></i> Watchlist</span><span><i class="legend-dot favorite"></i> HQ Favorite</span><span><i class="legend-dot serious"></i> Serious Inquiry</span></div><div class="offline-map-toolbar"><button class="btn" id="offlineMapZoomOut" type="button" aria-label="Zoom out">−</button><button class="btn" id="offlineMapZoomIn" type="button" aria-label="Zoom in">＋</button><button class="btn" id="offlineMapReset" type="button">Show all properties</button><button class="btn primary" id="autoFindParcels" type="button">🔎 Auto-find missing parcels</button><label class="map-boundary-toggle"><input id="mapBoundaryToggle" type="checkbox"> Show parcel boundaries</label><span class="small" id="offlineMapZoomLabel">100%</span></div><div id="propertyMapCanvas" class="offline-map-canvas" aria-label="Central Texas map with interactive property locations"></div><div id="parcelBatchStatus" class="small" role="status" aria-live="polite"></div><div id="offlineMapSelection" class="offline-map-selection small" aria-live="polite">Select a pin to see property details. Listing status describes market availability, not pin accuracy.</div><p id="mapNeedsLocation" class="small"></p><div id="mapLocationFallback" class="small" aria-live="polite"></div></section><section id="warCouncil" class="workspace-panel hidden" aria-label="War Council">
   <div class="sectionbar">
     <h2>⚔️ The War Council</h2>
@@ -623,11 +882,61 @@ const personalRef=uid=>doc(db,'personal',uid),memberRef=uid=>doc(db,'members',ui
 const researchCommentsRef=propertyId=>collection(db,'researchComments',propertyId,'comments');
 const rankOf=(obj,id)=>{let n=obj?.ranks?.[id];return Number.isInteger(n)&&n>0?n:null};
 const notesOf=(obj,id)=>obj?.notes?.[id]||'';
-const hqClass=p=>['Favorite','Serious inquiry'].includes(p.hqClassification)?p.hqClassification:'Watchlist';
+const hqClass=p=>['Favorite','Serious inquiry','Price Watch'].includes(p.hqClassification)?p.hqClassification:'Watchlist';
+// Personal classifications live only in personal/{uid}. Legacy shared classification is
+// intentionally displayed as legacy until each person makes an explicit personal choice.
+const personalClass=(account,id)=>['Favorite','Serious inquiry','Price Watch'].includes(account?.classifications?.[id])?account.classifications[id]:'Watchlist';
+const richAccount=()=>me?.uid===OWNER?mine:other;
+const tiffanyAccount=()=>me?.uid===OWNER?other:mine;
+const classIcon=c=>c==='Favorite'?'♥':c==='Serious inquiry'?'★':c==='Price Watch'?'$':'';
+function personalBadges(p){return [['R',richAccount()],['T',tiffanyAccount()]].map(([label,account])=>{const c=personalClass(account,p.id);return c==='Watchlist'?'':`<span class="hq-personal-badge" title="${label==='R'?'Rich':'Tiffany'}: ${esc(c)}">${label} ${classIcon(c)}</span>`}).join('')}
+function personalClassSelect(id,account,who,editable){const c=personalClass(account,id);return `<label class="hq-personal-choice">${who} <select data-personal-class="${esc(id)}" data-personal-owner="${who}" ${editable?'':'disabled title="Read only"'}><option value="Watchlist" ${c==='Watchlist'?'selected':''}>Watchlist</option><option value="Favorite" ${c==='Favorite'?'selected':''}>♥ Favorite</option><option value="Serious inquiry" ${c==='Serious inquiry'?'selected':''}>★ Serious Inquiry</option><option value="Price Watch" ${c==='Price Watch'?'selected':''}>$ Price Watch</option></select></label>`}
+function personalClassControls(p){return `<div class="hq-personal-controls">${personalClassSelect(p.id,richAccount(),'Rich',me.uid===OWNER)}${personalClassSelect(p.id,tiffanyAccount(),'Tiffany',true)}</div>`}
+// Personal decision controls use a single delegated handler on cards and Details.
+document.addEventListener('change',e=>{const el=e.target;if(el?.matches?.('[data-personal-class]'))setPersonalClassification(el.dataset.personalClass,el.value,el.dataset.personalOwner)});
+let partnerDecisionSaving=false;
+function orderedFor(account){const active=new Set(activeRankingIds());return Object.entries(account?.ranks||{}).filter(([id,n])=>active.has(id)&&Number.isInteger(Number(n))&&Number(n)>0).sort((a,b)=>Number(a[1])-Number(b[1])||a[0].localeCompare(b[0])).map(([id])=>id)}
+function updatePersonalChoice(account,id,value){
+ const before=personalClass(account,id);if(before===value)return false;
+ account.classifications??={};account.reviewed??={};account.ranks??={};
+ if(value==='Watchlist')delete account.classifications[id];else{account.classifications[id]=value;account.reviewed[id]=true}
+ if(before==='Watchlist'&&value!=='Watchlist'){
+   const ranked=orderedFor(account).filter(x=>x!==id);
+   const marked=ranked.filter(x=>personalClass(account,x)!=='Watchlist');
+   const unmarked=ranked.filter(x=>personalClass(account,x)==='Watchlist');
+   const newOrder=[...marked,id,...unmarked];
+   for(const key of activeRankingIds())delete account.ranks[key];
+   newOrder.forEach((key,index)=>account.ranks[key]=index+1);
+ }
+ return true;
+}
+async function setPersonalClassification(id,value,who){
+ if(!activeRankingIds().includes(id)||!['Watchlist','Favorite','Serious inquiry','Price Watch'].includes(value))return;
+ const editingPartner=(me.uid===OWNER&&who==='Tiffany');
+ if(who!==(me.uid===OWNER?'Rich':'Tiffany')&&!editingPartner){status('You can only change your own decisions.',true);render();return}
+ if(editingPartner){
+  if(!partnerUid){status('Tiffany’s member account is not connected yet. Her decisions cannot be saved.',true);render();return}
+  if(partnerDecisionSaving){status('Waiting for Tiffany’s previous change to save.',true);render();return}
+  const next=structuredClone(other);
+  if(!updatePersonalChoice(next,id,value))return;
+  partnerDecisionSaving=true;
+  try{
+   // Update only decision fields. Never write Tiffany's notes or criterion flames.
+   await updateDoc(personalRef(partnerUid),{classifications:next.classifications,reviewed:next.reviewed,ranks:next.ranks,updatedAt:new Date().toISOString()});
+   other={...other,classifications:next.classifications,reviewed:next.reviewed,ranks:next.ranks};
+   status('✓ Tiffany’s decision saved');renderAfterCardInteraction();
+  }catch(err){status('⚠ Tiffany’s decision was NOT saved: '+err.message,true);render()}
+  finally{partnerDecisionSaving=false}
+  return;
+ }
+ if(!updatePersonalChoice(mine,id,value))return;
+ queue('mine');renderAfterCardInteraction();
+}
+
 const priority=p=>hqClass(p)==='Serious inquiry'?0:hqClass(p)==='Favorite'?1:2;
 // Discovery is historical tagging; the pending queue is derived from two separate personal reviews.
 // No shared-property write is required to acknowledge a review, preventing cross-account update races.
-const hasReviewed=(account,id)=>rankOf(account,id)!==null || account?.reviewed?.[id]===true;
+const hasReviewed=(account,id)=>rankOf(account,id)!==null || account?.reviewed?.[id]===true || personalClass(account,id)!=='Watchlist';
 const discoveryTagged=p=>(p.groups||[]).includes('New discovery');
 const discoveryPending=p=>discoveryTagged(p)&&(p.decision||'Active')==='Active'&&!(hasReviewed(mine,p.id)&&hasReviewed(other,p.id));
 const richReviewed=p=>hasReviewed(me?.uid===OWNER?mine:other,p.id);
@@ -1006,7 +1315,7 @@ function queue(kind){if(!ready)return;if(kind==='shared')dirtyShared=true;else d
 document.addEventListener('focusout',e=>{if(e.target.matches?.('textarea:not([readonly]):not([disabled])'))setTimeout(()=>{if(!hqEditingTextarea())scheduleHqSaveAfterEdit()},0)},true);
 async function flush(){if(saveBusy||!ready)return;if(hqEditingTextarea()){clearTimeout(saveTimer);return;}saveBusy=true;let writeShared=dirtyShared,writeMine=dirtyMine;dirtyShared=false;dirtyMine=false;try{
  if(writeShared){let snapshot=encodeSharedForFirestore(shared);await setDoc(sharedRef,{properties:snapshot,updatedAt:new Date().toISOString()});}
- if(writeMine){await setDoc(personalRef(me.uid),{notes:mine.notes||{},ranks:mine.ranks||{},reviewed:mine.reviewed||{},updatedAt:new Date().toISOString()});}
+ if(writeMine){await setDoc(personalRef(me.uid),{notes:mine.notes||{},ranks:mine.ranks||{},reviewed:mine.reviewed||{},criterionFlames:mine.criterionFlames||{},classifications:mine.classifications||{},updatedAt:new Date().toISOString()});}
  status('✓ Cloud saved at '+new Date().toLocaleTimeString());
  }catch(e){if(writeShared)dirtyShared=true;if(writeMine)dirtyMine=true;status('⚠ Save failed: '+e.message,true)}finally{saveBusy=false;if((dirtyShared||dirtyMine)&&ready&&!$('backupstatus').classList.contains('needsbackup'))scheduleHqSaveAfterEdit();else if(hqRenderDeferredWhileEditing&&!hqTextEditorActive()){hqRenderDeferredWhileEditing=false;render()}}}
 window.addEventListener('beforeunload',e=>{if(dirtyShared||dirtyMine||saveBusy||ratingsDirty||ratingsBusy){e.preventDefault();e.returnValue=''}});
@@ -1052,7 +1361,7 @@ function start(){let mref=memberRef(me.uid);listen(mref,snap=>{if(!snap.exists()
    if(!ratingsDirty&&!ratingsBusy){myRatings=snap.exists()?snap.data():{ratings:{}};myRatings.loaded=true;ratingsReady=true;render();initializeOwnerRatings()}
  },e=>status('⚠ Personal ratings could not load: '+e.message,true));
  listen(query(collection(db,'members')),snap=>{let members=snap.docs.filter(d=>d.data().active===true);let partner=members.find(d=>d.id!==me.uid);let next=partner?.id||null;if(next!==partnerUid){partnerUid=next;if(window.otherUnsub)window.otherUnsub();if(partnerRatingsUnsub)partnerRatingsUnsub();partnerRatings={ratings:{}};other={};if(partnerUid){window.otherUnsub=onSnapshot(personalRef(partnerUid),s=>{other=s.exists()?s.data():{notes:{},ranks:{},reviewed:{}};render()});partnerRatingsUnsub=onSnapshot(ratingsRef(partnerUid),snap=>{partnerRatings=snap.exists()?snap.data():{ratings:{}};partnerRatings.loaded=true;render()},e=>status('Partner ratings sync error: '+e.message,true))}render()}});
- ready=true;open();$('identity').textContent=(me.uid===OWNER?'Rich (owner)':'Tiffany (member)')+' · '+(me.email||'');if(me.uid===OWNER)showAdmin();render();}
+ ready=true;open();$('identity').textContent=(me.uid===OWNER?'Rich (owner)':'Tiffany (member)')+' · '+(me.email||'');$('sort').value=me.uid===OWNER?'rich':'tiffany';$('sortDirection').value='asc';if(me.uid===OWNER)showAdmin();render();}
 onAuthStateChanged(auth,async user=>{cleanup();$('admin').classList.add('hidden');if(window.otherUnsub){window.otherUnsub();window.otherUnsub=null}if(!user){gate('Sign in with Google to access your private homestead dashboard.','<button class="btn primary" id="googleLogin">Sign in with Google</button>');$('googleLogin').onclick=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){gate('Sign-in failed: '+e.message,'<button class="btn primary" id="retry">Try again</button>');$('retry').onclick=()=>location.reload()}};return}
  me=user;gate('Checking your access…');try{let m=await getDoc(memberRef(user.uid));if(m.exists()&&m.data().active===true){start()}else{let claimed=false;try{claimed=await tryClaimInvitation(user)}catch(e){console.warn('Invitation claim failed:',e)}if(claimed){start();return}gate('This Google account is not yet approved. If you were invited, confirm you signed in with the invited Google email; otherwise request access from Rich.','<button class="btn primary" id="request">Request approval</button> <button class="btn" id="pendingLogout">Sign out</button>');$('request').onclick=()=>requestAccess(user);$('pendingLogout').onclick=()=>signOut(auth)}}catch(e){gate('Cannot verify access: '+e.message,'<button class="btn" id="pendingLogout">Sign out</button>');$('pendingLogout').onclick=()=>signOut(auth)}});
 $('logout').onclick=()=>signOut(auth);
@@ -1064,55 +1373,67 @@ $('refreshDashboard').onclick=()=>{
   // Reload from the server, including fresh Firebase listeners and the current page version.
   location.reload();
 };
-// Preserve the full active-list positions (1..N), including the gaps between top and bottom picks.
+// Allow time to classify and rank a card before the sorted list moves.
+let hqCardReorderTimer=null;
+function renderAfterCardInteraction(){
+ if(openPropertyId){render();return}
+ clearTimeout(hqCardReorderTimer);
+ hqCardReorderTimer=setTimeout(()=>{hqCardReorderTimer=null;render()},3500);
+}
+// Keep active personal rankings contiguous; move/clear shifts all neighboring ranks.
 function activeRankingIds(){return shared.filter(p=>(p.decision||'Active')==='Active').map(p=>p.id)}
+function orderedRankedIds(){
+ const active=new Set(activeRankingIds());
+ return Object.entries(mine.ranks||{}).filter(([id,n])=>active.has(id)&&Number.isInteger(Number(n))&&Number(n)>0)
+  .sort((a,b)=>Number(a[1])-Number(b[1])||a[0].localeCompare(b[0])).map(([id])=>id);
+}
+function writeOrderedRanks(ids){
+ mine.ranks??={};const active=new Set(activeRankingIds());
+ for(const id of active)delete mine.ranks[id];
+ ids.forEach((id,i)=>mine.ranks[id]=i+1);
+ queue('mine');renderAfterCardInteraction();
+}
 function setRank(id,value){
  const active=activeRankingIds(),max=active.length;
  if(!active.includes(id)){alert('Rank an active property; restore an archived property first.');return}
  const n=value===''?null:Number(value);
  if(n!==null&&(!Number.isInteger(n)||n<1||n>max)){alert('Choose a whole-number rank from 1 to '+max+', or clear it to unrank.');render();return}
- mine.ranks??={};const ranks={...mine.ranks};const old=rankOf(mine,id);
- delete ranks[id];
- if(n!==null){
-   const ownerAt=position=>active.find(k=>k!==id&&ranks[k]===position);
-   if(ownerAt(n)){
-     // Slide a chain into the nearest available slot while keeping other ranks unique.
-     let right=n;while(right<=max&&ownerAt(right))right++;
-     let left=n;while(left>=1&&ownerAt(left))left--;
-     if(old!==null&&old!==n&&!ownerAt(old)){
-       if(old>n)right=Math.min(right,old);else left=Math.max(left,old);
-     }
-     if(right<=max&&(left<1||right-n<=n-left)){
-       for(let i=right;i>n;i--){let occupant=ownerAt(i-1);if(occupant)ranks[occupant]=i;}
-     }else if(left>=1){
-       for(let i=left;i<n;i++){let occupant=ownerAt(i+1);if(occupant)ranks[occupant]=i;}
-     }else {alert('No free position available.');render();return}
-   }
-   ranks[id]=n;
- }
- mine.ranks=ranks;queue('mine');render();
+ const ids=orderedRankedIds().filter(k=>k!==id);
+ if(n!==null)ids.splice(Math.min(n-1,ids.length),0,id);
+ writeOrderedRanks(ids);
 }
 function nudgeRank(id,direction){
- const active=activeRankingIds(),max=active.length;
- if(!active.includes(id))return;
- const occupied=new Map(active.filter(k=>rankOf(mine,k)!==null).map(k=>[rankOf(mine,k),k]));
- const current=rankOf(mine,id);
- if(current===null){
-   let available=null;
-   if(direction==='up'){for(let n=1;n<=max;n++)if(!occupied.has(n)){available=n;break}}
-   else{for(let n=max;n>=1;n--)if(!occupied.has(n)){available=n;break}}
-   if(available!==null)setRank(id,available);return;
- }
- const positions=[...occupied.keys()].filter(n=>direction==='up'?n<current:n>current).sort((a,b)=>direction==='up'?b-a:a-b);
- if(positions.length){
-   let target=positions[0],swap=occupied.get(target);
-   mine.ranks??={};mine.ranks[swap]=current;mine.ranks[id]=target;queue('mine');render();
+ if(!activeRankingIds().includes(id))return;
+ const ids=orderedRankedIds();
+ const at=ids.indexOf(id);
+ if(at<0){
+   // Unranked properties enter the nearest vacant slot in the chosen direction.
+   // Up: first unoccupied positive rank. Down: highest unoccupied rank
+   // within the total number of active properties. Do not displace others.
+   const occupied=new Set(ids.map(k=>Number(mine.ranks?.[k])).filter(Number.isInteger));
+   const total=activeRankingIds().length;
+   let target;
+   if(direction==='up'){
+     target=1;
+     while(occupied.has(target)&&target<=total)target++;
+   }else{
+     target=total;
+     while(occupied.has(target)&&target>=1)target--;
+   }
+   if(target<1||target>total)return;
+   mine.ranks??={};
+   mine.ranks[id]=target;
+   queue('mine');renderAfterCardInteraction();
+   return;
  }else{
-   const adjacent=current+(direction==='up'?-1:1);
-   if(adjacent>=1&&adjacent<=max)setRank(id,adjacent);
+   // One step toward the next ranked property, not a numerical gap in old data.
+   const next=at+(direction==='up'?-1:1);
+   if(next<0||next>=ids.length){writeOrderedRanks(ids);return;}
+   ids.splice(at,1);
+   ids.splice(next,0,id);
  }
+ writeOrderedRanks(ids);
 }
-
 // Initial findings come from the 2026-11-04 research audit; they are NOT independent fact checks.
 // No alert is emitted merely because a normal MLS claim still needs inspection.
 const initialAlertFindings={
@@ -1145,8 +1466,51 @@ function resolveResearchAlert(id){
 }
 function reopenResearchAlert(id){const p=shared.find(x=>x.id===id);if(!p?.researchAlert?.resolved)return;
  if(!confirm('Reopen the resolved conflict?'))return;p.researchAlert={...p.researchAlert,resolved:false};delete p.researchAlert.resolvedAt;queue('shared');render();}
+
+// Details-page research conflicts appear in a floating, independently scrollable dialog.
+function closeDetailResearchAlert(){
+ const overlay=document.getElementById('hqDetailAlertOverlay');
+ if(overlay)overlay.remove();
+ document.body.classList.remove('hq-detail-alert-open');
+}
+function openDetailResearchAlert(id){
+ closeDetailResearchAlert();
+ const p=shared.find(x=>x.id===id);if(!p)return;
+ const active=alertInfo(p),resolved=!active&&p.researchAlert?.resolved;
+ if(!active&&!resolved)return;
+ const record=active||p.researchAlert;
+ const critical=active?.level==='critical';
+ const overlay=document.createElement('div');overlay.id='hqDetailAlertOverlay';overlay.className='hq-detail-alert-overlay';
+ overlay.innerHTML=`<section class="hq-detail-alert-dialog ${critical?'critical':active?'caution':'resolved'}" role="dialog" aria-modal="true" aria-labelledby="hqDetailAlertTitle" tabindex="-1">
+ <div class="hq-detail-alert-head"><h3 id="hqDetailAlertTitle">${critical?'Critical Alert':active?'Research Alert':'Resolved Research Alert'}</h3><button type="button" class="btn" id="hqDetailAlertClose" aria-label="Close research alert">✕ Close</button></div>
+ <div class="hq-detail-alert-body"><p class="hq-detail-alert-reason">${esc(record.reason||'Research discrepancy requires review.')}</p>
+ <p class="small">Source: ${esc(record.source||'Research import')}</p>
+ ${active?'<p class="small">This alert concerns conflicting research information, not routine unverified listing claims.</p>':`<p class="small">Resolution: ${esc(record.resolution||'Not recorded')}</p><p class="small">Resolved: ${esc(record.resolvedAt||'Not recorded')}</p>`}
+ <div class="hq-detail-alert-actions"><button type="button" class="btn ${active?'primary':''}" id="hqDetailAlertAction">${active?'✓ Mark resolved with evidence':'Reopen alert'}</button></div></div></section>`;
+ document.body.appendChild(overlay);document.body.classList.add('hq-detail-alert-open');
+ const dialog=overlay.querySelector('.hq-detail-alert-dialog');
+ const close=()=>{document.removeEventListener('keydown',keyHandler);closeDetailResearchAlert()};
+ const keyHandler=e=>{if(e.key==='Escape'){e.preventDefault();close()}};
+ document.addEventListener('keydown',keyHandler);
+ overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
+ overlay.querySelector('#hqDetailAlertClose').onclick=close;
+ overlay.querySelector('#hqDetailAlertAction').onclick=()=>{close();if(active)resolveResearchAlert(id);else reopenResearchAlert(id)};
+ dialog.focus();
+}
 function setNotes(id,value){mine.notes??={};mine.notes[id]=value;queue('mine')}
-function setDecision(id,value){let p=shared.find(p=>p.id===id);if(!p)return;if(!confirm(value==='Active'?'Restore this property to BOTH active lists?':'Set this property to '+value+' for BOTH people?'))return;p.decision=value;p.decisionDate=new Date().toISOString().slice(0,10);if(value==='Rejected'){p.decisionReason=prompt('Optional shared reason for rejecting this property:','')||''}if(value==='Active')p.decisionReason='';queue('shared');render()}
+function setDecision(id,value){
+ let p=shared.find(p=>p.id===id);if(!p)return;
+ const previous=p.decision||'Active';
+ const promptText=value==='Active'?'Restore this property to BOTH active lists? This does not change its verified listing status.':value==='Manual Archive'?'Archive this property for both Rich and Tiffany? Its collection, notes, rankings and research will be preserved.':`Set this property's shared tracking status to ${value}?`;
+ if(!confirm(promptText)){render();return}
+ const now=new Date().toISOString();
+ if(value==='Manual Archive'&&previous!=='Manual Archive')p.archiveInfo={...(p.archiveInfo||{}),previousDecision:previous==='Sold Archive'?(p.archiveInfo?.previousDecision||'Active'):previous,manualArchivedAt:now};
+ if(value==='Active'&&p.archiveInfo)p.archiveInfo={...p.archiveInfo,manuallyRestoredAt:now};
+ p.decision=value;p.decisionDate=now.slice(0,10);
+ if(value==='Rejected')p.decisionReason=prompt('Optional shared reason for rejecting this property:','')||'';
+ if(value==='Active')p.decisionReason='';
+ queue('shared');render();
+}
 
 // All dates and status changes must be documented; we never invent an MLS event date.
 const validDate=x=>typeof x==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(x)&&!Number.isNaN(Date.parse(x+'T12:00:00Z'));
@@ -1162,6 +1526,22 @@ function hoaSummary(p){
  if(h.hasHoa===true){return h.fee!=null&&h.fee!==''?'HOA: $'+esc(h.fee)+'/'+esc(h.frequency||'period unverified'):'HOA: dues unverified'}
  if(h.hasHoa===false)return 'No HOA (reported)';
  const raw=String(d.overview?.hoa||d.structures?.hoa||'').trim();return raw?'HOA: '+esc(raw.slice(0,85)):'HOA: unverified';
+}
+function hoaColorClass(p){
+ const h=p.hoaInfo||{};
+ if(h.hasHoa===false)return 'hoa-none';
+ if(h.hasHoa!==true)return 'hoa-unknown';
+ const raw=h.fee;
+ const amount=typeof raw==='number'?raw:Number(String(raw??'').replace(/[$,]/g,''));
+ if(raw===null||raw===undefined||raw===''||!Number.isFinite(amount)||amount<0)return 'hoa-unknown';
+ const freq=String(h.frequency||'').toLowerCase().replace(/[^a-z]/g,'');
+ let monthly;
+ if(['month','monthly','mo','permonth'].includes(freq))monthly=amount;
+ else if(['quarter','quarterly','qtr','perquarter'].includes(freq))monthly=amount/3;
+ else if(['year','yearly','annual','annually','yr','peryear'].includes(freq))monthly=amount/12;
+ else if(['week','weekly'].includes(freq))monthly=amount*52/12;
+ else return 'hoa-unknown';
+ return monthly===0?'hoa-none':monthly<=20?'hoa-low':'hoa-high';
 }
 function restrictionsSummary(p){
  const v=String(p.restrictions?.status||'');const detail=String(p.restrictions?.source||'');
@@ -1289,13 +1669,13 @@ async function openParcelExplorer(id){
   fit();setTimeout(()=>map.invalidateSize(),100);
  }catch(err){const node=document.getElementById('parcelExplorerMap');if(node)node.innerHTML='<p style="padding:22px;color:#f3d0b8">Interactive map unavailable: '+esc(err.message||String(err))+'</p>'}
 }
-function setHQClassification(id,value){const p=shared.find(x=>x.id===id);if(!p||!['Watchlist','Favorite','Serious inquiry'].includes(value))return;p.hqClassification=value;queue('shared');render()}
+function setHQClassification(id,value){const p=shared.find(x=>x.id===id);if(!p||!['Watchlist','Favorite','Serious inquiry','Price Watch'].includes(value))return;p.hqClassification=value;queue('shared');renderAfterCardInteraction()}
 function safeNumber(value){return typeof value==='number'&&Number.isFinite(value)?value:null}
 function historyHtml(p){const history=Array.isArray(p.listingHistory)?p.listingHistory:[];return history.length?'<ul>'+history.slice().sort((a,b)=>String(b.observedAt||b.date||'').localeCompare(String(a.observedAt||a.date||''))).map(e=>'<li><strong>'+esc(e.date?e.date+' (event date)':e.observedAt?e.observedAt+' (first observed)':'Date unverified')+'</strong> — '+esc(e.type||'Update')+(e.note?' · '+esc(e.note):'')+(e.source?' · <a href="'+safeUrl(e.source)+'" target="_blank" rel="noopener">Source</a>':'')+'</li>').join('')+'</ul>':'<p class="small">No verified listing status history imported yet.</p>'}
 const ROUTE_DESTINATIONS=[
  ['fredericksburg','Fredericksburg (downtown)','Fredericksburg, TX'],
  ['kerrvilleVA','Kerrville VA Medical Center','3600 Memorial Blvd, Kerrville, TX'],
- ['lackland','Lackland AFB (main gate)','JBSA Lackland Main Gate, San Antonio, TX']
+ ['lackland','Lackland AFB (San Antonio)','29.39377,-98.62204']
 ];
 const routeFinite=n=>typeof n==='number'&&Number.isFinite(n)&&n>=0;
 const routeDay=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}/.test(s)&&!Number.isNaN(Date.parse(s));
@@ -1538,18 +1918,34 @@ async function autoFindMissingParcels(){
  }finally{parcelBatchRunning=false;if(button)button.disabled=false}
 }
 
+function commuteRecord(trips,key){
+ const aliases={audieMurphyVA:['audieMurphy','sanAntonioVA','audieMurphyHospital','audieLMurphyVA','audieLMurphyHospital','sanAntonio','audie_murphy_va'],kerrvilleVA:['kerrvilleVa','kerrvilleHospital'],fredericksburg:['fredericksburgTX','fredericksburgTown']};
+ const names=[key,...(aliases[key]||[])];
+ const found=names.map(k=>trips[k]).filter(x=>x&&typeof x==='object');
+ return found.find(x=>routeFinite(x.minutes)&&routeFinite(x.miles))||found[0]||{};
+}
+function commuteGrade(x){
+ if(!routeFinite(x.minutes)||!routeFinite(x.miles))return ['unverified','No route saved'];
+ const minutes=Math.round(x.minutes);
+ return minutes<=60?['good','Within 60 min']:minutes<=65?['near','A few minutes over']:['long','Over 65 min'];
+}
 function tripSection(p){
  const trips=p.travelTimes||{};
- const keys=new Set(ROUTE_DESTINATIONS.map(x=>x[0]));
- const extra=Object.entries(trips).filter(([key,val])=>!keys.has(key)&&val&&typeof val==='object')
-   .map(([key,val])=>[key,String(val.destination||val.label||key),String(val.target||val.destination||val.label||key)]);
- return [...ROUTE_DESTINATIONS,...extra].map(([key,label,target])=>{
-  const x=trips[key]||{},status=routeStatus(x),orig=p.address+', '+p.city+', TX';
-  const route='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(orig)+'&destination='+encodeURIComponent(target)+'&travelmode=driving';
+ const rows=ROUTE_DESTINATIONS.map(([key,label,target])=>{
+  const x=commuteRecord(trips,key);
+  const hasEstimate=routeFinite(x.minutes)&&routeFinite(x.miles);
+  const verified=credibleRoute(x);
+  const [grade,description]=commuteGrade(x);
+  const directions=routeDirectionsLink(p,target);
   const source=String(x.sourceUrl||x.source||'');
-  const sourceLabel=credibleRoute(x)?' · Checked: '+esc(String(x.verifiedAt).slice(0,10))+(source.startsWith('https://')?' · <a href="'+safeUrl(source)+'" target="_blank" rel="noopener noreferrer">Route source ↗</a>':''):'';
-  return '<div class="detail-note"><strong>'+esc(label)+'</strong> · '+(routeFinite(x.minutes)?Math.round(x.minutes)+' min':'Time not researched')+' · '+(routeFinite(x.miles)?x.miles+' mi':'Distance not researched')+' · <span class="trip-status '+(credibleRoute(x)?'verified':'unverified')+'">'+esc(status)+'</span>'+sourceLabel+' · <a href="'+esc(route)+'" target="_blank" rel="noopener noreferrer">Directions ↗</a></div>';
- }).join('');
+  const provenance=verified?'Verified '+String(x.verifiedAt).slice(0,10):hasEstimate?'Saved estimate · source not verified':'No saved route estimate — research required';
+  return `<div class="hq-commute-row"><div><strong>${esc(label)}</strong><div class="small">${esc(provenance)}</div></div><div><strong>${hasEstimate?Math.round(x.minutes)+' min':'—'}</strong> · ${hasEstimate?x.miles+' mi':'— mi'}<div><span class="hq-commute-pill ${grade}">${esc(description)}</span></div></div><div><a href="${safeUrl(directions)}" target="_blank" rel="noopener noreferrer">Get standard route ↗</a>${verified&&source.startsWith('https://')?' · <a href="'+safeUrl(source)+'" target="_blank" rel="noopener noreferrer">Source ↗</a>':''}</div></div>`;
+ });
+ const records=ROUTE_DESTINATIONS.map(([key])=>commuteRecord(trips,key));
+ const available=records.filter(x=>routeFinite(x.minutes)&&routeFinite(x.miles));
+ const inRange=available.filter(x=>x.minutes<=65).length;
+ const summary=available.length===3?`${inRange} of 3 destinations within approximately 65 minutes`:`${available.length} of 3 route estimates available · ${inRange} within approximately 65 minutes`;
+ return `<div class="hq-commute-summary">${esc(summary)}</div>${rows.join('')}<p class="small">Standard driving distance/time estimates, not traffic-adjusted or live. Existing saved estimates display even if their sources are not fully verified. Missing routes need a research import; the Directions links open a standard route for manual reference. No paid mapping API required.</p>`;
 }
 // Preserve the active editor while cloud autosave and snapshot listeners run.
 // A full render replaces textarea nodes and would otherwise discard focus/caret.
@@ -1564,12 +1960,27 @@ document.addEventListener('focusout',()=>{
  if(!hqRenderDeferredWhileEditing)return;
  setTimeout(()=>{if(!hqTextEditorActive() && hqRenderDeferredWhileEditing && !dirtyShared && !saveBusy){hqRenderDeferredWhileEditing=false;render()}},0);
 });
+function renderCollections(){
+ const root=$('collectionsColumns');if(!root||!ready)return;
+ const groups=[['Favorite','♥','Favorites'],['Serious inquiry','★','Serious Inquiries'],['Price Watch','$','Price Watches']];
+ const personRank=p=>rankOf(mine,p.id)??Number.MAX_SAFE_INTEGER;
+ const partnerRank=p=>rankOf(other,p.id)??Number.MAX_SAFE_INTEGER;
+ root.innerHTML=groups.map(([key,icon,label])=>{
+  const items=shared.filter(p=>(p.decision||'Active')!=='Rejected'&&!['Sold Archive','Manual Archive'].includes(p.decision||'Active')&&hqClass(p)===key).sort((a,b)=>personRank(a)-personRank(b)||partnerRank(a)-partnerRank(b)||(a.price??Infinity)-(b.price??Infinity)||a.address.localeCompare(b.address));
+  const cards=items.map(p=>{
+   const r=me.uid===OWNER?rankOf(mine,p.id):rankOf(other,p.id),t=me.uid===OWNER?rankOf(other,p.id):rankOf(mine,p.id);
+   return `<button class="hq-mini-property" type="button" data-collection-open="${esc(p.id)}" aria-label="Open ${esc(p.address)} details"><div class="hq-mini-top"><span>${esc(p.address)}</span><span>${icon}</span></div><div class="hq-mini-meta">${esc(p.city)}, TX · ${fmt(p.acres)} ac · ${fmt(p.beds)} bd / ${fmt(p.baths)} ba</div><div class="hq-mini-price">${money(p.price)}</div><div class="hq-mini-ranks">Rich ${r===null?'—':'#'+r} · Tiffany ${t===null?'—':'#'+t}</div>${(p.decision||'Active')!=='Active'?`<div class="hq-mini-status">${esc(p.decision)}</div>`:''}</button>`;
+  }).join('');
+  return `<div class="hq-collection-column"><h3 class="hq-collection-heading"><span>${icon} ${label}</span><span class="count">${items.length}</span></h3>${cards||'<p class="small">No properties in this collection yet.</p>'}</div>`;
+ }).join('');
+ root.querySelectorAll('[data-collection-open]').forEach(b=>b.onclick=()=>openPropertyDetails(b.dataset.collectionOpen));
+}
 function render(){if(!ready)return;
  if(hqTextEditorActive()){hqRenderDeferredWhileEditing=true;return;}
 
  const openCardEvidence=new Set(Array.from(document.querySelectorAll('#cards [data-card-evidence]')).filter(node=>node.getAttribute('aria-expanded')==='true').map(node=>node.dataset.cardEvidence));
- renderWarCouncil();if(openPropertyId)renderPropertyDetails();let q=$('search').value.toLowerCase().trim(),g=$('group').value,d=$('decisionfilter').value,f=$('rankfilter').value;
- let list=shared.filter(p=>{let dec=p.decision||'Active';if(!(d==='all'||(d==='tracking'?dec==='Active':dec===d)))return false;if(g!=='all'&&!(g==='Favorite'||g==='Serious inquiry'?hqClass(p)===g:g==='New discovery'?discoveryPending(p):(p.groups||[]).includes(g)))return false;if(f==='mine-unranked'&&rankOf(mine,p.id)!==null)return false;if(f==='mine-ranked'&&rankOf(mine,p.id)===null)return false;if(f==='other-unranked'&&rankOf(other,p.id)!==null)return false;if(f==='other-ranked'&&rankOf(other,p.id)===null)return false;if(f==='both-ranked'&&combined(p.id)===null)return false;return[p.address,p.city,p.notes,p.risk,p.decisionReason,notesOf(mine,p.id),notesOf(other,p.id),...(p.features||[])].join(' ').toLowerCase().includes(q)});
+ renderWarCouncil();renderCollections();if(openPropertyId)renderPropertyDetails();let q=$('search').value.toLowerCase().trim(),g=$('group').value,d=$('decisionfilter').value,f=$('rankfilter').value;
+ let list=shared.filter(p=>{let dec=p.decision||'Active';if(!(d==='all'?dec!=='Rejected'&&dec!=='Sold Archive'&&dec!=='Manual Archive':(d==='tracking'?dec==='Active':dec===d)))return false;if(g!=='all'&&!(['Watchlist','Favorite','Serious inquiry','Price Watch'].includes(g)?hqClass(p)===g:g==='New discovery'?discoveryPending(p):(p.groups||[]).includes(g)))return false;if(f==='mine-unranked'&&rankOf(mine,p.id)!==null)return false;if(f==='mine-ranked'&&rankOf(mine,p.id)===null)return false;if(f==='other-unranked'&&rankOf(other,p.id)!==null)return false;if(f==='other-ranked'&&rankOf(other,p.id)===null)return false;if(f==='both-ranked'&&combined(p.id)===null)return false;return[p.address,p.city,p.notes,p.risk,p.decisionReason,notesOf(mine,p.id),notesOf(other,p.id),...(p.features||[])].join(' ').toLowerCase().includes(q)});
  let s=$('sort').value, direction=$('sortDirection').value;
  const sortValue=p=>{
    if(s==='price')return Number.isFinite(Number(p.price))&&p.price!==null&&p.price!==''?Number(p.price):null;
@@ -1586,13 +1997,13 @@ function render(){if(!ready)return;
    if(y===null||y===undefined)return -1;
    return (direction==='asc'?x-y:y-x)||priority(a)-priority(b);
  });
- let active=shared.filter(p=>(p.decision||'Active')==='Active');$('total').textContent=active.length;$('serious').textContent=active.filter(p=>hqClass(p)==='Serious inquiry').length;$('fresh').textContent=active.filter(discoveryPending).length;$('land').textContent=active.filter(p=>p.acres>=10).length;$('count').textContent=list.length+' showing · '+shared.filter(p=>p.decision==='Rejected').length+' archived';
- $('cards').innerHTML=list.length?list.map(p=>{let r=rankOf(mine,p.id),o=rankOf(other,p.id),c=combined(p.id),at=allTopicStats(p);return `<article data-rich-note="${esc(me.uid===OWNER?notesOf(mine,p.id):notesOf(other,p.id))}" data-tiffany-note="${esc(me.uid===OWNER?notesOf(other,p.id):notesOf(mine,p.id))}" class="card ${alertInfo(p)?'alert-'+alertInfo(p).level:''}"><div class="art ${boundaryRings(p).length||!p.photoUrl?'aerial-art':''}">${boundaryRings(p).length?cardAerial(p):p.photoUrl?`<img class="propertyphoto" src="${esc(p.photoUrl)}" alt="Property" loading="lazy" onerror="this.style.display='none'">`:cardAerial(p)}</div><div class="cardmain"><div class="property-overview"><div class="hq-class-row"><select aria-label="HQ classification" title="HQ classification" data-hqclass="${esc(p.id)}"><option value="Watchlist" ${hqClass(p)==='Watchlist'?'selected':''}>Watchlist</option><option value="Favorite" ${hqClass(p)==='Favorite'?'selected':''}>Favorite</option><option value="Serious inquiry" ${hqClass(p)==='Serious inquiry'?'selected':''}>Serious inquiry</option></select></div><div class="topline">${(p.groups||[]).filter(x=>!['Watchlist','Favorite','Serious inquiry'].includes(x) && !(x==='New discovery'&&!discoveryPending(p))).map(x=>`<span class="tag">${esc(x)}</span>`).join('')+ (hqClass(p)==='Watchlist'?'':`<span class="tag">HQ: ${esc(hqClass(p))}</span>`)}${discoveryTagged(p)&&!discoveryPending(p)&&(p.decision||'Active')==='Active'?`<span class="tag">Review complete ✓</span>`:''}${p.decision&&p.decision!=='Active'?`<span class="statuspill ${p.decision==='Rejected'?'rejected':'hold'}">${esc(p.decision)}</span>`:''}</div><h3>${esc(p.address)}</h3><div class="city">${esc(p.city)}, Texas</div><div class="card-meta">${listingStatusLabel(p)}<span class="mini-chip">${esc(ageClocks(p))}</span>${p.priceReduced?'<span class="mini-chip">↓ Price reduced</span>':''}</div><div class="listingmeta">Listed: ${esc(listedOn(p)||'Unverified')} · Last verified: ${esc(verifiedDate(p)||'Unverified')}</div><div class="card-price-row"><div class="price">${money(p.price)}</div><span class="mini-chip hoa-chip">${hoaSummary(p)}</span></div><div class="card-restrictions">${restrictionsSummary(p)}</div><div class="facts"><span>🌲 ${fmt(p.acres)} ac</span><span>⌂ ${fmt(p.beds)} bd / ${fmt(p.baths)} ba</span><span>${fmt(p.sqft)} sq ft</span></div>${p.features?.length?`<p class="note">${p.features.map(esc).join(' · ')}</p>`:''}${p.notes?`<p class="note">${esc(p.notes)}</p>`:''}${p.risk?`<p class="risk">⚑ ${esc(p.risk)}</p>`:''}${p.decisionReason?`<p class="reason">Shared decision: ${esc(p.decisionReason)}</p>`:''}${alertBadge(p)}${flagSummary(p)}</div>${dualBars(at,p)}<div class="rankgrid"><div class="rankbox">Rich<strong>${me.uid===OWNER?(r?'#'+r:'—'):(o?'#'+o:'—')}</strong></div><div class="rankbox">Tiffany<strong>${me.uid===OWNER?(o?'#'+o:'—'):(r?'#'+r:'—')}</strong></div><div class="rankbox">Combined<strong>${c===null?'—':'#'+c.toFixed(1)}</strong></div></div><div class="rankrow"><label for="rank-${esc(p.id)}">My rank</label><input id="rank-${esc(p.id)}" class="rankinput" data-rank="${esc(p.id)}" type="number" min="1" max="${shared.length}" value="${r??''}" placeholder="Unranked"><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="up" title="Unranked: next top rank; ranked: move higher">↑</button><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="down" title="Unranked: next bottom rank; ranked: move lower">↓</button><button class="btn rankbtn" data-unrank="${esc(p.id)}">Clear</button></div>${discoveryTagged(p)?`<div class="reviewrow"><span class="small ${richReviewed(p)&&tiffanyReviewed(p)?'review-complete':'review-waiting'}">${esc(reviewStatus(p))}</span><button class="btn" type="button" data-reviewed="${esc(p.id)}">${mine.reviewed?.[p.id]===true?'Undo my reviewed mark':'Mark reviewed / pass'}</button></div>`:''}<div class="card-evidence-box">
+ let active=shared.filter(p=>(p.decision||'Active')==='Active');$('total').textContent=active.length;$('serious').textContent=active.filter(p=>hqClass(p)==='Serious inquiry').length;$('fresh').textContent=active.filter(discoveryPending).length;$('land').textContent=active.filter(p=>p.acres>=10).length;$('count').textContent=list.length+' showing · '+shared.filter(p=>p.decision==='Rejected').length+' rejected · '+shared.filter(p=>['Sold Archive','Manual Archive'].includes(p.decision)).length+' archived';
+ $('cards').innerHTML=list.length?list.map(p=>{let r=rankOf(mine,p.id),o=rankOf(other,p.id),c=combined(p.id),at=allTopicStats(p);return `<article data-rich-note="${esc(me.uid===OWNER?notesOf(mine,p.id):notesOf(other,p.id))}" data-tiffany-note="${esc(me.uid===OWNER?notesOf(other,p.id):notesOf(mine,p.id))}" class="card ${alertInfo(p)?'alert-'+alertInfo(p).level:''}">${personalBadges(p)}<div class="art ${!p.photoUrl?'aerial-art':''}">${p.photoUrl&&/^https:\/\//i.test(p.photoUrl)?`<img class="propertyphoto" src="${safeUrl(p.photoUrl)}" alt="Property" loading="lazy" onerror="this.style.display='none'">`:cardAerial(p)}</div><div class="cardmain"><div class="property-overview">${personalClassControls(p)}<div class="topline">${(p.groups||[]).filter(x=>!['Watchlist','Favorite','Serious inquiry','Price Watch'].includes(x) && !(x==='New discovery'&&!discoveryPending(p))).map(x=>`<span class="tag">${esc(x)}</span>`).join('')}${discoveryTagged(p)&&!discoveryPending(p)&&(p.decision||'Active')==='Active'?`<span class="tag">Review complete ✓</span>`:''}${p.decision&&p.decision!=='Active'?`<span class="statuspill ${p.decision==='Rejected'?'rejected':['Sold Archive','Manual Archive'].includes(p.decision)?'sold':'hold'}">${esc(p.decision)}</span>`:''}</div><h3>${esc(p.address)}</h3><div class="city">${esc(p.city)}, Texas</div>${p.decision==='Sold Archive'?'<div class="hq-sold-banner">SOLD — OFF MARKET</div>':''}<div class="card-meta">${listingStatusLabel(p)}<span class="mini-chip">${esc(ageClocks(p))}</span>${p.priceReduced?'<span class="mini-chip">↓ Price reduced</span>':''}</div><div class="listingmeta">Listed: ${esc(listedOn(p)||'Unverified')} · Last verified: ${esc(verifiedDate(p)||'Unverified')}</div><div class="card-price-row"><div class="price">${money(p.price)}</div><span class="mini-chip hoa-chip ${hoaColorClass(p)}">${hoaSummary(p)}</span>${cardFlameHighlights(p)}</div><div class="card-restrictions">${restrictionsSummary(p)}</div><div class="facts"><span>🌲 ${fmt(p.acres)} ac</span><span>⌂ ${fmt(p.beds)} bd / ${fmt(p.baths)} ba</span><span>${fmt(p.sqft)} sq ft</span></div>${p.features?.length?`<p class="note">${p.features.map(esc).join(' · ')}</p>`:''}${p.notes?`<p class="note">${esc(p.notes)}</p>`:''}${p.risk?`<p class="risk">⚑ ${esc(p.risk)}</p>`:''}${p.decisionReason?`<p class="reason">Shared decision: ${esc(p.decisionReason)}</p>`:''}${alertBadge(p)}${flagSummary(p)}</div>${dualBars(at,p)}<div class="rankgrid"><div class="rankbox">Rich<strong>${me.uid===OWNER?(r?'#'+r:'—'):(o?'#'+o:'—')}</strong></div><div class="rankbox">Tiffany<strong>${me.uid===OWNER?(o?'#'+o:'—'):(r?'#'+r:'—')}</strong></div><div class="rankbox">Combined<strong>${c===null?'—':'#'+c.toFixed(1)}</strong></div></div><div class="rankrow"><label for="rank-${esc(p.id)}">My rank</label><input id="rank-${esc(p.id)}" class="rankinput" data-rank="${esc(p.id)}" type="number" min="1" max="${shared.length}" value="${r??''}" placeholder="Unranked"><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="up" title="Unranked: next top rank; ranked: move higher">↑</button><button class="btn rankbtn direction" data-nudge="${esc(p.id)}" data-dir="down" title="Unranked: next bottom rank; ranked: move lower">↓</button><button class="btn rankbtn" data-unrank="${esc(p.id)}">Clear</button></div>${discoveryTagged(p)?`<div class="reviewrow"><span class="small ${richReviewed(p)&&tiffanyReviewed(p)?'review-complete':'review-waiting'}">${esc(reviewStatus(p))}</span><button class="btn" type="button" data-reviewed="${esc(p.id)}">${mine.reviewed?.[p.id]===true?'Undo my reviewed mark':'Mark reviewed / pass'}</button></div>`:''}<div class="card-evidence-box">
   <div class="card-evidence-controls">
     <button type="button" class="card-evidence-toggle" data-card-evidence="${esc(p.id)}:wishlist" aria-expanded="${openCardEvidence.has(p.id+':wishlist')?'true':'false'}" aria-controls="card-wishlist-${esc(p.id)}">⚔️ Master Grades</button>
   </div>
   ${wishlistEvidenceCard(p,new Set())}
-</div><div class="notesgrid"><div><label>My personal notes (editable)</label><textarea data-notes="${esc(p.id)}" placeholder="Your impressions, visit notes, questions…">${esc(notesOf(mine,p.id))}</textarea></div><div><label>${me.uid===OWNER?'Tiffany':'Rich'}'s notes (read only)</label><textarea readonly>${esc(notesOf(other,p.id))}</textarea></div></div><div class="actionline">${p.decision==='Active'?`<button class="btn" data-decision="On Hold" data-id="${esc(p.id)}">On hold</button><button class="btn archive" data-decision="Rejected" data-id="${esc(p.id)}">Reject / archive</button>`:`<button class="btn" data-decision="Active" data-id="${esc(p.id)}">Restore to active</button>`}<button class="btn" data-research="${esc(p.id)}">
+</div><div class="notesgrid"><div><label>My personal notes (editable)</label><textarea data-notes="${esc(p.id)}" placeholder="Your impressions, visit notes, questions…">${esc(notesOf(mine,p.id))}</textarea></div><div><label>${me.uid===OWNER?'Tiffany':'Rich'}'s notes (read only)</label><textarea readonly>${esc(notesOf(other,p.id))}</textarea></div></div><div class="actionline">${(p.decision||'Active')==='Active'?`<button class="btn" data-decision="On Hold" data-id="${esc(p.id)}">On hold</button><button class="btn archive" data-decision="Rejected" data-id="${esc(p.id)}">Reject</button><button class="btn" data-decision="Manual Archive" data-id="${esc(p.id)}">📦 Archive</button>`:`<button class="btn" data-decision="Active" data-id="${esc(p.id)}">Restore to active</button>`}<button class="btn" data-research="${esc(p.id)}">
   ${p.deepResearch ? '🔎 Remove Research Flag' : '🔎 Deep Research'}
 </button><button class="btn" data-photo="${esc(p.id)}">Set photo URL</button></div></div><div class="cardfoot"><button class="btn" type="button" data-open-details="${esc(p.id)}">Details</button><label class="small"><input class="compare" type="checkbox" data-id="${esc(p.id)}" ${chosen.has(p.id)?'checked':''}> Compare</label><a href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">Original listing ↗</a></div></article>`}).join(''):'<div class="empty">No properties match these filters.</div>';
  // Organize horizontal cards: notes/actions in the property column; rankings above progress in the right column.
@@ -1666,7 +2077,7 @@ function render(){if(!ready)return;
    const closeBtn=document.createElement('button');closeBtn.type='button';closeBtn.className='btn hq-grade-popover-close';closeBtn.textContent='✕ Close';
    head.append(title,closeBtn);popup.append(head);
    const parent=panel.parentNode,after=panel.nextSibling;
-   panel.hidden=false;popup.appendChild(panel);document.body.append(backdrop,popup);document.body.classList.add('hq-grade-dialog-open');popup.scrollTop=0;
+   panel.hidden=false;popup.appendChild(panel);wireQuickAssessment(panel,shared.find(p=>p.id===button.dataset.cardEvidence.split(':')[0]));document.body.append(backdrop,popup);document.body.classList.add('hq-grade-dialog-open');popup.scrollTop=0;
    button.setAttribute('aria-expanded','true');
    function close(){if(!popup.isConnected)return;if(after&&after.parentNode===parent)parent.insertBefore(panel,after);else if(parent.isConnected)parent.appendChild(panel);panel.hidden=true;popup.remove();backdrop.remove();document.body.classList.remove('hq-grade-dialog-open');button.setAttribute('aria-expanded','false');document.removeEventListener('keydown',onKey)}
    function onKey(e){if(e.key==='Escape')close()}
@@ -1840,10 +2251,20 @@ const researchHTML = councilAccordion('Deep Research', '🔎', researchPropertie
   container.innerHTML = researchHTML + tiers.map(([tier, icon, description]) => {
     const properties = activeProperties
       .filter(p => councilTier(p.id) === tier)
-      .sort((a, b) =>
-        (combined(a.id) ?? Infinity) -
-        (combined(b.id) ?? Infinity)
-      );
+      .sort((a, b) => {
+        // Show the partner's ranked favorites first to guide the person who
+        // has not ranked them yet. Use own ranking only as a fallback.
+        if (tier === 'Unranked') {
+          const partnerA = rankOf(other, a.id) ?? Infinity;
+          const partnerB = rankOf(other, b.id) ?? Infinity;
+          if (partnerA !== partnerB) return partnerA - partnerB;
+          const ownA = rankOf(mine, a.id) ?? Infinity;
+          const ownB = rankOf(mine, b.id) ?? Infinity;
+          if (ownA !== ownB) return ownA - ownB;
+          return (a.address || '').localeCompare(b.address || '');
+        }
+        return (combined(a.id) ?? Infinity) - (combined(b.id) ?? Infinity);
+      });
 
     const propertyRows = properties.map(p => {
       const richRank = rankOf(
@@ -2071,14 +2492,58 @@ const criterionByKey = Object.fromEntries(scoredCriteria.map(c=>[c.key,c]));
 // Card-only read-only summary: labels and grades, with manual values highlighted.
 // Evidence details, automatic sources, and the edit controls remain in Property Details.
 function wishlistEvidenceCard(p, openCardEvidence){
+  // A compact summary: scored criteria plus any criterion carrying a shared
+  // comment or either person's flame/highlight note.
   const entries=wishlistFeatures.map(([key,label])=>{
     const auto=automaticWishlist(p,key);
     const override=ratingOverride(myRatings,p,key);
-    if(auto.value===null&&override===null)return null;
-    return {key,label,grade:override===null?auto.value:override,overridden:override!==null};
+    const grade=override===null?auto.value:override;
+    const comment=String(p.assessmentComments?.[key]||'').trim();
+    const own=flameData(mine,p.id,key),partner=flameData(other,p.id,key);
+    if(grade===null&&!comment&&!own.level&&!own.note.trim()&&!partner.level&&!partner.note.trim())return null;
+    return {key,label,grade,overridden:override!==null,comment,own,partner};
   }).filter(Boolean);
-  const content=entries.length?entries.map(e=>`<div class="wishlist-evidence-row"><span class="wishlist-feature-name">${esc(e.label)}</span><span class="wishlist-evidence-score${e.overridden?' overridden':''}" title="${e.overridden?'My manual rating':'Automatic grade'}">${e.grade}/5</span><span class="card-grade-description">${esc(masterGradeDescription(criterionByKey[e.key],e.grade))}</span></div>`).join(''):'<p class="card-evidence-empty">No master criteria scored yet.</p>';
-  return `<div class="card-evidence-panel" id="card-wishlist-${esc(p.id)}" data-evidence-panel="${esc(p.id)}:wishlist" ${openCardEvidence.has(p.id+':wishlist')?'':'hidden'}><div class="card-evidence-heading">Master grades · ${entries.length} rated</div><div class="card-grade-legend"><span class="card-grade-origin auto">AUTO</span> Evidence-based grade <span class="card-grade-origin manual">MANUAL</span> Your override</div>${content}</div>`;
+  const rows=entries.map(e=>{
+    const hasFlame=e.own.level||e.own.note.trim()||e.partner.level||e.partner.note.trim();
+    const ownName=me.uid===OWNER?'Rich':'Tiffany',partnerName=me.uid===OWNER?'Tiffany':'Rich';
+    return `<div class="wishlist-evidence-row hq-quick-criterion">
+      <span class="wishlist-feature-name">${esc(e.label)}</span>
+      <span class="wishlist-evidence-score${e.overridden?' overridden':''}">${e.grade===null?'Not Assessed':e.grade+'/5'}</span>
+      <span class="card-grade-description">${e.grade===null?'Comment / highlight only':esc(masterGradeDescription(criterionByKey[e.key],e.grade))}</span>
+      <span class="hq-quick-icons">
+        ${e.comment?`<button type="button" class="hq-quick-icon" data-quick-comment title="${esc(e.comment)}" aria-label="Read general comment for ${esc(e.label)}">💬</button><span class="hq-quick-tip" role="tooltip">${esc(e.comment)}</span>`:''}
+        <button type="button" class="hq-quick-icon hq-quick-flame" data-quick-flame="${esc(e.key)}" title="${esc((e.own.note||e.partner.note||'Add or edit your flame highlight'))}" aria-label="Edit your flame highlight for ${esc(e.label)}">${e.own.level?'🔥'.repeat(e.own.level):hasFlame?'🔥':'♢'}</button>
+      </span>
+      <div class="hq-quick-flame-editor" data-quick-editor="${esc(e.key)}" hidden>
+        <div class="hq-quick-flame-summary"><strong>${esc(ownName)}:</strong> <span data-quick-own-level="${esc(e.key)}">${e.own.level?'🔥'.repeat(e.own.level):'No flames'}</span>${e.own.note?` · ${esc(e.own.note)}`:''}</div>
+        <div class="hq-quick-flame-summary"><strong>${esc(partnerName)}:</strong> ${e.partner.level?'🔥'.repeat(e.partner.level):'No flames'}${e.partner.note?` · ${esc(e.partner.note)}`:''}</div>
+        <button type="button" class="btn" data-quick-cycle="${esc(e.key)}">Change my flame level (0–2)</button>
+        <label>My flame comment <textarea maxlength="250" rows="2" data-quick-note="${esc(e.key)}" placeholder="Add your reason…">${esc(e.own.note)}</textarea></label>
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="card-evidence-panel" id="card-wishlist-${esc(p.id)}" data-evidence-panel="${esc(p.id)}:wishlist" ${openCardEvidence.has(p.id+':wishlist')?'':'hidden'}><div class="card-evidence-heading">Master grades · ${entries.filter(e=>e.grade!==null).length} rated · ${entries.length} shown</div><div class="card-grade-legend"><span class="card-grade-origin auto">AUTO</span> Evidence-based grade <span class="card-grade-origin manual">MANUAL</span> Your override</div>${rows||'<p class="card-evidence-empty">No grades, comments, or flames yet.</p>'}</div>`;
+}
+function wireQuickAssessment(panel,p){
+  panel.addEventListener('click',e=>{
+    const comment=e.target.closest('[data-quick-comment]');
+    if(comment){comment.classList.toggle('hq-quick-tip-open');return;}
+    const flame=e.target.closest('[data-quick-flame]');
+    if(flame){const editor=panel.querySelector('[data-quick-editor="'+flame.dataset.quickFlame+'"]');if(editor)editor.hidden=!editor.hidden;return;}
+    const cycle=e.target.closest('[data-quick-cycle]');
+    if(cycle){
+      const key=cycle.dataset.quickCycle,level=(flameData(mine,p.id,key).level+1)%3;
+      updateFlame(p.id,key,{level});
+      const label=panel.querySelector('[data-quick-own-level="'+key+'"]');
+      if(label)label.textContent=level?'🔥'.repeat(level):'No flames';
+      const icon=panel.querySelector('[data-quick-flame="'+key+'"]');
+      if(icon)icon.textContent=level?'🔥'.repeat(level):'♢';
+    }
+  });
+  panel.addEventListener('input',e=>{
+    const field=e.target.closest('[data-quick-note]');
+    if(field)updateFlame(p.id,field.dataset.quickNote,{note:field.value.slice(0,250)});
+  });
 }
 // These are the 45 scored topics from the ORIGINAL wishlist (not dynamically derived
 // from existing evidence, which would make the denominator change as research grows).
@@ -2163,7 +2628,7 @@ function restoreDetailReturnPosition() {
 function openPropertyDetails(id) {
   if(mapActive)closePropertyMap();
   if (!shared.some(p=>p.id===id)) return;
-  detailReturnView = currentView === 'council' ? 'council' : 'properties';
+  detailReturnView = ['council','collections'].includes(currentView) ? currentView : 'properties';
   captureDetailReturnPosition(id);
   openPropertyId = id;
   switchView('details');
@@ -2200,6 +2665,21 @@ function masterGradeDescription(c,n){
  return values && Number.isInteger(n) && n>=0 && n<=5 ? values[n] : 'Not Assessed';
 }
 // v3.0: One canonical walkthrough. Each automatic grade explains its supporting facts beside the grade.
+function flameData(account,propertyId,key){const value=account?.criterionFlames?.[propertyId]?.[key];return {level:Math.max(0,Math.min(2,Number(value?.level)||0)),note:typeof value?.note==='string'?value.note:''};}
+function flameControls(p,c){const mineFlame=flameData(mine,p.id,c.key),partnerFlame=flameData(other,p.id,c.key);const mineName=me.uid===OWNER?'Rich':'Tiffany',otherName=me.uid===OWNER?'Tiffany':'Rich';return `<div class="flame-controls"><button type="button" class="flame-cycle" data-flame-key="${esc(c.key)}" title="Cycle your flames: none, love it, absolutely love it" aria-label="${esc(mineName)} highlight ${esc(c.label)}: ${mineFlame.level} flames">${mineFlame.level?'🔥'.repeat(mineFlame.level):'♢'} <span>${esc(mineName)}</span></button><span class="flame-partner" title="${esc(otherName)}'s highlight">${esc(otherName)}: ${partnerFlame.level?'🔥'.repeat(partnerFlame.level):'—'}</span><button type="button" class="flame-note-toggle" data-flame-note-toggle="${esc(c.key)}" title="Edit your personal flame note">💬</button><div class="flame-note-editor" data-flame-editor="${esc(c.key)}" hidden><label>Your reason (optional, 250 characters)<textarea maxlength="250" rows="2" data-flame-note="${esc(c.key)}" placeholder="What makes this stand out to you?">${esc(mineFlame.note)}</textarea></label></div>${partnerFlame.level&&partnerFlame.note?`<div class="flame-other-note"><strong>${esc(otherName)}:</strong> ${esc(partnerFlame.note)}</div>`:''}</div>`;}
+function cardFlameHighlights(p){
+ const people=[['Rich',me.uid===OWNER?mine:other],['Tiffany',me.uid===OWNER?other:mine]];
+ const allCriteria=masterSections.flatMap(section=>section.criteria);
+ const badges=people.map(([name,account])=>{
+  const entries=allCriteria.map(c=>({c,...flameData(account,p.id,c.key)})).filter(x=>x.level>0).sort((a,b)=>b.level-a.level||a.c.display_number-b.c.display_number);
+  if(!entries.length)return '';
+  const popup=entries.map(x=>`<div class="card-flame-entry"><b>${'🔥'.repeat(x.level)} ${esc(x.c.label)}</b>${x.note?`<span class="card-flame-reason">${esc(x.note)}</span>`:''}</div>`).join('');
+  return `<span class="card-flame-person" tabindex="0" aria-label="${esc(name)}: ${entries.length} highlighted criteria; hover or focus to view"><span>${esc(name)}</span><span>${entries.some(x=>x.level===2)?'🔥🔥':'🔥'}</span><span class="card-flame-popup" role="tooltip"><strong>${esc(name)} — What Stands Out (${entries.length})</strong>${popup}</span></span>`;
+ }).filter(Boolean);
+ return badges.length?`<div class="card-flame-highlights">${badges.join('')}</div>`:'';
+}
+function flameSummary(p){const entries=masterSections.flatMap(sec=>sec.criteria).map(c=>({c,r:flameData(me.uid===OWNER?mine:other,p.id,c.key),t:flameData(me.uid===OWNER?other:mine,p.id,c.key)}));const column=(name,key)=>{const rows=entries.filter(x=>x[key].level).sort((a,b)=>b[key].level-a[key].level||a.c.display_number-b.c.display_number);return `<div class="flame-summary-column"><strong>${name}'s Highlights</strong>${rows.length?rows.map(x=>`<div class="flame-summary-item"><span>${'🔥'.repeat(x[key].level)} <b>${esc(x.c.label)}</b></span>${x[key].note?`<p>${esc(x[key].note)}</p>`:''}</div>`).join(''):'<p class="small">No highlighted criteria yet.</p>'}</div>`};return `<div class="flame-summary-grid">${column('Rich','r')}${column('Tiffany','t')}</div>`;}
+function updateFlame(propertyId,key,update){mine.criterionFlames??={};mine.criterionFlames[propertyId]??={};const current=flameData(mine,propertyId,key);mine.criterionFlames[propertyId][key]={...current,...update};queue('mine');}
 function masterGradeSections(p,scores){
  return masterSections.map(sec=>{
    // Only numerical scores are counted. Personal overrides take precedence over
@@ -2214,7 +2694,7 @@ function masterGradeSections(p,scores){
  const rows=sec.criteria.map(c=>{
    if(c.type!=='scored'){
      const facts=informationalFacts(p,c);
-     return `<div class="master-grade-row informational"><div class="master-grade-title"><strong>${c.display_number}. ${esc(c.label)}</strong><span class="master-legacy">Information · Not scored</span></div><div class="master-grade-result"><div class="master-evidence">${facts.length?'<div><strong>Evidence recorded — status not verified</strong></div>'+facts.map(f=>`<div>• <strong>${esc(f.label)}:</strong> ${esc(f.value)}</div>`).join(''):'<span class="muted">Not Assessed — no reliable information recorded.</span>'}</div></div></div>`;
+     return `<div class="master-grade-row informational"><div class="master-grade-title"><strong>${c.display_number}. ${esc(c.label)}</strong><span class="master-legacy">Information · Not scored</span></div><div class="master-grade-result"><div class="master-evidence">${facts.length?'<div><strong>Evidence recorded — status not verified</strong></div>'+facts.map(f=>`<div>• <strong>${esc(f.label)}:</strong> ${esc(f.value)}</div>`).join(''):'<span class="muted">Not Assessed — no reliable information recorded.</span>'}</div></div>${flameControls(p,c)}</div>`;
    }
    const auto=automaticWishlist(p,c.key),override=explicitScore(scores[c.key]);
    const source=override!==null?'Manual':auto.value!==null?'Auto':'Not Assessed';
@@ -2222,7 +2702,7 @@ function masterGradeSections(p,scores){
    const explanation=auto.value!==null?
       `<strong>Why HQ assigned ${auto.value}/5:</strong> ${esc(auto.source)}`:
       `<strong>Not Assessed.</strong> No supported automatic grade. ${facts.length?'Available information: '+facts.slice(0,3).map(f=>esc(f.label+': '+f.value)).join(' · '):'No criterion-specific evidence recorded.'}`;
-   return `<div class="master-grade-row"><div class="master-grade-title"><label for="detail-score-${esc(c.key)}"><strong>${c.display_number}. ${esc(c.label)}</strong></label><span class="master-legacy">Score 0–5</span></div><div class="master-grade-result"><div class="score-controls"><span class="score-origin ${source==='Manual'?'is-manual':source==='Auto'?'is-auto':'is-unassessed'}">${source}</span><span class="hq-mobile-grade-select" data-short-grade="${override===null?'Not Assessed':override+' / 5'}"><select id="detail-score-${esc(c.key)}" data-wishlist="${esc(c.key)}" aria-label="${esc(c.label)} grade">${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${override===n?'selected':''}>${n} / 5 — ${esc(masterGradeDescription(c,n))}</option>`).join('')}<option value="" ${override===null?'selected':''}>${auto.value===null?'Not Assessed':'Not Assessed / use automatic grade'}</option></select></span><button type="button" class="btn grade-reset" data-reset-wishlist="${esc(c.key)}" ${override===null?'disabled':''} title="Remove your manual grade and restore the original automatic grade (or Not Assessed when evidence is insufficient)">↺ Reset</button></div><div class="master-evidence">${explanation}</div></div><textarea class="master-item-comment" data-assessment-comment="${esc(c.key)}" rows="1" placeholder="Add shared comments…" aria-label="Shared comments for ${esc(c.label)}">${esc(p.assessmentComments?.[c.key]||'')}</textarea></div>`;
+   return `<div class="master-grade-row"><div class="master-grade-title"><label for="detail-score-${esc(c.key)}"><strong>${c.display_number}. ${esc(c.label)}</strong></label><span class="master-legacy">Score 0–5</span></div><div class="master-grade-result"><div class="score-controls"><span class="score-origin ${source==='Manual'?'is-manual':source==='Auto'?'is-auto':'is-unassessed'}">${source}</span><span class="hq-mobile-grade-select" data-short-grade="${override===null?'Not Assessed':override+' / 5'}"><select id="detail-score-${esc(c.key)}" data-wishlist="${esc(c.key)}" aria-label="${esc(c.label)} grade">${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${override===n?'selected':''}>${n} / 5 — ${esc(masterGradeDescription(c,n))}</option>`).join('')}<option value="" ${override===null?'selected':''}>${auto.value===null?'Not Assessed':'Not Assessed / use automatic grade'}</option></select></span><button type="button" class="btn grade-reset" data-reset-wishlist="${esc(c.key)}" ${override===null?'disabled':''} title="Remove your manual grade and restore the original automatic grade (or Not Assessed when evidence is insufficient)">↺ Reset</button></div><div class="master-evidence">${explanation}</div></div><textarea class="master-item-comment" data-assessment-comment="${esc(c.key)}" rows="1" placeholder="Add shared comments…" aria-label="Shared comments for ${esc(c.label)}">${esc(p.assessmentComments?.[c.key]||'')}</textarea>${flameControls(p,c)}</div>`;
  }).join('');
  return `<details class="master-category" data-master-section="${sec.section_id}" ><summary>${sec.section_id}. ${esc(sec.section_name)} <span class="small">(${sec.criteria.length})</span><span class="master-section-stats" aria-label="${graded} of ${scored.length} graded: ${autoCount} automatic, ${manual} manual"><span class="stat">Graded ${graded}/${scored.length}</span><span class="stat auto">Auto ${autoCount}</span><span class="stat manual">Manual ${manual}</span></span></summary><div class="master-category-body">${rows}</div></details>`;
  }).join('');
@@ -2248,14 +2728,14 @@ function renderPropertyDetails() {
   const photos=Array.isArray(d.photos)?d.photos:[];
   root.innerHTML=`
     <div class="hq-detail-fixed"><div class="hq-detail-info">
-    <div class="details-top"><button class="btn" id="detailBack" type="button">← Back to ${detailReturnView==='council'?'War Council':'Properties'}</button>${p.decision&&p.decision!=='Active'?`<span class="tag">${esc(p.decision)}</span>`:''}<div class="hq-detail-rank-summary" aria-label="Property rankings"><div class="rankbox">Rich<strong>${rich===null?'—':'#'+rich}</strong></div><div class="rankbox">Tiffany<strong>${tiffany===null?'—':'#'+tiffany}</strong></div><div class="rankbox">Combined<strong>${combined(p.id)===null?'—':'#'+combined(p.id).toFixed(1)}</strong></div></div><span class="tag hq-detail-tier">${esc(councilTier(p.id))}</span>${councilTier(p.id)==='Unranked'?`<span class="hq-rank-wait-note">Tier updates once both Rich and Tiffany have ranked this property.</span>`:''}</div>
-    <h2 style="font-size:clamp(25px,3vw,37px);margin:0">${esc(p.address)}</h2>${alertBadge(p)}
-    <div class="city">${esc(p.city)}, Texas · ${esc(listingStatus(p))}</div>
-    <p class="small">Research last checked: ${esc(p.researchLastChecked?new Date(p.researchLastChecked).toLocaleString():'Not recorded')}</p><div class="card-meta">${listingStatusLabel(p)}<span class="mini-chip">${esc(ageClocks(p))}</span><span class="mini-chip">${hoaSummary(p)}</span>${restrictionsSummary(p)}</div><div class="detail-meta"><strong>${money(p.price)}</strong><span>🌲 ${fmt(p.acres)} acres</span><span>${fmt(p.beds)} beds / ${fmt(p.baths)} baths</span><span>${fmt(p.sqft)} sq ft</span></div>
-    ${alertInfo(p)?`<div class="alert-panel ${esc(alertInfo(p).level)}"><strong>⚠ Research alert — ${alertInfo(p).level==='critical'?'Major conflict':'Minor conflict'}</strong><p>${esc(alertInfo(p).reason)}</p><p class="small">Source: ${esc(alertInfo(p).source||'Research import')}. This alert concerns conflicting information, not routine unverified listing claims.</p><button class="btn" type="button" id="resolveAlert">✓ Mark resolved with evidence</button></div>`:p.researchAlert?.resolved?`<div class="alert-panel"><strong>✓ Research alert resolved</strong><p>${esc(p.researchAlert.reason||'')}</p><p class="small">${esc(p.researchAlert.resolution||'')} · ${esc(p.researchAlert.resolvedAt||'')}</p><button class="btn" id="reopenAlert" type="button">Reopen alert</button></div>`:''}
-    ${pilotResearch[p.id]?`<div class="notice"><strong>Research pilot available:</strong> Reviewed listing information for this Serious Inquiry. <button class="btn primary" id="applyPilotResearch" type="button">📋 Populate Researched Details</button><div class="small">Adds only missing fields; never overwrites your existing entries or manual scores. Review before relying on any listing claims.</div></div>`:''}
-    <div class="detail-actions"><a class="btn primary" href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">Open Original Listing ↗</a><button class="btn" type="button" id="detailResearch">${p.deepResearch?'🔎 Remove Research Flag':'🔎 Mark for Deep Research'}</button></div>
-    </div><div class="hq-detail-right"><div class="hq-detail-notes"><div class="hq-note-rich"><label>R · Rich's notes ${me.uid===OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid===OWNER?'id="detailMyNotes"':'readonly'} placeholder="Rich's observations…">${esc(notesOf(me.uid===OWNER?mine:other,p.id))}</textarea></div><div class="hq-note-tiffany"><label>T · Tiffany's notes ${me.uid!==OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid!==OWNER?'id="detailMyNotes"':'readonly'} placeholder="Tiffany's observations…">${esc(notesOf(me.uid===OWNER?other:mine,p.id))}</textarea></div></div><div class="hq-detail-progress">${dualBars(allTopicStats(p),p)}</div></div></div></div><div class="hq-detail-scroll" id="detailAssessmentScroll">
+    <div class="details-top"><button class="btn" id="detailBack" type="button">← Back to ${detailReturnView==='council'?'War Council':detailReturnView==='collections'?'Collections':'Properties'}</button>${p.decision&&p.decision!=='Active'?`<span class="tag">${esc(p.decision)}</span>`:''}<div class="hq-detail-rank-summary" aria-label="Property rankings"><div class="rankbox">Rich<strong>${rich===null?'—':'#'+rich}</strong></div><div class="rankbox">Tiffany<strong>${tiffany===null?'—':'#'+tiffany}</strong></div><div class="rankbox">Combined<strong>${combined(p.id)===null?'—':'#'+combined(p.id).toFixed(1)}</strong></div></div><span class="tag hq-detail-tier">${esc(councilTier(p.id))}</span>${councilTier(p.id)==='Unranked'?`<span class="hq-rank-wait-note">Tier updates once both Rich and Tiffany have ranked this property.</span>`:''}</div>
+    <h2 style="font-size:clamp(25px,3vw,37px);margin:0">${esc(p.address)}</h2>${alertInfo(p)?`<button class="btn hq-detail-alert-trigger ${alertInfo(p).level==='critical'?'critical':'caution'}" type="button" id="detailAlertOpen">${alertInfo(p).level==='critical'?'Critical Alert':'Research Alert'}</button>`:p.researchAlert?.resolved?`<button class="btn hq-detail-alert-trigger resolved" type="button" id="detailAlertOpen">✓ Resolved Research Alert</button>`:''}
+    <div class="city">${esc(p.city)}, Texas · ${esc(listingStatus(p))}</div>${p.decision==='Sold Archive'?'<div class="hq-sold-banner">SOLD — OFF MARKET · ARCHIVED</div>':''}
+    <p class="small">Research last checked: ${esc(p.researchLastChecked?new Date(p.researchLastChecked).toLocaleString():'Not recorded')}</p><div class="card-meta">${listingStatusLabel(p)}<span class="mini-chip">${esc(ageClocks(p))}</span><span class="mini-chip hoa-chip ${hoaColorClass(p)}">${hoaSummary(p)}</span>${restrictionsSummary(p)}</div><div class="detail-meta"><strong>${money(p.price)}</strong><span>🌲 ${fmt(p.acres)} acres</span><span>${fmt(p.beds)} beds / ${fmt(p.baths)} baths</span><span>${fmt(p.sqft)} sq ft</span></div>
+
+
+    </div><div class="hq-detail-media"><div class="hq-detail-photo" aria-label="Main property photograph">${/^https:\/\//i.test(p.photoUrl||'')?`<img src="${safeUrl(p.photoUrl)}" alt="Main listing photo for ${esc(p.address)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="hq-photo-placeholder" hidden>Photo unavailable</span>`:`<span class="hq-photo-placeholder">Photo unavailable</span>`}<span class="hq-photo-caption">${p.photoUrl?'Main listing photo':'No verified photo yet'}</span></div><div class="hq-detail-aerial"><div class="hq-detail-aerial-label">Aerial view · Property boundaries</div>${cardAerial(p)}</div></div><div class="hq-detail-right"><div class="hq-detail-notes"><div class="hq-note-rich"><label>R · Rich's notes ${me.uid===OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid===OWNER?'id="detailMyNotes"':'readonly'} placeholder="Rich's observations…">${esc(notesOf(me.uid===OWNER?mine:other,p.id))}</textarea></div><div class="hq-note-tiffany"><label>T · Tiffany's notes ${me.uid!==OWNER?'(editable)':'(read only)'}</label><textarea ${me.uid!==OWNER?'id="detailMyNotes"':'readonly'} placeholder="Tiffany's observations…">${esc(notesOf(me.uid===OWNER?other:mine,p.id))}</textarea></div></div><div class="hq-detail-progress">${dualBars(allTopicStats(p),p)}</div></div><div class="hq-detail-toolbar"><div class="detail-actions">${personalClassControls(p)}<label class="hq-detail-class-picker">Tracking <select id="detailTrackingStatus" aria-label="Shared tracking status"><option value="Active" ${(p.decision||'Active')==='Active'?'selected':''}>Active</option><option value="On Hold" ${p.decision==='On Hold'?'selected':''}>On Hold</option><option value="Manual Archive" ${p.decision==='Manual Archive'?'selected':''}>📦 Archived (manual)</option><option value="Sold Archive" ${p.decision==='Sold Archive'?'selected':''} disabled>📦 Archived (sold)</option><option value="Rejected" ${p.decision==='Rejected'?'selected':''}>Rejected</option></select></label><a class="btn primary" href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">Open Original Listing ↗</a><button class="btn" type="button" id="detailResearch">${p.deepResearch?'🔎 Remove Research Flag':'🔎 Mark for Deep Research'}</button></div></div></div></div><div class="hq-detail-scroll" id="detailAssessmentScroll">
+    <details class="details-section"><summary>🔥 What Stands Out — Rich & Tiffany</summary><div class="details-body">${flameSummary(p)}</div></details>
     <details class="details-section"><summary>⚔️ Master Property Assessment — 72 entries</summary><div class="details-body">
       <div class="detail-meta"><strong id="detailScoreTotal">—</strong><span id="detailScoreCount"></span></div>
       ${masterGradeSections(p,scores)}
@@ -2264,13 +2744,13 @@ function renderPropertyDetails() {
     <details class="details-section"><summary>🏡 Property Overview</summary><div class="details-body"><div class="small" style="margin-bottom:7px">Shared overview / observations · read only</div><div class="overview-readonly">${esc(d.overview?.summary||'No shared overview recorded.')}</div></div></details>
     ${fieldBlocks[0]}
     <details class="details-section"><summary>🗺️ Location & Parcel</summary><div class="details-body"><p class="small">${mapCoords(p)?'Saved location: '+mapCoords(p).join(', '):'Property coordinates not verified.'} · Parcel outlines require matched, verified GIS boundary data; a map pin is not a legal boundary.</p><button class="btn" type="button" id="detailOpenMap">View on property map</button> <a class="btn" href="${safeUrl(mapLink(p))}" target="_blank" rel="noopener noreferrer">Open map ↗</a><p class="small">${esc(boundaryLabel(p))}${p.parcelBoundary?.source?' · Source: '+esc(p.parcelBoundary.source):''}${p.parcelBoundary?.checkedAt?' · Checked: '+esc(String(p.parcelBoundary.checkedAt).slice(0,10)):''}. GIS lines are not legal surveys.</p><div class="actionline"><button class="btn primary" type="button" id="detailParcelLookup">🔍 Find parcel in Texas GIS</button><a class="btn" href="https://geographic.texas.gov/stratmap/land-parcels.html" target="_blank" rel="noopener noreferrer">GIS data info ↗</a></div><div id="detailParcelResult" class="small" aria-live="polite"></div></div></details>
-    <details class="details-section"><summary>🚗 Travel & Commute</summary><div class="details-body"><p class="small">Calculate road-based distance and a no-live-traffic driving estimate with Google Maps Routes. API usage may be billed. Use a browser-referrer-restricted Google Maps Platform key (Maps JavaScript API + Routes API); it is saved only in this browser, never to Firebase. Rates reflect a routing estimate, not a guaranteed commute.</p><div class="route-setup"><label>Google Maps browser API key <input id="hqRoutesKey" type="password" autocomplete="off" placeholder="Paste restricted browser key" value="${esc(getRoutesKey())}"></label><div class="actionline"><button class="btn" id="hqRoutesSaveKey" type="button">Save key on this device</button><button class="btn archive" id="hqRoutesForgetKey" type="button">Forget key</button><button class="btn primary" id="hqRoutesCompute" type="button">🚗 Calculate routes for this property</button></div><div id="hqRoutesStatus" class="small" aria-live="polite"></div></div>${tripSection(p)}</div></details>
+    <details class="details-section"><summary>🚗 Location & Commute</summary><div class="details-body">${tripSection(p)}</div></details>
     <details class="details-section"><summary>📅 Listing History & HOA</summary><div class="details-body"><p class="small">Status: ${esc(listingStatus(p))} · Age: ${esc(ageClocks(p))} · Last verified: ${esc(verifiedDate(p)||'Unverified')}</p><label class="meta-field">Known listing start date <input id="detailListedOn" type="date" value="${esc(listedOn(p))}"></label><p class="small">Only enter a date supported by the original listing or MLS. A new date doesn't create a historical event.</p><p><strong>${hoaSummary(p)}</strong> · ${restrictionsSummary(p)||'Restrictions not verified'}</p>${historyHtml(p)}</div></details>
     ${fieldBlocks.slice(1).join('')}
     <details class="details-section"><summary>⚔️ War Council</summary><div class="details-body"><div class="rankgrid"><div class="rankbox">Rich<strong>${rich?'#'+rich:'—'}</strong></div><div class="rankbox">Tiffany<strong>${tiffany?'#'+tiffany:'—'}</strong></div><div class="rankbox">Combined<strong>${combined(p.id)===null?'—':'#'+combined(p.id).toFixed(1)}</strong></div></div><p class="small">Tier: ${esc(councilTier(p.id))}</p><label>My rank <input id="detailMyRank" class="rankinput" type="number" min="1" max="${shared.length}" value="${rankOf(mine,p.id)??''}" placeholder="Unranked"></label><button class="btn rankbtn direction" id="detailRankUp" type="button">↑ Top / Up</button><button class="btn rankbtn direction" id="detailRankDown" type="button">↓ Bottom / Down</button><button class="btn" type="button" id="detailClearRank">Clear rank</button>${discoveryTagged(p)?`<div class="reviewrow"><span class="small ${richReviewed(p)&&tiffanyReviewed(p)?'review-complete':'review-waiting'}">${esc(reviewStatus(p))} · Ranking counts as reviewed.</span><button class="btn" type="button" id="detailReviewed">${mine.reviewed?.[p.id]===true?'Undo my reviewed mark':'Mark reviewed / pass'}</button></div>`:''}</div></details>
     <details class="details-section"><summary>🔎 Research Discussion</summary><div class="details-body">${p.deepResearch?`<div id="detailResearchComments"><p class="small">Loading comments…</p></div><textarea id="detailResearchInput" maxlength="5000" placeholder="Share a research finding or question…"></textarea><button class="btn" id="detailPostComment" type="button">Post Comment</button>`:'<p class="small">Mark this property for Deep Research to enable shared comments.</p>'}</div></details>
     <details class="details-section"><summary>📸 Optional Serious-Contender Photos</summary><div class="details-body"><p class="detail-help">Optional direct image URLs with captions. No uploads or Firebase Storage setup required.</p><div class="details-photos">${photos.map((photo,i)=>`<div class="details-photo-item"><img src="${safeUrl(photo.url)}" alt="${esc(photo.caption||'Property photo')}" loading="lazy"><p class="small">${esc(photo.caption||'Property photo')}</p><button class="btn archive" type="button" data-remove-photo="${i}">Remove</button></div>`).join('')}</div><div class="details-fields"><label>Image URL<input id="detailPhotoUrl" type="url" placeholder="https://..."></label><label>Caption<input id="detailPhotoCaption" placeholder="Workshop, porch, guest house…"></label></div><button class="btn" id="detailAddPhoto" type="button">Add Photo URL</button></div></details>
-    <div class="detail-actions"><button class="btn" id="detailBackBottom" type="button">← Back to ${detailReturnView==='council'?'War Council':'Properties'}</button></div></div>`;
+    <div class="detail-actions"><button class="btn" id="detailBackBottom" type="button">← Back to ${detailReturnView==='council'?'War Council':detailReturnView==='collections'?'Collections':'Properties'}</button></div></div>`;
   root.dataset.renderedPropertyId=String(openPropertyId);
   if(openPanels){
     root.querySelectorAll('details.details-section').forEach((section,index)=>{
@@ -2291,10 +2771,18 @@ function renderPropertyDetails() {
   }
   const back=()=>{openPropertyId=null;switchView(detailReturnView);restoreDetailReturnPosition()};
   $('detailBack').onclick=back;$('detailBackBottom').onclick=back;
-  if(pilotResearch[p.id])$('applyPilotResearch').onclick=()=>applyPilotResearch(p.id);
+  // v3.7.4: Detail aerial is rendered after card event binding; wire its own map popup.
+  root.querySelectorAll('.hq-detail-aerial [data-map-focus]').forEach(el=>{
+    el.addEventListener('click',event=>{event.preventDefault();openParcelExplorer(el.dataset.mapFocus);});
+  });
+  $('detailTrackingStatus').onchange=e=>{const next=e.target.value;if(next!==(p.decision||'Active'))setDecision(p.id,next);else e.target.value=p.decision||'Active';};
+
   root.querySelectorAll('[data-detail-group]').forEach(el=>el.onchange=()=>saveDetailField(p.id,el.dataset.detailGroup,el.dataset.detailKey,el.value.trim()));
   function updateScore(){const stats=wishlistStats(p);$('detailScoreTotal').textContent=stats.known?`${stats.points} / ${stats.total*5} possible master points`:'Not yet scored';$('detailScoreCount').textContent=`${stats.known} of ${stats.total} criteria assessed · ${stats.automatic} automatic`;}
   root.querySelectorAll('[data-wishlist]').forEach(el=>{el.disabled=!ratingsReady;el.onchange=()=>{const wrap=el.closest('.hq-mobile-grade-select');if(wrap)wrap.dataset.shortGrade=el.value===''?'Not Assessed':el.value+' / 5';setPersonalRating(p.id,el.dataset.wishlist,el.value)}});root.querySelectorAll('[data-reset-wishlist]').forEach(el=>{el.disabled=!ratingsReady||el.disabled;el.onclick=()=>setPersonalRating(p.id,el.dataset.resetWishlist,'')});updateScore();
+  root.querySelectorAll('[data-flame-key]').forEach(el=>el.onclick=()=>{const key=el.dataset.flameKey;const current=flameData(mine,p.id,key);updateFlame(p.id,key,{level:(current.level+1)%3});el.innerHTML=((current.level+1)%3?'🔥'.repeat((current.level+1)%3):'♢')+' <span>'+(me.uid===OWNER?'Rich':'Tiffany')+'</span>';el.setAttribute('aria-label','Your highlight: '+((current.level+1)%3)+' flames');const summary=root.querySelector('.flame-summary-grid');if(summary)summary.outerHTML=flameSummary(p);});
+  root.querySelectorAll('[data-flame-note-toggle]').forEach(el=>el.onclick=()=>{const editor=root.querySelector('[data-flame-editor="'+el.dataset.flameNoteToggle+'"]');if(editor)editor.hidden=!editor.hidden;});
+  root.querySelectorAll('[data-flame-note]').forEach(el=>el.oninput=()=>{updateFlame(p.id,el.dataset.flameNote,{note:el.value.slice(0,250)});const summary=root.querySelector('.flame-summary-grid');if(summary)summary.outerHTML=flameSummary(p);});
   root.querySelectorAll('[data-assessment-comment]').forEach(el=>{
     const resize=()=>{el.style.height='auto';el.style.height=Math.max(34,el.scrollHeight)+'px'};
     resize();el.oninput=()=>{p.assessmentComments??={};p.assessmentComments[el.dataset.assessmentComment]=el.value;resize();queue('shared')};
@@ -2307,7 +2795,7 @@ function renderPropertyDetails() {
   if($('hqRoutesCompute'))$('hqRoutesCompute').onclick=async()=>{const btn=$('hqRoutesCompute'),status=$('hqRoutesStatus');btn.disabled=true;try{await computeTravelRoutes(p.id,status)}catch(e){const dest=$('hqRoutesStatus');if(dest)dest.textContent='Routing failed: '+String(e.message||e)}finally{const dest=$('hqRoutesCompute');if(dest)dest.disabled=false}};
 
   if($('detailListedOn'))$('detailListedOn').onchange=e=>{p.listedOn=e.target.value;queue('shared');render()};
-  if($('resolveAlert'))$('resolveAlert').onclick=()=>resolveResearchAlert(p.id);if($('reopenAlert'))$('reopenAlert').onclick=()=>reopenResearchAlert(p.id);$('detailMyRank').onchange=el=>setRank(p.id,el.target.value);
+  if($('detailAlertOpen'))$('detailAlertOpen').onclick=()=>openDetailResearchAlert(p.id);$('detailMyRank').onchange=el=>setRank(p.id,el.target.value);
   if($('detailReviewed'))$('detailReviewed').onclick=()=>setReviewed(p.id);$('detailClearRank').onclick=()=>setRank(p.id,'');$('detailRankUp').onclick=()=>nudgeRank(p.id,'up');$('detailRankDown').onclick=()=>nudgeRank(p.id,'down');
   $('detailResearch').onclick=()=>{p.deepResearch=!p.deepResearch;queue('shared');render();};
   if(p.deepResearch){
@@ -2336,26 +2824,31 @@ function switchView(view) {
   currentView = view;
 
   const showingCouncil = view === 'council';
+  const showingCollections = view === 'collections';
   const showingDetails = view === 'details';
   document.body.classList.toggle('hq-details-active', showingDetails);
   $('propertyDetails').classList.toggle('hidden', !showingDetails);
-  $('myPropertiesSection').classList.toggle('hidden', showingCouncil || showingDetails || mapActive);
+  $('myPropertiesSection').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails || mapActive);
   $('showProperties').classList.toggle('primary', view === 'properties');
   $('showWarCouncil').classList.toggle('primary', showingCouncil);
+  $('showCollections').classList.toggle('primary', showingCollections);
+  $('collectionsPage').classList.toggle('hidden', !showingCollections);
 
   $('warCouncil').classList.toggle('hidden', !showingCouncil);
 
   
 
   // Hide the property grid and its heading while viewing the Council.
-  $('cards').classList.toggle('hidden', showingCouncil || showingDetails);
-  $('count').parentElement.classList.toggle('hidden', showingCouncil || showingDetails);
+  $('cards').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails);
+  $('count').parentElement.classList.toggle('hidden', showingCouncil || showingCollections || showingDetails);
 
   // Keep the comparison panel out of the Council view.
-  $('comparepanel').classList.toggle('hidden', showingCouncil || showingDetails); if (!showingCouncil && !showingDetails) compare();
+  $('comparepanel').classList.toggle('hidden', showingCouncil || showingCollections || showingDetails); if (!showingCouncil && !showingCollections && !showingDetails) compare();
 
   if (showingCouncil) {
     renderWarCouncil();
+  } else if (showingCollections) {
+    renderCollections();
   } else if (showingDetails) {
     renderPropertyDetails();
   } else {
@@ -2583,10 +3076,12 @@ document.addEventListener('keydown',e=>{
 
 $('showProperties').onclick = () => {if(mapActive)closePropertyMap();openPropertyId=null;switchView('properties')};
 $('showWarCouncil').onclick = () => {if(mapActive)closePropertyMap();openPropertyId=null;switchView('council')};
+$('showCollections').onclick = () => {if(mapActive)closePropertyMap();openPropertyId=null;switchView('collections')};
+$('closeCollections').onclick = () => {openPropertyId=null;switchView('properties')};
 
 // Val's Research JSON v1: {format:"homestead-research-v1", properties:[{id?,address,city,...}]}.
 // This is deliberately not the full cloud backup format. Existing user decisions and personal records are protected.
-const researchFields=['researchAlert','address','city','url','listingStatus','listingVerifiedAt','listedOn','listingHistory','priceReduced','hoaInfo','restrictions','travelTimes','parcelBoundary','lat','lon','price','acres','beds','baths','sqft','status','photoUrl','notes','risk','features','gradeEvidence'];
+const researchFields=['researchAlert','address','city','url','listingStatus','listingVerifiedAt','listedOn','listingHistory','priceReduced','hoaInfo','restrictions','travelTimes','parcelBoundary','lat','lon','price','acres','beds','baths','sqft','status','photoUrl','photoSource','photoVerifiedAt','listingStatusSource','notes','risk','features','gradeEvidence'];
 const researchDetailGroups=['overview','structures','income','scoreEvidence'];
 const cloneResearch=x=>JSON.parse(JSON.stringify(x));
 const nonempty=x=>x!==null&&x!==undefined&&x!=='';
@@ -2612,6 +3107,8 @@ function checkResearchFile(payload){
   const k=identityKey(p);if(keys.has(k))throw Error('Duplicate address in import: '+p.address);keys.add(k);
   if(p.id!=null){if(typeof p.id!=='string'||!p.id.trim())throw Error('Invalid property ID.');if(ids.has(p.id))throw Error('Duplicate ID in import: '+p.id);ids.add(p.id)}
   for(const f of ['price','acres','beds','baths','sqft'])if(nonempty(p[f])&&(typeof p[f]!=='number'||!Number.isFinite(p[f])||p[f]<0))throw Error('Invalid '+f+' for '+p.address);
+  if(p.photoUrl!==undefined&&(!/^https:\/\//i.test(p.photoUrl)||p.photoUrl.length>2048))throw Error('Photo URL must be HTTPS for '+p.address);
+  if(p.listingStatusSource!==undefined&&(!/^https:\/\//i.test(p.listingStatusSource)||p.listingStatusSource.length>2048))throw Error('Listing status source must be HTTPS for '+p.address);
   if(p.listingHistory!==undefined&&(!Array.isArray(p.listingHistory)||p.listingHistory.length>250))throw Error('Invalid listing history for '+p.address);
   for(const f of ['listingVerifiedAt','listedOn'])if(p[f]!==undefined&&p[f]!==''&&!isoDay(p[f]))throw Error('Invalid '+f+' for '+p.address);
   for(const f of ['lat','lon'])if(p[f]!==undefined&&(typeof p[f]!=='number'||!Number.isFinite(p[f])))throw Error('Invalid '+f+' for '+p.address);
@@ -2681,6 +3178,7 @@ function mergeResearch(existing,incoming,now){
    if(!sameResearchValue(prior,value)){p.parcelBoundary=cloneResearch(value);changes.push(field)}
    continue;
   }
+  if(field==='photoUrl'&&p.photoUrl&&p.photoUrl.trim())continue; // Keep approved/manual thumbnail; never overwrite it on refresh.
   if(field==='listingHistory'){
    const merged=mergeListingHistory(p.listingHistory,value,p.address);
    if(!sameResearchValue(p.listingHistory??[],merged)){
@@ -2709,6 +3207,19 @@ function mergeResearch(existing,incoming,now){
     p.details[group][key]=cloneResearch(value);changes.push(group+'.'+key);
    }
   }
+ }
+ // Auto-archive only a documented, explicitly sold listing. No pending/off-market inference.
+ const confirmedSold=/^(sold|closed|sold\s*[-—:]\s*off\s*market)$/i.test(String(incoming.listingStatus||'').trim())
+  &&!!isoDay(incoming.listingVerifiedAt)&&/^https:\/\//i.test(String(incoming.listingStatusSource||''));
+ const confirmedReturned=/^(active|available|for sale|back on market)$/i.test(String(incoming.listingStatus||'').trim())
+  &&!!isoDay(incoming.listingVerifiedAt)&&/^https:\/\//i.test(String(incoming.listingStatusSource||''));
+ if(confirmedSold&&!['Sold Archive','Manual Archive','Rejected'].includes(p.decision||'Active')){
+  p.archiveInfo={previousDecision:p.decision||'Active',archivedAt:now,verifiedAt:incoming.listingVerifiedAt,source:incoming.listingStatusSource};
+  p.decision='Sold Archive';changes.push('Archived: confirmed sold');
+ }else if(confirmedReturned&&p.decision==='Sold Archive'&&p.archiveInfo&&!p.archiveInfo.manuallyRestoredAt){
+  p.decision=p.archiveInfo.previousDecision||'Active';
+  p.archiveInfo={...p.archiveInfo,returnedAt:now,returnSource:incoming.listingStatusSource};
+  changes.push('Restored: back on market');
  }
  // Never accept incoming decision, groups, manual wishlist, ranks, comments, or personal notes.
  // Record an observation when a status or price changes. We know when it was
@@ -2748,10 +3259,10 @@ function planResearchImport(items,base){
 function downloadResearchJSON(payload,filename){const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 $('refreshResearch').onclick=()=>{
  if(!ready)return;
- const items=shared.filter(p=>(p.decision||'Active')==='Active').map(p=>({id:p.id,address:p.address,city:p.city,url:p.url||'',lastChecked:p.researchLastChecked||null,currentStatus:listingStatus(p),currentPrice:p.price??null,listedOn:listedOn(p)||null,existingHOA:p.hoaInfo||null}));
- if(!items.length){alert('No active properties to research.');return}
- downloadResearchJSON({format:'homestead-research-request-v1',requestedAt:new Date().toISOString(),instructions:'Upload this file to Val in ChatGPT to refresh listings. Verify current status, price, listing date, HOA dues and restrictions, and any actual status-change dates with sources. For each travelTimes destination include driving minutes, miles, HTTPS routing-source URL and verifiedAt date; do not claim verified for unsupported estimates. For parcelBoundary use GeoJSON Polygon or MultiPolygon coordinates in [longitude,latitude], source, parcelId/parcelIds, matched boolean, and checkedAt date; never treat appraisal GIS as a legal survey. Return a homestead-research-v1 import; leave unverified fields unknown. Separate date observed from confirmed event date.',properties:items},'homestead_research_request_'+new Date().toISOString().slice(0,10)+'.json');
- alert('Research request downloaded for '+items.length+' active properties. Upload it to our ChatGPT conversation and ask me to refresh them. Then import the resulting research JSON here. This button does not independently search the web.');
+ const items=shared.filter(p=>['Active','Sold Archive','Manual Archive'].includes(p.decision||'Active')).map(p=>({id:p.id,address:p.address,city:p.city,url:p.url||'',lastChecked:p.researchLastChecked||null,currentStatus:listingStatus(p),currentPrice:p.price??null,listedOn:listedOn(p)||null,existingHOA:p.hoaInfo||null}));
+ if(!items.length){alert('No active or archived properties to research.');return}
+ downloadResearchJSON({format:'homestead-research-request-v1',requestedAt:new Date().toISOString(),instructions:'Upload this file to Val in ChatGPT to refresh listings. Verify current status, price, listing date, HOA dues and restrictions, and any actual status-change dates with sources. For a confirmed Sold or back-on-market listing, provide listingStatus, listingVerifiedAt (YYYY-MM-DD) and listingStatusSource (direct HTTPS source URL); without these HQ will not auto-archive or auto-restore. For a permitted, exact-listing main image provide photoUrl (direct HTTPS image URL), photoSource and photoVerifiedAt; never substitute a nearby house or fabricate an image URL. For each travelTimes destination include driving minutes, miles, HTTPS routing-source URL and verifiedAt date; do not claim verified for unsupported estimates. For parcelBoundary use GeoJSON Polygon or MultiPolygon coordinates in [longitude,latitude], source, parcelId/parcelIds, matched boolean, and checkedAt date; never treat appraisal GIS as a legal survey. Return a homestead-research-v1 import; leave unverified fields unknown. Separate date observed from confirmed event date.',properties:items},'homestead_research_request_'+new Date().toISOString().slice(0,10)+'.json');
+ alert('Research request downloaded for '+items.length+' active and archived properties. Upload it to our ChatGPT conversation and ask me to refresh them. Then import the resulting research JSON here. This button does not independently search the web.');
 };
 $('importResearch').onclick=()=>{if(!ready)return;if(me?.uid!==OWNER){alert('Only Rich can import shared research.');return}if(saveBusy||dirtyShared||dirtyMine||ratingsBusy||ratingsDirty){alert('Wait until all changes are cloud-saved before importing.');return}$('researchFile').value='';$('researchFile').click()};
 $('researchFile').onchange=async e=>{
@@ -2771,21 +3282,40 @@ $('researchFile').onchange=async e=>{
    try{
     if(saveBusy||dirtyShared||dirtyMine)throw Error('Wait for cloud save to finish, then re-open the import.');
     // Transaction merges against latest cloud state, not an outdated browser snapshot.
+    let committedMoves=[];
     await runTransaction(db,async tx=>{
      const snap=await tx.get(sharedRef),current=snap.exists()?(snap.data().properties||[]):[];
      const freshPlan=planResearchImport(items,current);
+     committedMoves=freshPlan.filter(x=>x.changes.some(c=>c==='Archived: confirmed sold'||c==='Restored: back on market')).map(x=>({address:x.address,action:x.changes.includes('Archived: confirmed sold')?'archived':'restored'}));
      const byId=new Map(freshPlan.filter(x=>x.type!=='unchanged').map(x=>[x.id,x.property]));
      const next=current.map(p=>byId.get(p.id)||p);
      for(const x of freshPlan)if(x.type==='new')next.push(x.property);
      tx.set(sharedRef,{properties:next,updatedAt:new Date().toISOString()});
     });
-    panel.innerHTML='<strong>✓ Research import saved to Firebase.</strong><p class="small">Updated shared research will appear as the cloud listener synchronizes. Personal evaluations were not modified.</p>';
+    const archived=committedMoves.filter(x=>x.action==='archived'),restored=committedMoves.filter(x=>x.action==='restored');
+    panel.innerHTML='<strong>✓ Research import saved to Firebase.</strong><p class="small">Updated shared research will appear as the cloud listener synchronizes. Personal evaluations were not modified.</p>'+(committedMoves.length?'<div class="hq-archive-notice"><strong>📦 '+archived.length+' sold properties moved to Archive · '+restored.length+' returned to market</strong><div>'+committedMoves.map(x=>'<p class="small">'+(x.action==='archived'?'Archived: ':'Restored: ')+esc(x.address)+'</p>').join('')+'</div><button type="button" class="btn" id="hqViewSoldArchive">View Property Archive</button></div>':'');
+    if(committedMoves.length){$('hqViewSoldArchive').onclick=()=>{$('decisionfilter').value='Sold Archive';switchView('properties');render()};}
    }catch(err){panel.innerHTML='<strong>Import stopped:</strong> '+esc(err.message)+'<p class="small">No research changes were committed by this import.</p>'}
   };
  }catch(err){researchImportPending=null;panel.classList.remove('hidden');panel.textContent='Import rejected: '+err.message}
 };
 
-$('add').onclick=()=>{let address=prompt('Property street address:');if(!address)return;let city=prompt('City:');if(!city)return;let url=prompt('Listing URL:')||'';let price=Number(prompt('Asking price (number):')||0);let acres=Number(prompt('Acreage (number):')||0);let id='custom-'+crypto.randomUUID();shared.push({id,address:address.trim(),city:city.trim(),url,price,acres,groups:['Watchlist'],decision:'Active',status:'Unverified',features:[],gradeEvidence:[],source:'Added manually'});queue('shared');render()};
+$('add').onclick=()=>{
+ const raw=prompt('Add property — enter street address and city (example: 266 Live Oak Trl, Tarpley).\nOnly the address is required to begin.');
+ if(!raw?.trim())return;
+ let parts=raw.split(',').map(x=>x.trim()).filter(Boolean);
+ let address=parts.shift()||'',city=(parts.shift()||'').replace(/\s+(TX|Texas)(?:\s+\d{5})?$/i,'').trim();
+ let url=(prompt('Listing URL (optional — leave blank to skip):')||'').trim();
+ if(url&&!/^https:\/\//i.test(url)){alert('Listing URL must start with https://');return}
+ if(!city&&url){try{const match=new URL(url).pathname.match(/^\/TX\/([^/]+)\//i);if(match)city=decodeURIComponent(match[1]).replace(/-/g,' ')}catch{}}
+ if(!city)city=(prompt('City (needed to identify the correct property):')||'').trim();
+ if(!address||!city)return;
+ if(shared.some(p=>identityKey(p)===identityKey({address,city}))){alert('This property is already tracked in HQ.');return}
+ const flag=confirm('Flag this new property for Deep Research?\nOK = Add & Flag for Research\nCancel = Add to Watchlist only');
+ const id='custom-'+crypto.randomUUID();
+ shared.push({id,address,city,url,groups:['Watchlist'],hqClassification:'Watchlist',decision:'Active',status:'Unverified',features:[],gradeEvidence:[],source:'Added manually',deepResearch:flag});
+ queue('shared');render();
+};
 // An export is only called complete if every property discussion collection was read successfully.
 function serializeCommentValue(value){
  if(value&&typeof value.toDate==='function')return value.toDate().toISOString();
@@ -2803,7 +3333,7 @@ $('export').onclick=async()=>{
    comments[p.id]=snap.docs.map(d=>({id:d.id,...Object.fromEntries(Object.entries(d.data()).map(([k,v])=>[k,serializeCommentValue(v)]))}));
   }
   const payload={version:12,exported:new Date().toISOString(),sharedProperties:shared,
-   personal:{[me.uid]:{notes:mine.notes||{},ranks:mine.ranks||{}},...(partnerUid?{[partnerUid]:{notes:other.notes||{},ranks:other.ranks||{}}}:{})},
+   personal:{[me.uid]:{notes:mine.notes||{},ranks:mine.ranks||{},criterionFlames:mine.criterionFlames||{}},...(partnerUid?{[partnerUid]:{notes:other.notes||{},ranks:other.ranks||{},criterionFlames:other.criterionFlames||{}}}:{})},
    personalWishlistRatings:{[me.uid]:myRatings.ratings||{},...(partnerUid?{[partnerUid]:partnerRatings.ratings||{}}:{})},
    researchComments:comments,
    backupCoverage:{properties:shared.length,discussionCollections:Object.keys(comments).length,discussionComments:Object.values(comments).reduce((a,v)=>a+v.length,0),notesAndRanks:'Current signed-in member and available partner snapshot; includes separate 1–5 wishlist overrides',deepResearchComments:'All tracked property discussions read successfully'},
