@@ -630,7 +630,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .card .hq-personal-choice select{width:138px;max-width:138px}
 @media(max-width:740px){.card .hq-address-status-row .hq-personal-controls{align-items:flex-start;margin-left:0}.card .hq-address-status-row{gap:8px}}
 
-/* v3.7.21 — prominent personal classification icons floating over rank corners */
+/* v3.7.22 — prominent personal classification icons floating over rank corners */
 .card .hq-personal-icon{display:none!important}
 .card .hq-card-rankgrid{padding-top:9px;overflow:visible}
 .card .hq-status-rankbox{position:relative;overflow:visible}
@@ -639,7 +639,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .card .hq-rank-status-icon.star{color:#ffc72c;font-size:36px}
 .card .hq-rank-status-icon.dollar{color:#42ec6a;font-size:34px}
 
-/* v3.7.21 — keep address at its natural top; status selectors align with rank boxes.
+/* v3.7.22 — keep address at its natural top; status selectors align with rank boxes.
    Remove the tall flex row that previously pushed the entire middle column down. */
 #cards>.card>.cardmain>.property-overview{position:relative}
 #cards .hq-address-status-row{display:block!important;position:static!important;margin:0 0 5px!important;min-height:0!important}
@@ -652,6 +652,14 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
  #cards .hq-address-status-row .hq-personal-controls{position:static!important;align-items:flex-start!important;margin-top:8px!important}
  #cards .hq-address-status-row h3{padding-right:0!important}
 }
+
+/* v3.7.22: Restore grade-source key and improve AUTO/MANUAL distinction. */
+.card-grade-legend{display:flex;align-items:center;flex-wrap:wrap;gap:7px 9px;margin:8px 0 12px;padding:10px 12px;border:1px solid #597369;border-radius:8px;background:#13251f;color:#e5eee9;font-size:12px;font-weight:600}
+.card-grade-origin{display:inline-flex;align-items:center;justify-content:center;min-width:64px;padding:4px 8px;border-radius:5px;border:1px solid transparent;font-size:11px;font-weight:900;letter-spacing:.055em}
+.card-grade-origin.auto{background:#164b70;color:#e8f8ff;border-color:#58c7ff}
+.card-grade-origin.manual{background:#704016;color:#fff1d7;border-color:#ffb84d}
+.card-evidence-panel .wishlist-evidence-score{color:#75d5ff;background:#103a51;border:1px solid #4ca9d8;border-radius:5px;padding:3px 7px;font-weight:900}
+.card-evidence-panel .wishlist-evidence-score.overridden{color:#ffd18a;background:#593511;border-color:#f5a83b}
 </style><style id="card-flame-preview-styles">
 .card-price-row .card-flame-highlights{display:flex;gap:7px;align-items:center;margin-left:auto;flex-wrap:wrap;min-width:0}
 .card-flame-person{position:relative;display:inline-flex;align-items:center;gap:4px;border:1px solid #80633b;border-radius:7px;padding:4px 7px;background:#302b21;color:#f8e3ae;font-size:11px;font-weight:700;cursor:help;outline-offset:3px}
@@ -845,7 +853,7 @@ header .hq-header-data .btn{font-size:12px;padding:7px 11px;min-height:34px;text
 .hq-personal-controls{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.hq-personal-choice{font-size:12px;display:inline-flex;gap:5px;align-items:center}.hq-personal-choice select{max-width:150px;background:#23332e;color:#f2f4f0;border:1px solid #64786a;border-radius:5px;padding:4px}.hq-personal-choice select:disabled{opacity:.7}.hq-personal-badge{display:inline-block;padding:3px 6px;margin:3px 3px 0 0;background:#403c4b;color:#f8e8c5;border-radius:5px;font-size:12px;font-weight:700}.hq-class-row select:disabled{opacity:.55}
 </style>
 </head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p></div><div class="hq-header-data" role="group" aria-label="Data tools"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div></div></header><main class="shell"><div class="memberbar">   <span id="identity"></span>   <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">     <button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button>
-     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.21     </span><span title="v3.7: Sold Archive, refresh notifications, lightweight main photo, mobile details scrolling, research pilot removed" style="font-size:11px;color:#d3e3d4">What’s new: legacy icons restored · safe Rich classification migration</span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
+     <span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.22     </span><span title="v3.7: Sold Archive, refresh notifications, lightweight main photo, mobile details scrolling, research pilot removed" style="font-size:11px;color:#d3e3d4">What’s new: legacy icons restored · safe Rich classification migration</span>     <button class="btn" id="logout">Sign out</button>   </div> </div><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
