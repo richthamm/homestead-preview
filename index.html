@@ -700,6 +700,26 @@ header #admin .owner-tools-body{right:-120px}
 .hq-gallery-close{right:18px;top:15px}.hq-gallery-prev{left:12px;top:48%}.hq-gallery-next{right:12px;top:48%}
 .hq-gallery-count{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:#d6e4d9;font-size:12px}
 @media(max-width:650px){.hq-gallery-overlay{padding:60px 44px}.hq-gallery-control{font-size:18px;padding:8px}.hq-gallery-prev{left:4px}.hq-gallery-next{right:4px}}
+
+/* v3.7.47 — consistent header organization on desktop, tablet, and phone.
+   Keep account on the bottom header row and the two utilities equal sized. */
+header .hq-header-content{width:100%;box-sizing:border-box}
+header .hq-header-data{min-width:0}
+header .hq-header-utilities{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+header #admin.admin,header #hqDisclaimer.hq-disclaimer{min-width:0;align-self:stretch}
+header #admin .owner-tools-summary,header #hqDisclaimer summary{display:flex;align-items:center;justify-content:center;min-height:40px;height:100%;box-sizing:border-box}
+header .hq-header-account{width:100%;box-sizing:border-box}
+@media(min-width:701px){
+ header .hq-header-content{column-gap:24px}
+ header .hq-header-data{flex:0 1 280px;max-width:280px}
+ header .hq-header-utilities{gap:8px}
+ header #admin .owner-tools-summary,header #hqDisclaimer summary{font-size:12px;padding:9px 10px}
+ header #identity{font-size:13px}
+}
+@media(max-width:700px){
+ header .hq-header-data{max-width:145px}
+ header .hq-header-utilities{gap:6px}
+}
 </style><style id="card-flame-preview-styles">
 .card-price-row .card-flame-highlights{display:flex;gap:7px;align-items:center;margin-left:auto;flex-wrap:wrap;min-width:0}
 .card-flame-person{position:relative;display:inline-flex;align-items:center;gap:4px;border:1px solid #80633b;border-radius:7px;padding:4px 7px;background:#302b21;color:#f8e3ae;font-size:11px;font-weight:700;cursor:help;outline-offset:3px}
@@ -980,12 +1000,27 @@ header #admin .owner-tools-body{right:-120px}
 #dreamBigPreview .dream-primary-actions .hq-gallery-open{background:#c8dfb2;color:#14251d;border:2px solid #d9ecc5;border-radius:9px;font-weight:800;cursor:pointer}
 #dreamBigPreview .dream-primary-actions .hq-gallery-open:hover{background:#e1f0ce}
 @media(max-width:700px){#dreamBigPreview .dream-property{min-height:165px}#dreamBigPreview .dream-photo-art{min-height:165px}#dreamBigPreview .dream-primary-actions{gap:5px}#dreamBigPreview .dream-primary-actions .hq-gallery-open,#dreamBigPreview .dream-primary-actions .btn.primary{font-size:10px;padding:7px 4px;min-height:40px}}
+
+/* v3.7.47 — compact header and temporary connection notice */
+header .hq-header-content{flex-wrap:wrap;row-gap:8px}
+header .hq-header-account{flex:0 0 100%;display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:0;border-top:1px solid #526b59;padding-top:8px}
+header #identity{min-width:0;overflow-wrap:anywhere;font-size:12px}
+header #logout{flex:0 0 auto;min-height:32px;padding:5px 11px}
+header .hq-header-utilities{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px;width:100%}
+header #admin.admin,header #hqDisclaimer.hq-disclaimer{width:100%;flex:auto}
+header #admin .owner-tools-summary,header #hqDisclaimer summary{width:100%;min-height:37px;box-sizing:border-box;white-space:normal;text-align:center;font-size:11px}
+header #admin .owner-tools-body{right:0}
+.owner-research-actions{display:grid;gap:8px;margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #536b59}
+.owner-research-actions .btn{width:100%;margin:0!important;font-size:12px!important;min-height:38px!important}
+.hq-toast{position:fixed!important;top:12px;left:50%;transform:translate(-50%,-12px);width:min(92vw,560px);max-width:calc(100vw - 24px);z-index:1200;box-sizing:border-box;margin:0!important;padding:12px 15px!important;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,transform .2s,visibility .2s;box-shadow:0 8px 24px #0008;text-align:center}
+.hq-toast.hq-toast-visible{opacity:1;visibility:visible;transform:translate(-50%,0)}
+@media(max-width:650px){header .hq-header-account{padding-top:7px}header #identity{font-size:11px}header #logout{font-size:11px}header .hq-header-utilities{gap:6px}header #admin .owner-tools-summary,header #hqDisclaimer summary{font-size:10px;min-height:36px}}
 </style>
-</head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.44     </span><span title="v3.7.43: DREAM BIG original listing button styling" style="font-size:11px;color:#d3e3d4">What’s new: DREAM BIG original listing links styled as HQ buttons</span></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
+</head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.47     </span><span title="v3.7.43: DREAM BIG original listing button styling" style="font-size:11px;color:#d3e3d4">What’s new: DREAM BIG original listing links styled as HQ buttons</span></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><div id="ownerActionStaging" class="hidden"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
-  <summary>⚠️ Data &amp; scoring notes <span class="small">Research and map limitations</span></summary>
+  <summary>⚠️ Regs <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
-</details></div></div></div></header><main class="shell"><div class="memberbar">   <span id="identity"></span> <button class="btn" id="logout">Sign out</button></div><div class="metrics"><div class="metric"><strong id="total">—</strong><span>Properties tracked</span></div><div class="metric"><strong id="serious">—</strong><span>Serious inquiries</span></div><div class="metric"><strong id="fresh">—</strong><span>New discoveries</span></div><div class="metric"><strong id="land">—</strong><span>10+ acres</span></div></div><div id="researchImportPanel" class="admin hidden" aria-live="polite"></div><div id="backupstatus" class="backupstatus" role="status">Connecting to cloud…</div><div class="hq-menu" aria-label="Homestead HQ menu"><input id="researchFile" type="file" accept=".json,application/json" class="hidden"><div class="hq-menu-columns">
+</details></div></div><div class="hq-header-account"><span id="identity"></span><button class="btn" id="logout">Sign out</button></div></div></header><main class="shell"><div class="metrics"><div class="metric"><strong id="total">—</strong><span>Properties tracked</span></div><div class="metric"><strong id="serious">—</strong><span>Serious inquiries</span></div><div class="metric"><strong id="fresh">—</strong><span>New discoveries</span></div><div class="metric"><strong id="land">—</strong><span>10+ acres</span></div></div><div id="researchImportPanel" class="admin hidden" aria-live="polite"></div><div id="backupstatus" class="backupstatus hq-toast" role="status" aria-live="polite">Connecting to cloud…</div><div class="hq-menu" aria-label="Homestead HQ menu"><input id="researchFile" type="file" accept=".json,application/json" class="hidden"><div class="hq-menu-columns">
   <div class="hq-menu-row" role="group" aria-label="Dashboard views">
     <span class="hq-menu-label">Views</span>
     <button class="btn primary" id="showProperties" type="button">🏡 My Properties</button>
@@ -1480,7 +1515,14 @@ function councilTier(id) {
   return 'B Tier';
 }
 
-function status(s,error=false){$('backupstatus').textContent=s;$('backupstatus').className='backupstatus'+(error?' needsbackup':'')}
+let hqToastTimer;
+function status(s,error=false){
+ const el=$('backupstatus'); if(!el)return;
+ clearTimeout(hqToastTimer);el.textContent=s;
+ el.className='backupstatus hq-toast'+(error?' needsbackup':'')+' hq-toast-visible';
+ // Warnings remain visible until replaced; successful connection notices disappear.
+ if(!error)hqToastTimer=setTimeout(()=>el.classList.remove('hq-toast-visible'),4200);
+}
 function gate(text,buttons=''){$('cloudgate').style.display='flex';$('gateMessage').textContent=text;$('gateActions').innerHTML=buttons}
 function open(){ $('cloudgate').style.display='none'; }
 function listen(ref,callback){unsubs.push(onSnapshot(ref,callback,e=>status('Sync error: '+e.message,true)))}
@@ -1541,7 +1583,8 @@ async function tryClaimInvitation(user){
  return true;
 }
 async function approve(uid){if(!confirm('Approve this Google account to access the shared homestead dashboard?'))return;try{await setDoc(memberRef(uid),{active:true,role:'member',approvedAt:serverTimestamp(),approvedBy:OWNER});alert('Approved. Tiffany can refresh or sign in now.')}catch(e){alert(e.message)}}
-async function showAdmin(){if(me.uid!==OWNER)return;let box=$('admin');box.classList.remove('hidden');box.innerHTML='<details id="ownerToolsDisclosure"><summary class="owner-tools-summary">⚙️ Owner Tools <span class="small">Invitations, approvals & backup migration</span></summary><div class="owner-tools-body"><div class="small">Prepare an invitation for a verified Google email before first login. This does not create a Firebase account or a personal rank record.</div><div class="actionline"><input id="inviteEmail" type="email" autocomplete="off" placeholder="Google email address" style="min-width:250px;flex:1;background:#1c2926;color:#eef2eb;border:1px solid #54715f;border-radius:7px;padding:9px"><button class="btn primary" id="saveInvite" type="button">Prepare invitation</button></div><p id="inviteStatus" class="small" role="status"></p><hr style="border:0;border-top:1px solid #506354;margin:16px 0"><div class="small">Approve pending Google accounts below. Confirm the email before manually approving any account.</div><div id="pending">Loading requests…</div><button class="btn" id="migrate">One-time migration from existing dashboard</button><p class="small">Migration copies existing shared properties and your notes only if the new database is empty. Both rankings start blank. Your old database is never deleted.</p></div></details>';
+async function showAdmin(){if(me.uid!==OWNER)return;let box=$('admin');box.classList.remove('hidden');box.innerHTML='<details id="ownerToolsDisclosure"><summary class="owner-tools-summary">⚙️ Owner Tools <span class="small">Invitations, approvals & backup migration</span></summary><div class="owner-tools-body"><div id="ownerResearchActions" class="owner-research-actions"></div><div class="small">Prepare an invitation for a verified Google email before first login. This does not create a Firebase account or a personal rank record.</div><div class="actionline"><input id="inviteEmail" type="email" autocomplete="off" placeholder="Google email address" style="min-width:250px;flex:1;background:#1c2926;color:#eef2eb;border:1px solid #54715f;border-radius:7px;padding:9px"><button class="btn primary" id="saveInvite" type="button">Prepare invitation</button></div><p id="inviteStatus" class="small" role="status"></p><hr style="border:0;border-top:1px solid #506354;margin:16px 0"><div class="small">Approve pending Google accounts below. Confirm the email before manually approving any account.</div><div id="pending">Loading requests…</div><button class="btn" id="migrate">One-time migration from existing dashboard</button><p class="small">Migration copies existing shared properties and your notes only if the new database is empty. Both rankings start blank. Your old database is never deleted.</p></div></details>';
+ const ownerActions=$('ownerResearchActions');for(const id of ['importResearch','refreshResearch','export']){const button=$(id);if(button)ownerActions.appendChild(button)}
  $('migrate').onclick=migrate; $('saveInvite').onclick=saveInvitation;
  listen(query(collection(db,'requests')),snap=>{let pending=[...snap.docs].map(d=>({uid:d.id,...d.data()}));$('pending').innerHTML=pending.length?pending.map(r=>`<div class="actionline"><span>${esc(r.name)} · ${esc(r.email)} · <code>${esc(r.uid)}</code></span><button class="btn" data-approve="${esc(r.uid)}">Approve</button></div>`).join(''):'<p class="small">No pending requests yet.</p>';box.querySelectorAll('[data-approve]').forEach(b=>b.onclick=()=>approve(b.dataset.approve))});
 }
