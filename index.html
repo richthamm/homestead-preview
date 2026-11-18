@@ -1016,7 +1016,35 @@ header #admin .owner-tools-body{right:0}
 .hq-toast.hq-toast-visible{opacity:1;visibility:visible;transform:translate(-50%,0)}
 @media(max-width:650px){header .hq-header-account{padding-top:7px}header #identity{font-size:11px}header #logout{font-size:11px}header .hq-header-utilities{gap:6px}header #admin .owner-tools-summary,header #hqDisclaimer summary{font-size:10px;min-height:36px}}
 </style>
-</head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.47     </span><span title="v3.7.43: DREAM BIG original listing button styling" style="font-size:11px;color:#d3e3d4">What’s new: DREAM BIG original listing links styled as HQ buttons</span></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><div id="ownerActionStaging" class="hidden"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
+<style id="hq-v3748-mobile-navigation-header">
+/* Header tools occupy the right-hand side beside the title on all screens. */
+header .hq-header-content{display:flex;flex-wrap:wrap;align-items:flex-start}
+header .hq-header-title{flex:1 1 0;min-width:0}
+header .hq-header-data{flex:0 0 auto;min-width:0;margin-left:auto;align-self:flex-start}
+header .hq-header-utilities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+header .hq-header-account{flex:0 0 100%}
+@media(max-width:700px){
+ /* Explore first, Views second; one horizontal row of buttons per section. */
+ .hq-menu-columns{display:flex;flex-direction:column;min-width:0}
+ .hq-menu-columns>.hq-menu-row{display:grid!important;grid-template-rows:auto auto;gap:6px;padding:9px 9px;min-width:0;align-items:stretch}
+ .hq-menu-columns>.hq-menu-row:nth-child(2){order:0;grid-template-columns:repeat(2,minmax(0,1fr));border:0;border-bottom:1px solid #31483e}
+ .hq-menu-columns>.hq-menu-row:first-child{order:1;grid-template-columns:repeat(4,minmax(0,1fr));border:0}
+ .hq-menu-columns>.hq-menu-row>.hq-menu-label{grid-column:1/-1!important;grid-row:1!important;width:auto;flex:auto;margin:0}
+ .hq-menu-columns>.hq-menu-row>.btn{grid-row:2!important;grid-column:auto!important;min-width:0;width:100%;min-height:42px;max-width:100%;padding:6px 3px;font-size:10px;line-height:1.15;white-space:normal;overflow-wrap:normal;margin:0!important;justify-self:stretch!important;align-self:stretch!important;flex:none}
+ .hq-menu-columns>.hq-menu-row:first-child>#showProperties{grid-column:1!important}
+ .hq-menu-columns>.hq-menu-row:first-child>#showWarCouncil{grid-column:2!important}
+ .hq-menu-columns>.hq-menu-row:first-child>#showCollections{grid-column:3!important}
+ .hq-menu-columns>.hq-menu-row:first-child>#dreamOpen{grid-column:4!important}
+ header .hq-header-title{flex:1 1 0;min-width:0}
+ header .hq-header-data{flex:0 0 140px;max-width:140px;margin-left:auto}
+ header .hq-header-utilities{gap:5px}
+ header #admin .owner-tools-summary,header #hqDisclaimer summary{min-height:38px;padding:5px 3px;font-size:10px}
+}
+@media(max-width:390px){
+ header .hq-header-data{flex-basis:128px;max-width:128px}
+ .hq-menu-columns>.hq-menu-row>.btn{font-size:9px;padding:6px 2px}
+}
+</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.48     </span><span title="v3.7.43: DREAM BIG original listing button styling" style="font-size:11px;color:#d3e3d4">What’s new: DREAM BIG original listing links styled as HQ buttons</span></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><div id="ownerActionStaging" class="hidden"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Regs <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -1031,7 +1059,7 @@ header #admin .owner-tools-body{right:0}
   <div class="hq-menu-row" role="group" aria-label="Map and property actions">
     <span class="hq-menu-label">Explore</span>
     <button class="btn" id="showMap" type="button">🗺️ Property Map</button>
-    <button class="btn" id="add" type="button">Add property</button>
+    <button class="btn" id="add" type="button">Add new listing</button>
   </div>
 </div></div>
 <div class="hq-filter-panel" aria-label="Search and filters">
