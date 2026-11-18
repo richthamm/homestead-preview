@@ -1142,7 +1142,28 @@ header .hq-header-account{flex:0 0 100%}
  #cards>.card .hq-card-rankgrid .rankbox:first-child .hq-rank-flame .card-flame-popup{right:auto;left:-3px}
  #cards>.card .card-price-row>.card-flame-highlights{display:none!important}
 }
-</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.53     </span><span title="v3.7.43: DREAM BIG original listing button styling" style="font-size:11px;color:#d3e3d4">What’s new: DREAM BIG original listing links styled as HQ buttons</span></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><div id="ownerActionStaging" class="hidden"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
+</style><style id="hq-v3754-mobile-card-polish">
+@media(max-width:700px){
+ #myPropertiesSection>.sectionbar{align-items:center!important;text-align:center!important;margin:2px 0 12px!important;gap:1px!important}
+ #myPropertiesSection>.sectionbar h2{width:100%;text-align:center!important}
+ #myPropertiesSection>.sectionbar #count{width:100%;text-align:center!important}
+ #cards>.card .rankrow{justify-content:center!important}
+ #cards>.card .card-price-row{margin:2px 0 2px!important;display:flex!important;align-items:center!important;flex-wrap:wrap!important;gap:5px!important}
+ #cards>.card .price{margin:0!important;line-height:1.12!important}
+ #cards>.card .facts{margin:3px 0 2px!important}
+ #cards>.card .flagbrief{display:none!important}
+ #cards>.card .property-overview>.alert-label{display:none!important}
+ #cards>.card .card-price-row .hq-conflict-trigger{display:inline-flex!important;position:relative;cursor:pointer;align-items:center;margin:0!important;padding:4px 6px!important;font-size:10px!important;line-height:1.2!important;white-space:nowrap}
+ #cards>.card .hq-conflict-popup{position:absolute;z-index:70;display:block;visibility:hidden;opacity:0;pointer-events:none;top:calc(100% + 6px);right:0;width:min(265px,78vw);white-space:normal;padding:10px;background:#1b2924;border:1px solid #cba869;border-radius:8px;color:#f3eee1;box-shadow:0 9px 26px #000b;text-align:left;font-size:12px;font-weight:400;line-height:1.45}
+ #cards>.card .hq-conflict-trigger:hover .hq-conflict-popup,#cards>.card .hq-conflict-trigger:focus .hq-conflict-popup,#cards>.card .hq-conflict-trigger.is-open .hq-conflict-popup{visibility:visible;opacity:1;pointer-events:auto}
+ #cards>.card{overflow:visible!important}
+ #cards>.card .cardfoot{justify-content:space-between!important;flex-wrap:nowrap!important;gap:5px!important}
+ #cards>.card .cardfoot .hq-card-left-links{display:contents!important}
+ #cards>.card .cardfoot [data-open-details]{order:0!important;flex:0 0 auto}
+ #cards>.card .cardfoot label:has(.compare){order:1!important;flex:0 0 auto}
+ #cards>.card .cardfoot a[href]{order:2!important;margin-left:auto!important;display:inline-flex!important;align-items:center;justify-content:center;text-align:center;text-decoration:none!important;background:#c7ddab!important;color:#18261e!important;border:1px solid #d3e8bd!important;border-radius:7px!important;padding:6px 7px!important;min-height:32px!important;font-weight:750!important;font-size:10px!important;line-height:1.15!important;white-space:normal}
+}
+</style></head><body><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.54     </span><span title="v3.7.43: DREAM BIG original listing button styling" style="font-size:11px;color:#d3e3d4">What’s new: DREAM BIG original listing links styled as HQ buttons</span></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><div id="ownerActionStaging" class="hidden"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Regs <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -2422,6 +2443,30 @@ function render(){if(!ready)return;
      const selectors=overview.querySelector('.hq-personal-controls');
      const rankGrid=right.querySelector('.hq-card-rankgrid');
      if(selectors&&rankGrid)right.insertBefore(selectors,rankGrid);
+   }
+   // v3.7.54 mobile-only: position facts above price and move the existing
+   // conflict indicator into the price/HOA row without changing its data.
+   if(window.matchMedia('(max-width:700px)').matches){
+     const facts=overview.querySelector('.facts');
+     const priceRow=overview.querySelector('.card-price-row');
+     if(facts&&priceRow)overview.insertBefore(facts,priceRow);
+     const badge=overview.querySelector('.alert-label');
+     if(badge&&priceRow){
+       const info=alertInfo(p);
+       badge.classList.add('hq-conflict-trigger');
+       badge.setAttribute('role','button');
+       badge.setAttribute('tabindex','0');
+       badge.setAttribute('aria-expanded','false');
+       badge.textContent=info?.level==='critical'?'🔴 Serious Conflicts':'🟡 Conflicting Detail';
+       const pop=document.createElement('span');
+       pop.className='hq-conflict-popup';
+       pop.textContent=info?.reason||'Review the conflicting listing details.';
+       badge.appendChild(pop);
+       priceRow.appendChild(badge);
+       const toggle=e=>{e.stopPropagation();const open=badge.classList.toggle('is-open');badge.setAttribute('aria-expanded',String(open));};
+       badge.addEventListener('click',toggle);
+       badge.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(e)}});
+     }
    }
    // Compact left column: image, Details + listing, Compare, then property actions.
    const art=card.querySelector(':scope > .art'),foot=card.querySelector(':scope > .cardfoot');
