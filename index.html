@@ -1222,27 +1222,84 @@ header .hq-header-account{flex:0 0 100%}
 .hq-collection-column>summary::-webkit-details-marker{display:none}
 .hq-collection-items{display:grid;gap:9px;padding:10px}
 .hq-gallery-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;position:relative;z-index:3}
-#cards .card .actionline,#cards .card .cardfoot{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-#cards .card .actionline>* ,#cards .card .cardfoot>*{min-width:0;text-align:center}
-#cards .card .cardfoot a{display:flex;align-items:center;justify-content:center}
-#cards .card .hq-address-row{flex-wrap:wrap}
-#cards .card .hq-address-row h3{flex:1 0 100%}
 #cards .card .listingmeta{font-size:11px}
-#cards .card .hq-notes-summary{padding:7px}
-#hqWhatsNew{max-width:640px;margin:12px auto;padding:10px 16px;border:1px solid #607b67;border-radius:9px;background:#1c2926;color:#f0f4ec}
-#hqWhatsNew summary{cursor:pointer;font-weight:700}
-#hqWhatsNew details{padding:8px 0}
-#hqWhatsNew li{margin:5px 0}
-</style></head>\1
-<details id="hqWhatsNew"><summary>ⓘ Homestead HQ v4.0.0 · What's New</summary>
-<details open><summary>v4.0.0 — The Command Center (preview)</summary><ul>
-<li>Collapsible Collections: New Discoveries, Serious Inquiries, Favorites, Price Watches, 10+ Acres, and Rejected/Sold/Archived.</li>
-<li>Individual New Discoveries review labels and counts.</li>
-<li>More Photos opens a gallery even when empty, with Add Photo by URL and verified Set as Thumbnail controls.</li>
-<li>Removed new On Hold and Manual Archive actions; historical values remain preserved.</li>
-<li>Compact two-column card actions and mobile layout refinements.</li>
-</ul><p class="small">This is a preview. Automatic research-status archival, status-change notifications, and independent rank restoration are not yet implemented.</p></details>
-</details><div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span style="background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700">       ⚔️ Homestead HQ · v3.7.57     </span><span title="v3.7.43: DREAM BIG original listing button styling" style="font-size:11px;color:#d3e3d4">What’s new: DREAM BIG original listing links styled as HQ buttons</span></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><div id="ownerActionStaging" class="hidden"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
+</style><style id="hq-v401-version-info">
+
+.hq-header-meta{position:relative}
+.hq-version-badge{background:#344a3d;color:#d7eab9;border:1px solid #78917d;border-radius:8px;padding:6px 9px;font-size:12px;font-weight:700;white-space:nowrap}
+.hq-version-info{display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;min-width:27px;padding:0;border:1px solid #78917d;border-radius:50%;background:#253b30;color:#d7eab9;font-size:18px;font-weight:800;vertical-align:middle;cursor:pointer}
+.hq-version-info:focus-visible{outline:2px solid #c7ddab;outline-offset:2px}
+.hq-whatsnew-popover{position:absolute;z-index:250;top:calc(100% + 7px);left:0;max-width:min(500px,calc(100vw - 45px));width:440px;margin:0;padding:12px 15px;border:1px solid #607b67;border-radius:9px;background:#1c2926;color:#f0f4ec;box-shadow:0 16px 32px #000a;font-size:12px;line-height:1.5}
+.hq-whatsnew-popover:not([open]){display:none}
+.hq-whatsnew-popover[open]{display:block}
+.hq-whatsnew-popover>.hq-whatsnew-title{font-weight:750;cursor:pointer}
+.hq-whatsnew-popover #hqChangeHistory{max-height:60vh;overflow-y:auto}
+.hq-whatsnew-popover #hqChangeHistory details{padding:5px 0;border-bottom:1px solid #40574b}
+.hq-whatsnew-popover #hqChangeHistory summary{cursor:pointer;font-weight:650}
+.hq-whatsnew-popover li{margin:4px 0}
+@media(max-width:700px){.hq-version-badge{font-size:11px;padding:5px 7px}.hq-whatsnew-popover{width:min(420px,calc(100vw - 45px))}}
+
+</style><style id="hq-v402-layout">
+
+@media(max-width:700px){
+ #cards>.card>.hq-card-left>.actionline{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important;align-items:stretch!important}
+ #cards>.card>.hq-card-left>.actionline>[data-photo]{grid-column:1;grid-row:1}
+ #cards>.card>.hq-card-left>.actionline>[data-research]{grid-column:2;grid-row:1}
+ #cards>.card>.hq-card-left>.actionline>[data-decision]{grid-column:1;grid-row:2}
+ #cards>.card>.hq-card-left>.actionline>.hq-card-action-compare{grid-column:2;grid-row:2;display:flex!important;align-items:center;justify-content:center;gap:7px;min-height:31px;margin:0;padding:3px 4px;font-size:12px;border:1px solid #52725e;border-radius:8px;background:#293f35;cursor:pointer}
+ #cards>.card>.hq-card-left>.actionline>.hq-card-action-compare input{margin:0}
+ #cards>.card .hq-mobile-address-actions .cardfoot{display:flex!important;flex-direction:column!important;grid-template-columns:none!important}
+}
+
+</style><style id="hq-v403-layout">
+
+@media(max-width:700px){
+ #cards>.card .card-price-row>.hq-conflict-trigger{display:inline-flex!important;visibility:visible!important;opacity:1!important;z-index:3}
+ #cards>.card .card-price-row .hq-conflict-popup{z-index:80}
+}
+
+</style><style id="hq-v404-layout">
+
+@media(max-width:700px){
+ #cards>.card .hq-mobile-address-actions{grid-template-columns:minmax(0,1fr) 110px!important;gap:8px!important;align-items:start!important}
+ #cards>.card .hq-mobile-address-actions>.hq-mobile-address-text{display:flex;flex-direction:column;min-width:0;align-self:start}
+ #cards>.card .hq-mobile-address-text .city{display:block!important;position:static!important;margin:3px 0 0!important;line-height:1.25!important}
+ #cards>.card .hq-mobile-address-text .hq-address-status-row{display:block!important;min-width:0;max-width:100%}
+}
+
+</style><style id="hq-v405-layout">
+
+@media(max-width:700px){
+ #cards>.card .card-rank-column>.hq-personal-controls{position:static!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;flex-wrap:nowrap!important;justify-content:stretch!important;width:100%!important;min-width:0!important;margin:6px 0 3px!important}
+ #cards>.card .card-rank-column>.hq-personal-controls>.hq-personal-choice{display:flex!important;align-items:center!important;min-width:0!important;max-width:100%!important;gap:4px!important;flex-wrap:nowrap!important;font-size:11px!important}
+ #cards>.card .card-rank-column>.hq-personal-controls>.hq-personal-choice>.hq-personal-name{flex:0 0 auto!important;width:auto!important;white-space:nowrap!important;font-size:10px!important}
+ #cards>.card .card-rank-column>.hq-personal-controls>.hq-personal-choice select{flex:1 1 0!important;width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important;font-size:10px!important;padding:4px 16px 4px 3px!important}
+}
+
+</style><style id="hq-v406-layout">
+
+@media(max-width:700px){
+ #cards>.card>.hq-card-left{padding:9px 8px 6px 9px!important}
+ #cards>.card>.hq-card-left>.actionline{margin-top:6px!important}
+ #cards>.card .hq-mobile-address-actions{margin-top:3px!important;margin-bottom:6px!important}
+ #cards>.card .hq-mobile-address-actions .cardfoot{margin:0!important;padding:0!important;gap:6px!important}
+ #cards>.card .hq-property-info .card-meta{margin-top:5px!important}
+ #cards>.card .hq-notes-summary{margin-top:9px!important;padding:7px 8px!important}
+ #cards>.card .card-rank-column{margin-top:8px!important;gap:5px!important}
+}
+
+</style></head><body>
+<div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.0.6</span><button type="button" class="hq-version-info" id="hqWhatsNewToggle" aria-expanded="false" aria-controls="hqWhatsNew" aria-label="View version history" title="View version history">ⓘ</button><details id="hqWhatsNew" class="hq-whatsnew-popover" aria-label="Version history">
+ <summary class="hq-whatsnew-title">What’s New · v4.0.6</summary>
+ <div id="hqChangeHistory"><details open><summary>v4.0.6 — Aligned card spacing with the previous approved hierarchy</summary><p>Aligned card spacing with the previous approved hierarchy.</p></details><details><summary>v4.0.5 — Reinstated side-by-side Rich and Tiffany controls</summary><p>Reinstated side-by-side Rich and Tiffany controls.</p></details><details><summary>v4.0.4 — Kept street address and city/state together above listing facts</summary><p>Kept street address and city/state together above listing facts.</p></details><details><summary>v4.0.3 — Restored sourced CONFLICT badge in the mobile price row</summary><p>Restored sourced CONFLICT badge in the mobile price row.</p></details><details><summary>v4.0.2 — Reinstated photo action grid and address-side listing controls</summary><p>Reinstated photo action grid and address-side listing controls.</p></details>
+  <details><summary>v4.0.1 — Release information</summary><p>Moved release notes to the existing dashboard version indicator and removed the accidental extra header bar.</p></details>
+  <details><summary>v4.0.0 — The Command Center preview</summary><ul>
+   <li>Collapsible Collections and independent New Discoveries review counters.</li>
+   <li>More Photos gallery, Add Photo by URL, and Set as Thumbnail.</li>
+   <li>Existing On Hold and Manual Archive records retained; new controls removed.</li>
+  </ul></details>
+ </div>
+</details></div></div><div class="hq-header-data" role="group" aria-label="Data tools"><div id="ownerActionStaging" class="hidden"><button class="btn" id="importResearch" type="button">📥 Import Val's Research</button><button class="btn" id="refreshResearch" type="button">🔎 Refresh All Research</button><button class="btn primary" id="export" type="button">Download JSON Backup</button></div><div class="hq-header-utilities"><div id="admin" class="admin hidden"></div>
 <details id="hqDisclaimer" class="hq-disclaimer">
   <summary>⚠️ Regs <span class="small">Research and map limitations</span></summary>
   <div class="hq-disclaimer-body">Saved listings are research snapshots, not live verified listing data. Card previews use public Texas NAIP 2022 aerial imagery where available (USGS fallback) and saved approximate location pins; imagery dates and resolution vary. The all-property overview uses a free interactive map with clustered location markers, and falls back to the previous static USGS map if the interactive map fails. Parcel outlines appear for stored GIS polygons; on-demand GIS parcel lookups require confirmation before saving. Drive times can be calculated via the optional Google Maps Routes integration. Master auto-grades use only explicit facts that meet the current criterion rubric, not historical points or live listing scraping. Every auto-grade has an explanation beside its score. Two independent scoring lists are retained. Progress bars use the 49 master scored criteria only. Not Assessed criteria remain in the fixed maximum as unearned points, not proven deficiencies. Non-scored assessments never affect the percentage. Personal notes, ranks, and wishlist ratings are saved separately for each account. Both accounts start from identical evidence-based automatic scores. Shared property changes sync between both accounts. New Discoveries is a shared review queue: ranking or marking reviewed counts as your review, and a property leaves New Discoveries when both people finish. Shared rejection and On Hold remove a property from the active review queue. Newly imported properties enter New Discoveries automatically.</div>
@@ -2546,9 +2603,11 @@ function render(){if(!ready)return;
      const facts=overview.querySelector('.facts');
      const priceRow=overview.querySelector('.card-price-row');
      if(facts&&priceRow)priceRow.parentNode.insertBefore(facts,priceRow);
-     const badge=overview.querySelector('.alert-label');
-     if(badge&&priceRow){
-       const info=propertyRecord?alertInfo(propertyRecord):null;
+     const info=propertyRecord?alertInfo(propertyRecord):null;
+     let badge=overview.querySelector('.alert-label');
+     // Preserve the original research-alert source and level. Never invent an alert.
+     if(info&&!badge){badge=document.createElement('span');badge.className='alert-label '+info.level;}
+     if(badge&&info&&priceRow){
        badge.classList.add('hq-conflict-trigger');
        badge.setAttribute('role','button');
        badge.setAttribute('title',info?.reason||'Review conflicting listing details');
@@ -2600,13 +2659,22 @@ function render(){if(!ready)return;
      const actionLine=card.querySelector('.actionline');
      const research=actionLine?.querySelector('[data-research]');
      const compareLabel=cardFoot?.querySelector('label:has(.compare)');
-     if(research&&compareLabel){
-       const compareRow=document.createElement('div');
-       compareRow.className='hq-mobile-compare-row';
-       compareRow.appendChild(compareLabel);
-       research.insertAdjacentElement('afterend',compareRow);
+     // Original photograph → action grid, then address beside Details/Listing.
+     // Reorder EXISTING controls; no duplicate controls or event handlers.
+     if(actionLine){
+       const photo=actionLine.querySelector('[data-photo]');
+       if(photo&&research)actionLine.prepend(photo,research);
+       else if(photo)actionLine.prepend(photo);
+       if(compareLabel){
+         compareLabel.classList.add('hq-card-action-compare');
+         actionLine.appendChild(compareLabel);
+       }
      }
      if(addressRow&&city&&cardFoot){
+       // Both address text nodes stay together, independent of footer actions.
+       const oldSelectors=addressRow.querySelector('.hq-personal-controls');
+       const rankGrid=right.querySelector('.hq-card-rankgrid');
+       if(oldSelectors&&rankGrid)right.insertBefore(oldSelectors,rankGrid);
        const addressActions=document.createElement('div');
        addressActions.className='hq-mobile-address-actions';
        addressRow.parentNode.insertBefore(addressActions,addressRow);
@@ -2780,7 +2848,7 @@ const researchHTML = councilAccordion('Deep Research', '🔎', researchPropertie
           <button class="btn" type="button" data-post-comment="${esc(p.id)}">Post Comment</button>
         </div>
         <div class="actionline">
-          <a class="btn" href="${safeUrl(p.url)}"
+<a class="btn" href="${safeUrl(p.url)}"
              target="_blank" rel="noopener noreferrer">
             View Listing
           </a><button class="btn" type="button" data-council-details="${esc(p.id)}">Property Details</button>
@@ -3730,7 +3798,7 @@ function mergeResearch(existing,incoming,now){
     // Protect manually verified and previously route-verified data from weaker imports.
     if(prior?.manualVerified===true)continue;
     if(credibleRoute(prior)&&!credibleRoute(update))continue;
-    if(credibleRoute(prior)&&credibleRoute(update)&&String(update.verifiedAt)<String(prior.verifiedAt))continue;
+if(credibleRoute(prior)&&credibleRoute(update)&&String(update.verifiedAt)<String(prior.verifiedAt))continue;
     const next={...(prior||{}),...cloneResearch(update)};
     if(!sameResearchValue(prior,next)){merged[key]=next;changes.push('travelTimes.'+key)}
    }
@@ -4254,4 +4322,4 @@ document.addEventListener('click',function(e){
  if(flame){const open=!flame.classList.contains('is-open');flame.classList.toggle('is-open',open);flame.setAttribute('aria-expanded',String(open));}
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.hq-rank-flame.is-open').forEach(el=>{el.classList.remove('is-open');el.setAttribute('aria-expanded','false');});}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.hq-rank-flame')){e.preventDefault();e.target.click();}});
-</script></body></html>
+</script><script id="hq-version-ui">(()=>{const btn=document.getElementById('hqWhatsNewToggle'),panel=document.getElementById('hqWhatsNew');if(!btn||!panel)return;btn.addEventListener('click',event=>{event.stopPropagation();panel.open=!panel.open;btn.setAttribute('aria-expanded',String(panel.open));});panel.addEventListener('toggle',()=>btn.setAttribute('aria-expanded',String(panel.open)));document.addEventListener('click',event=>{if(panel.open&&!panel.contains(event.target)&&event.target!==btn)panel.open=false});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&panel.open){panel.open=false;btn.focus()}})})();</script></body></html>
