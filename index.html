@@ -4454,4 +4454,39 @@ document.addEventListener('click',function(e){
  if(flame){const open=!flame.classList.contains('is-open');flame.classList.toggle('is-open',open);flame.setAttribute('aria-expanded',String(open));}
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.hq-rank-flame.is-open').forEach(el=>{el.classList.remove('is-open');el.setAttribute('aria-expanded','false');});}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.hq-rank-flame')){e.preventDefault();e.target.click();}});
-</script><script id="hq-version-ui">(()=>{const btn=document.getElementById('hqWhatsNewToggle'),panel=document.getElementById('hqWhatsNew');if(!btn||!panel)return;btn.addEventListener('click',event=>{event.stopPropagation();panel.open=!panel.open;btn.setAttribute('aria-expanded',String(panel.open));});panel.addEventListener('toggle',()=>btn.setAttribute('aria-expanded',String(panel.open)));document.addEventListener('click',event=>{if(panel.open&&!panel.contains(event.target)&&event.target!==btn)panel.open=false});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&panel.open){panel.open=false;btn.focus()}})})();</script></body></html>
+</script><script id="hq-version-ui">(()=>{const btn=document.getElementById('hqWhatsNewToggle'),panel=document.getElementById('hqWhatsNew');if(!btn||!panel)return;btn.addEventListener('click',event=>{event.stopPropagation();panel.open=!panel.open;btn.setAttribute('aria-expanded',String(panel.open));});panel.addEventListener('toggle',()=>btn.setAttribute('aria-expanded',String(panel.open)));document.addEventListener('click',event=>{if(panel.open&&!panel.contains(event.target)&&event.target!==btn)panel.open=false});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&panel.open){panel.open=false;btn.focus()}})})();</script>
+<style id="hq-v408-mobile-master-comment-fix">
+@media(max-width:700px){
+ .card-evidence-panel .hq-quick-tip{display:none!important}
+ .hq-comment-backdrop{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:18px}
+ .hq-comment-dialog{width:min(100%,430px);max-height:min(75dvh,620px);overflow:auto;overflow-wrap:anywhere;white-space:pre-wrap;background:#1b2b24;border:1px solid #8ca28b;border-radius:12px;padding:18px;color:#eef2eb;box-shadow:0 15px 50px #000b}
+ .hq-comment-dialog button{display:block;margin:0 0 12px auto;border:1px solid #6e8a77;border-radius:7px;background:#30463b;color:#fff;padding:8px 15px}
+ .hq-comment-dialog p{margin:0;font-size:14px;line-height:1.6}
+}
+</style>
+<script id="hq-v408-mobile-master-comment-handler">
+(function(){
+ let current=null;
+ function close(){if(!current)return;current.remove();current=null;document.removeEventListener('keydown',onKey)}
+ function onKey(e){if(e.key==='Escape')close()}
+ document.addEventListener('click',function(e){
+   const btn=e.target.closest?.('.card-evidence-panel [data-quick-comment]');
+   if(!btn||!matchMedia('(max-width:700px)').matches)return;
+   e.preventDefault();e.stopImmediatePropagation();
+   const tip=btn.nextElementSibling;
+   const message=tip?.textContent?.trim()||btn.title||'No comment available.';
+   close();
+   const backdrop=document.createElement('div');backdrop.className='hq-comment-backdrop';
+   backdrop.setAttribute('role','presentation');
+   const dialog=document.createElement('div');dialog.className='hq-comment-dialog';
+   dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-label','Master grade comment');
+   const dismiss=document.createElement('button');dismiss.type='button';dismiss.textContent='✕ Close';
+   const body=document.createElement('p');body.textContent=message;
+   dismiss.addEventListener('click',close);
+   dialog.append(dismiss,body);backdrop.append(dialog);
+   backdrop.addEventListener('click',ev=>{if(ev.target===backdrop)close()});
+   document.body.append(backdrop);current=backdrop;document.addEventListener('keydown',onKey);dismiss.focus();
+ },true);
+})();
+</script>
+</body></html>
