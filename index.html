@@ -1506,10 +1506,59 @@ header .hq-header-account{flex:0 0 100%}
   #dreamBigPreview .dream-actions>[data-dream-assess]{grid-column:2;grid-row:4;width:100%}
 }
 </style>
-</head><body>
-<div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br/>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.0.13</span><button aria-controls="hqWhatsNew" aria-expanded="false" aria-label="View version history" class="hq-version-info" id="hqWhatsNewToggle" title="View version history" type="button">ⓘ</button><details aria-label="Version history" class="hq-whatsnew-popover" id="hqWhatsNew">
-<summary class="hq-whatsnew-title">What’s New · v4.0.13</summary>
-<div id="hqChangeHistory">
+<style id="hq-v414-dream-desktop">
+@media(min-width:1180px){
+ #dreamBigPreview .dream-desktop-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:12px 0}
+ #dreamBigPreview .dream-desktop-panel{border:1px solid #56705c;background:#1d302a;border-radius:11px;padding:13px 15px;min-width:0}
+ #dreamBigPreview .dream-desktop-panel h3{font-size:15px;color:#e8d7a0;margin:0 0 10px}
+ #dreamBigPreview .dream-search-panel .dream-controls{display:flex;flex-direction:column;gap:9px;margin:0}
+ #dreamBigPreview .dream-search-panel .dream-controls input,#dreamBigPreview .dream-search-panel .dream-controls select{width:100%;font-size:14px}
+ #dreamBigPreview .dream-explore-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+ #dreamBigPreview .dream-explore-actions button{font-size:14px;padding:10px 13px;min-height:40px}
+ #dreamBigPreview .dream-investment{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+ #dreamBigPreview .dream-income-head{width:100%}
+ #dreamBigPreview .dream-ranking-row{display:flex;justify-content:space-between;align-items:center;gap:8px;min-width:0;width:100%}
+ #dreamBigPreview .dream-ranking-row .dream-rank-controls{display:flex;flex:1 1 auto;align-items:center;justify-content:flex-start;flex-wrap:nowrap;gap:4px;min-width:0}
+ #dreamBigPreview .dream-ranking-row .dream-rank-controls input{width:58px;flex:0 1 58px}
+ #dreamBigPreview .dream-ranking-row .dream-ranks{display:flex;flex:0 0 auto;gap:7px;margin:0}
+ #dreamBigPreview .dream-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;width:100%}
+ #dreamBigPreview .dream-actions>[data-dream-promote]{grid-column:1;grid-row:1;width:100%}
+ #dreamBigPreview .dream-actions>[data-dream-history]{grid-column:2;grid-row:1;width:100%}
+ #dreamBigPreview .dream-actions>[data-dream-assess]{grid-column:1/-1;grid-row:2;width:100%}
+}
+@media(max-width:1179px){
+ #dreamBigPreview .dream-desktop-toolbar{display:contents}
+ #dreamBigPreview .dream-desktop-panel h3{display:none}
+ #dreamBigPreview .dream-explore-panel{display:none}
+ #dreamBigPreview .dream-ranking-row{display:contents}
+ #dreamBigPreview .dream-ranking-row .dream-ranks{grid-column:1/-1}
+ #dreamBigPreview .dream-ranking-row .dream-rank-controls{grid-column:1/-1}
+}
+.dream-utility-overlay{position:fixed;inset:0;z-index:99999;background:#000c;display:flex;align-items:center;justify-content:center;padding:16px}
+.dream-utility-dialog{width:min(960px,100%);max-height:90vh;overflow:auto;background:#192d24;border:1px solid #7e9b81;border-radius:13px;padding:18px;color:#e9f1e8;box-shadow:0 18px 65px #000b}
+.dream-utility-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.dream-utility-head h3{margin:0;color:#f1dfad}
+.dream-map-canvas{height:min(62vh,580px);min-height:320px;position:relative;overflow:hidden;border:1px solid #536f59;border-radius:9px}
+.dream-map-selection{margin-top:10px;padding:10px;background:#12241c;border-radius:7px}.dream-map-selection a{color:#d5efc0}
+.dream-manual-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.dream-manual-form label{display:flex;flex-direction:column;gap:5px;font-size:13px}.dream-manual-form input{padding:10px;border-radius:6px;background:#11241b;color:white;border:1px solid #708b73;min-width:0}.dream-manual-footer{grid-column:1/-1;display:flex;gap:14px;align-items:center}
+@media(max-width:700px){.dream-manual-form{grid-template-columns:1fr}}
+</style><style>
+/* v4.0.15: desktop DREAM BIG alignment; all-device naming and functional enhancements */
+#dreamBigPreview .dream-stat{cursor:pointer;transition:border-color .15s,background .15s}
+#dreamBigPreview .dream-stat:hover,#dreamBigPreview .dream-stat:focus-visible{border-color:#d7c58a}
+#dreamBigPreview .dream-stat.dream-stat-selected{border-color:#d9c78f;box-shadow:inset 0 0 0 1px #d9c78f}
+#dreamBigPreview .dream-facts{margin:5px 0;padding-left:19px;line-height:1.4}
+#dreamBigPreview .dream-facts li{margin:3px 0}
+.dream-commute-list{margin:3px 0 1px 10px;display:grid;gap:2px}
+@media(min-width:1180px){
+#dreamBigPreview .dream-ranking-row{display:flex!important;flex-direction:row!important;justify-content:center!important;align-items:center!important;flex-wrap:nowrap!important;gap:14px!important;width:100%!important}
+#dreamBigPreview .dream-ranking-row .dream-rank-controls{display:flex!important;flex:0 0 auto!important;grid-column:auto!important;width:auto!important;justify-content:center!important;align-items:center!important}
+#dreamBigPreview .dream-ranking-row .dream-ranks{display:flex!important;flex:0 0 auto!important;width:auto!important;justify-content:center!important;gap:8px!important}
+#dreamBigPreview .dream-ranking-row .dream-rank{width:72px!important;min-width:72px!important;max-width:72px!important}
+}
+</style><style>.hq-norse-title-wrap{display:flex;flex-direction:column;line-height:1.22;min-width:0}.hq-norse-subtitle{font-size:10px;font-weight:400;opacity:.72;margin-top:2px}</style></head><body>
+<div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br/>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.0.15</span><button aria-controls="hqWhatsNew" aria-expanded="false" aria-label="View version history" class="hq-version-info" id="hqWhatsNewToggle" title="View version history" type="button">ⓘ</button><details aria-label="Version history" class="hq-whatsnew-popover" id="hqWhatsNew">
+<summary class="hq-whatsnew-title">What’s New · v4.0.15</summary>
+<div id="hqChangeHistory"><details open=""><summary>v4.0.15 — DREAM BIG assessments, archive and Norse titles</summary><p>DREAM BIG: centered desktop rank controls and displays; interactive Properties, Income Evidence, Under $800k, and Price Drops statistics; merged Property Details and Property Summary into compact Prelim Assessment with three commute destinations; added Reject to the shared HQ archive. HQ: unified Rejected/Sold/Archived status filtering as Hall of the Fallen. Norse-inspired visible labels include Uncharted Lands (New Discoveries), Valhalla’s Chosen (Favorites), Loki’s Shortlist (Serious Inquiry), The Merchant’s Watch (Price Watch), and Hall of the Fallen (Rejected/Sold/Archived). Original statuses and storage identifiers are preserved. Layout adjustments remain desktop-specific.</p></details><details open=""><summary>v4.0.14 — DREAM BIG desktop Explore and ranking alignment</summary><p>Desktop Search &amp; Filter and Explore panels, DREAM BIG-only property map and manual listing entry, and aligned ranking controls. Mobile layout remains unchanged.</p></details>
 <details open=""><summary>v4.0.13 — DREAM BIG desktop card layout</summary><p>Desktop-only: two-column cards on wide screens, larger button labels, compact ranking boxes with rank controls alongside, and Property Summary naming. Mobile layout preserved.</p></details>
 <details open=""><summary>v4.0.12 — Corrected version display and release history</summary><p>Updated the header version and restored missing release notes; no dashboard behavior changed in this revision.</p></details>
 <details><summary>v4.0.11 — DREAM BIG promotion and pending research workflow</summary><p>Added DREAM BIG origin badges, promoted-property research queue, targeted and full research request scopes, watchlist filters, and a DREAM BIG Collections view.</p></details>
@@ -1549,7 +1598,7 @@ header .hq-header-account{flex:0 0 100%}
 <div class="hq-filter-controls">
 <select aria-label="Collections" id="group"><option value="all">Collections: All</option><option value="Serious inquiry">Serious inquiries</option><option value="Favorite">Favorites</option><option value="New discovery">New discoveries</option><option value="Watchlist">Watchlist</option><option value="dream-only">DREAM BIG only</option><option value="dream-exclude">Exclude DREAM BIG</option><option value="Price Watch">Price Watch</option></select>
 <select aria-label="Ranked status" id="rankfilter"><option value="all">Ranked Status: All</option><option value="mine-unranked">Unranked by me</option><option value="mine-ranked">Ranked by me</option><option value="other-unranked">Unranked by partner</option><option value="other-ranked">Ranked by partner</option><option value="both-ranked">Ranked by both</option></select>
-<select aria-label="Listing status" id="decisionfilter"><option value="all">Status: ALL</option><option value="Active">Active</option><option value="Rejected">Rejected</option><option value="Sold Archive">Rejected/Sold/Archived</option></select>
+<select aria-label="Listing status" id="decisionfilter"><option value="all">Status: ALL</option><option value="Active">Active</option><option value="archive">Hall of the Fallen</option></select>
 </div>
 </div>
 <div class="hq-filter-field"><div class="hq-field-heading">Sort By</div>
@@ -1561,7 +1610,7 @@ header .hq-header-account{flex:0 0 100%}
 </div>
 <div class="hq-search-row"><input aria-label="Search address and property details" id="search" placeholder="Search address, town, features, notes…" type="search"/></div>
 </div>
-<section aria-label="Dream Big collection preview" class="hidden" id="dreamBigPreview"><div class="dream-head"><div class="dream-brand"><div class="dream-demo">INDEPENDENT RESEARCH COLLECTION</div><div class="dream-title-line"><h2>✦ DREAM BIG</h2><div class="dream-owner-wrap"><button aria-controls="dreamOwnerPanel" aria-expanded="false" class="btn" id="dreamOwnerTools" type="button">⚙ Owner Tools ▾</button><div aria-label="DREAM BIG owner tools" class="dream-owner-panel hidden" id="dreamOwnerPanel" role="group"><button class="btn primary" id="dreamImport" type="button">📥 Import DREAM BIG JSON</button><button class="btn" id="dreamExport" type="button">Download DREAM BIG backup</button><button class="btn" id="dreamGalleryImport" type="button">📷 Import Gallery URLs</button></div></div></div><p class="dream-sub">10+ acres · $600,001–$1,000,000 · Established on-property rentals · Independent rankings</p><div class="dream-header-bottom"><button id="dreamBack" type="button">← Return to HQ</button><button aria-expanded="false" aria-haspopup="dialog" class="dream-info-btn" id="dreamInfo" type="button">ⓘ Separate from your regular watchlist</button></div></div></div><div class="dream-upload-inputs"><input accept=".json,application/json" class="hidden" id="dreamGalleryFile" type="file"/><input accept=".json,application/json" class="hidden" id="dreamFile" type="file"/></div><div class="small" id="dreamStatus" role="status"></div><div class="dream-stats"><div class="dream-stat">Properties<strong>3</strong><small>Research candidates</small></div><div class="dream-stat">Income evidence<strong>1 / 3</strong><small>Evidence classification</small></div><div class="dream-stat">Under $800k<strong>1</strong><small>Closer-look target</small></div><div class="dream-stat">Price drops<strong>2</strong><small>Recorded changes</small></div></div><div class="dream-controls"><input aria-label="Search Dream Big" id="dreamSearch" placeholder="Search" type="search"/><select aria-hidden="true" class="hidden" id="dreamFilter" tabindex="-1"><option value="all">All opportunities</option><option value="verified">Documented income</option><option value="claimed">Claimed income</option><option value="under800">Under $800k</option></select><select id="dreamSort"><option value="rich">Rich's DREAM BIG rank</option><option value="tiffany">Tiffany's DREAM BIG rank</option><option value="price">Price: low to high</option><option value="drop">Largest price reduction</option></select></div><div class="dream-grid" id="dreamCards"></div><div class="dream-info-overlay hidden" id="dreamInfoOverlay" role="presentation"><div aria-labelledby="dreamInfoTitle" aria-modal="true" class="dream-info-dialog" role="dialog"><button class="btn" id="dreamInfoClose" type="button">✕ Close</button><h3 id="dreamInfoTitle">Separate from your regular watchlist</h3><p>DREAM BIG research and rankings are stored independently in the cloud. Only Rich can import or promote listings. Verify income claims before relying on them.</p></div></div></section><section aria-label="Property collections overview" class="workspace-panel hidden" id="collectionsPage"><div class="sectionbar"><h2>♥ Collections</h2><button class="btn" id="closeCollections" type="button">← Back to properties</button></div><div class="hq-collections-grid" id="collectionsColumns"></div></section>
+<section aria-label="Dream Big collection preview" class="hidden" id="dreamBigPreview"><div class="dream-head"><div class="dream-brand"><div class="dream-demo">INDEPENDENT RESEARCH COLLECTION</div><div class="dream-title-line"><h2>✦ DREAM BIG</h2><div class="dream-owner-wrap"><button aria-controls="dreamOwnerPanel" aria-expanded="false" class="btn" id="dreamOwnerTools" type="button">⚙ Owner Tools ▾</button><div aria-label="DREAM BIG owner tools" class="dream-owner-panel hidden" id="dreamOwnerPanel" role="group"><button class="btn primary" id="dreamImport" type="button">📥 Import DREAM BIG JSON</button><button class="btn" id="dreamExport" type="button">Download DREAM BIG backup</button><button class="btn" id="dreamGalleryImport" type="button">📷 Import Gallery URLs</button></div></div></div><p class="dream-sub">10+ acres · $600,001–$1,000,000 · Established on-property rentals · Independent rankings</p><div class="dream-header-bottom"><button id="dreamBack" type="button">← Return to HQ</button><button aria-expanded="false" aria-haspopup="dialog" class="dream-info-btn" id="dreamInfo" type="button">ⓘ Separate from your regular watchlist</button></div></div></div><div class="dream-upload-inputs"><input accept=".json,application/json" class="hidden" id="dreamGalleryFile" type="file"/><input accept=".json,application/json" class="hidden" id="dreamFile" type="file"/></div><div class="small" id="dreamStatus" role="status"></div><div class="dream-stats"><div class="dream-stat">Properties<strong>3</strong><small>Research candidates</small></div><div class="dream-stat">Income evidence<strong>1 / 3</strong><small>Evidence classification</small></div><div class="dream-stat">Under $800k<strong>1</strong><small>Closer-look target</small></div><div class="dream-stat">Price drops<strong>2</strong><small>Recorded changes</small></div></div><div class="dream-desktop-toolbar"><div class="dream-desktop-panel dream-search-panel"><h3>Search &amp; Filter</h3><div class="dream-controls"><input aria-label="Search Dream Big" id="dreamSearch" placeholder="Search" type="search"/><select aria-hidden="true" class="hidden" id="dreamFilter" tabindex="-1"><option value="all">All opportunities</option><option value="verified">Documented income</option><option value="claimed">Claimed income</option><option value="under800">Under $800k</option></select><select id="dreamSort"><option value="rich">Rich's DREAM BIG rank</option><option value="tiffany">Tiffany's DREAM BIG rank</option><option value="price">Price: low to high</option><option value="drop">Largest price reduction</option></select></div></div><div class="dream-desktop-panel dream-explore-panel"><h3>Explore</h3><div class="dream-explore-actions"><button type="button" class="btn" id="dreamMapOpen">🗺️ Property Map</button><button type="button" class="btn" id="dreamAddOpen">Add new listing</button></div></div></div><div class="dream-grid" id="dreamCards"></div><div class="dream-info-overlay hidden" id="dreamInfoOverlay" role="presentation"><div aria-labelledby="dreamInfoTitle" aria-modal="true" class="dream-info-dialog" role="dialog"><button class="btn" id="dreamInfoClose" type="button">✕ Close</button><h3 id="dreamInfoTitle">Separate from your regular watchlist</h3><p>DREAM BIG research and rankings are stored independently in the cloud. Only Rich can import or promote listings. Verify income claims before relying on them.</p></div></div></section><section aria-label="Property collections overview" class="workspace-panel hidden" id="collectionsPage"><div class="sectionbar"><h2>♥ Collections</h2><button class="btn" id="closeCollections" type="button">← Back to properties</button></div><div class="hq-collections-grid" id="collectionsColumns"></div></section>
 <section aria-label="Lightweight regional property map" class="hidden" id="propertyMapPage"><div class="sectionbar"><h2>🗺️ Property Map</h2><button class="btn" id="closeMap" type="button">← Back to properties</button></div><div class="small">Interactive regional road map: zoom and drag to separate property markers. Nearby properties group into numbered clusters; click a cluster to zoom in. If the interactive map cannot load, HQ restores the previous static map. Coordinates are approximate, not legal boundaries.</div><div class="offline-map-legend"><span><i class="legend-dot watchlist"></i> Watchlist</span><span><i class="legend-dot favorite"></i> HQ Favorite</span><span><i class="legend-dot serious"></i> Serious Inquiry</span></div><div class="offline-map-toolbar"><button aria-label="Zoom out" class="btn" id="offlineMapZoomOut" type="button">−</button><button aria-label="Zoom in" class="btn" id="offlineMapZoomIn" type="button">＋</button><button class="btn" id="offlineMapReset" type="button">Show all properties</button><button class="btn primary" id="autoFindParcels" type="button">🔎 Auto-find missing parcels</button><label class="map-boundary-toggle"><input id="mapBoundaryToggle" type="checkbox"/> Show parcel boundaries</label><span class="small" id="offlineMapZoomLabel">100%</span></div><div aria-label="Central Texas map with interactive property locations" class="offline-map-canvas" id="propertyMapCanvas"></div><div aria-live="polite" class="small" id="parcelBatchStatus" role="status"></div><div aria-live="polite" class="offline-map-selection small" id="offlineMapSelection">Select a pin to see property details. Listing status describes market availability, not pin accuracy.</div><p class="small" id="mapNeedsLocation"></p><div aria-live="polite" class="small" id="mapLocationFallback"></div></section><section aria-label="War Council" class="workspace-panel hidden" id="warCouncil">
 <div class="sectionbar">
 <h2>⚔️ The War Council</h2>
@@ -2722,7 +2771,7 @@ function hqOpenCollection(key){
 }
 function renderCollections(){
  const root=$('collectionsColumns');if(!root||!ready)return;
- const groups=[['DREAM BIG','✦','DREAM BIG · Promoted','dream'],['New discovery','✦','New Discoveries','discoveries'],['Serious inquiry','★','Serious Inquiries','serious'],['Favorite','♥','Favorites','favorites'],['Price Watch','$','Price Watches','watch'],['10+ Acres','🌲','10+ Acres','acres'],['Archive','📦','Rejected / Sold / Archived','archive']];
+ const groups=[['DREAM BIG','✦','DREAM BIG · Promoted','dream'],['New discovery','✦','Uncharted Lands','discoveries'],['Serious inquiry','★',"Loki's Shortlist",'serious'],['Favorite','♥',"Valhalla's Chosen",'favorites'],['Price Watch','$',"The Merchant's Watch",'watch'],['10+ Acres','🌲','10+ Acres','acres'],['Archive','☠️','Hall of the Fallen','archive']];
  const personRank=p=>rankOf(mine,p.id)??Number.MAX_SAFE_INTEGER;
  const partnerRank=p=>rankOf(other,p.id)??Number.MAX_SAFE_INTEGER;
  root.innerHTML=groups.map(([key,icon,label,theme])=>{
@@ -2740,7 +2789,7 @@ function renderCollections(){
    const review=key==='New discovery';
    return `<div class="hq-mini-property"><button class="hq-mini-open" type="button" data-collection-open="${esc(p.id)}" aria-label="Open details for ${esc(p.address)}"><div class="hq-mini-top"><span>${esc(p.address)}</span><span class="hq-collection-mini-symbol ${esc(theme)}" aria-hidden="true">${icon}</span></div><div class="hq-mini-meta">${esc(p.city)}, TX · ${fmt(p.acres)} ac · ${fmt(p.beds)} bd / ${fmt(p.baths)} ba</div><div class="hq-mini-price">${money(p.price)}</div><div class="hq-mini-ranks">Rich ${r===null?'—':'#'+r} · Tiffany ${t===null?'—':'#'+t}</div>${review?`<div class="hq-mini-status">${esc(reviewStatus(p))}</div>`:''}${key==='Archive'?`<div class="hq-mini-status">${esc(p.decision||'Archived')}</div>`:''}</button>${review?`<div class="hq-mini-reviewbar"><span class="hq-review-owner">${me.uid===OWNER?'Rich':'Tiffany'}'s review</span><button class="hq-review-btn" type="button" data-collection-reviewed="${esc(p.id)}" aria-label="Mark ${esc(p.address)} as reviewed for ${me.uid===OWNER?'Rich':'Tiffany'}">✓ Mark Reviewed</button></div>`:''}</div>`;
   }).join('');
-  return `<details class="hq-collection-column" data-collection-section="${esc(key)}" ${hqCollectionExpanded.has(key)?'open':''}><summary class="hq-collection-heading"><span class="hq-collection-title"><span class="hq-collection-icon ${theme}" aria-hidden="true">${icon}</span><span>${esc(label)}</span></span><span class="hq-collection-count">${items.length}</span><span class="hq-collection-arrow" aria-hidden="true">▾</span></summary><div class="hq-collection-items">${cards||'<p class="small">No properties in this collection yet.</p>'}</div></details>`;
+  return `<details class="hq-collection-column" data-collection-section="${esc(key)}" ${hqCollectionExpanded.has(key)?'open':''}><summary class="hq-collection-heading"><span class="hq-collection-title"><span class="hq-collection-icon ${theme}" aria-hidden="true">${icon}</span><span class="hq-norse-title-wrap"><span>${esc(label)}</span><small class="hq-norse-subtitle">${esc(({Archive:"Rejected / Sold / Archived", "New discovery":"New Discoveries", "Serious inquiry":"Serious Inquiry", Favorite:"Favorites", "Price Watch":"Price Watch", "DREAM BIG":"Promoted Properties"})[key]||"")}</small></span></span><span class="hq-collection-count">${items.length}</span><span class="hq-collection-arrow" aria-hidden="true">▾</span></summary><div class="hq-collection-items">${cards||'<p class="small">No properties in this collection yet.</p>'}</div></details>`;
  }).join('');
  root.querySelectorAll('details').forEach(d=>d.addEventListener('toggle',()=>{const k=d.dataset.collectionSection;if(d.open)hqCollectionExpanded.add(k);else hqCollectionExpanded.delete(k)}));
  root.querySelectorAll('[data-collection-open]').forEach(b=>b.onclick=()=>openPropertyDetails(b.dataset.collectionOpen));
@@ -2754,7 +2803,7 @@ function render(){if(!ready)return;
 
  const openCardEvidence=new Set(Array.from(document.querySelectorAll('#cards [data-card-evidence]')).filter(node=>node.getAttribute('aria-expanded')==='true').map(node=>node.dataset.cardEvidence));
  renderWarCouncil();renderCollections();hqRenderPendingDreamQueue();if(openPropertyId)renderPropertyDetails();let q=$('search').value.toLowerCase().trim(),g=$('group').value,d=$('decisionfilter').value,f=$('rankfilter').value;
- let list=shared.filter(p=>{if(p.dreamBigPendingResearch)return false;if(g==='dream-only'&&!p.dreamBigOrigin)return false;if(g==='dream-exclude'&&p.dreamBigOrigin)return false;let dec=p.decision||'Active';if(!(d==='all'?dec!=='Rejected'&&dec!=='Sold Archive'&&dec!=='Manual Archive':(d==='tracking'?dec==='Active':dec===d)))return false;if(!['all','dream-only','dream-exclude'].includes(g)&&!(['Watchlist','Favorite','Serious inquiry','Price Watch'].includes(g)?personalClass(me.uid===OWNER?mine:other,p.id)===g:g==='New discovery'?discoveryPending(p):(p.groups||[]).includes(g)))return false;if(f==='mine-unranked'&&rankOf(mine,p.id)!==null)return false;if(f==='mine-ranked'&&rankOf(mine,p.id)===null)return false;if(f==='other-unranked'&&rankOf(other,p.id)!==null)return false;if(f==='other-ranked'&&rankOf(other,p.id)===null)return false;if(f==='both-ranked'&&combined(p.id)===null)return false;return[p.address,p.city,p.notes,p.risk,p.decisionReason,notesOf(mine,p.id),notesOf(other,p.id),...(p.features||[])].join(' ').toLowerCase().includes(q)});
+ let list=shared.filter(p=>{if(p.dreamBigPendingResearch)return false;if(g==='dream-only'&&!p.dreamBigOrigin)return false;if(g==='dream-exclude'&&p.dreamBigOrigin)return false;let dec=p.decision||'Active';if(!(d==='all'?dec!=='Rejected'&&dec!=='Sold Archive'&&dec!=='Manual Archive':(d==='archive'?['Rejected','Sold Archive','Manual Archive'].includes(dec):d==='tracking'?dec==='Active':dec===d)))return false;if(!['all','dream-only','dream-exclude'].includes(g)&&!(['Watchlist','Favorite','Serious inquiry','Price Watch'].includes(g)?personalClass(me.uid===OWNER?mine:other,p.id)===g:g==='New discovery'?discoveryPending(p):(p.groups||[]).includes(g)))return false;if(f==='mine-unranked'&&rankOf(mine,p.id)!==null)return false;if(f==='mine-ranked'&&rankOf(mine,p.id)===null)return false;if(f==='other-unranked'&&rankOf(other,p.id)!==null)return false;if(f==='other-ranked'&&rankOf(other,p.id)===null)return false;if(f==='both-ranked'&&combined(p.id)===null)return false;return[p.address,p.city,p.notes,p.risk,p.decisionReason,notesOf(mine,p.id),notesOf(other,p.id),...(p.features||[])].join(' ').toLowerCase().includes(q)});
  let s=$('sort').value, direction=$('sortDirection').value;
  const sortValue=p=>{
    if(s==='price')return Number.isFinite(Number(p.price))&&p.price!==null&&p.price!==''?Number(p.price):null;
@@ -3043,7 +3092,7 @@ const researchHTML = councilAccordion('Deep Research', '🔎', researchPropertie
 <a class="btn" href="${safeUrl(p.url)}"
              target="_blank" rel="noopener noreferrer">
             View Listing
-          </a><button class="btn" type="button" data-council-details="${esc(p.id)}">Property Details</button>
+          </a><button class="btn" type="button" data-council-details="${esc(p.id)}">Prelim Assessment</button>
         </div>
       </div>
     `).join('') || '<p class="small">No properties flagged for research yet.</p>'}
@@ -3102,7 +3151,7 @@ const researchHTML = councilAccordion('Deep Research', '🔎', researchPropertie
             <a class="btn" href="${safeUrl(p.url)}"
                target="_blank" rel="noopener noreferrer">
               View Listing
-            </a><button class="btn" type="button" data-council-details="${esc(p.id)}">Property Details</button>
+            </a><button class="btn" type="button" data-council-details="${esc(p.id)}">Prelim Assessment</button>
           </div>
         </div>
       `;
@@ -4164,7 +4213,7 @@ $('researchFile').onchange=async e=>{
     });
     const archived=committedMoves.filter(x=>x.action==='archived'),restored=committedMoves.filter(x=>x.action==='restored');
     panel.innerHTML='<strong>✓ Research import saved to Firebase.</strong><p class="small">Updated shared research will appear as the cloud listener synchronizes. Personal evaluations were not modified.</p>'+(committedMoves.length?'<div class="hq-archive-notice"><strong>📦 '+archived.length+' sold properties moved to Archive · '+restored.length+' returned to market</strong><div>'+committedMoves.map(x=>'<p class="small">'+(x.action==='archived'?'Archived: ':'Restored: ')+esc(x.address)+'</p>').join('')+'</div><button type="button" class="btn" id="hqViewSoldArchive">View Property Archive</button></div>':'');
-    if(committedMoves.length){$('hqViewSoldArchive').onclick=()=>{$('decisionfilter').value='Sold Archive';switchView('properties');render()};}
+    if(committedMoves.length){$('hqViewSoldArchive').onclick=()=>{$('decisionfilter').value='archive';switchView('properties');render()};}
    }catch(err){panel.innerHTML='<strong>Import stopped:</strong> '+esc(err.message)+'<p class="small">No research changes were committed by this import.</p>'}
   };
  }catch(err){researchImportPending=null;panel.classList.remove('hidden');panel.textContent='Import rejected: '+err.message}
@@ -4322,30 +4371,21 @@ function dreamPlain(value){
  return String(value).replace(/https?:\/\/\S+/g,'').replace(/\b(?:Researched|Source|Territory):?\s*202\d[^\n]*/gi,'').replace(/\s+/g,' ').trim().replace(/[.;,\s]+$/,'');
 }
 function dreamBullets(p){
- const d=p.details||{}, out=[],seen=new Set();
- const add=(label,value)=>{
-  if(value===null||value===undefined||typeof value==='object')return;
-  const v=dreamPlain(value);if(!v||v.length<3||seen.has(v.toLowerCase()))return;
-  seen.add(v.toLowerCase());out.push(`<li><b>${esc(label)}:</b> ${esc(v)}</li>`);
- };
- const st=d.structures||{};
- add('Home',st.construction);
- add('Garage / workshop',st.garage);
- add('Utilities',st.utilities);
- for(const f of (Array.isArray(p.features)?p.features:[]))add('Feature',f);
- if(p.sqft)add('Living area',Number(p.sqft).toLocaleString()+' sq ft');
- const inc=d.income||{};
- add('Rental setup',inc.existing);
- add('Rental history',inc.history);
- if(p.hoaInfo?.hasHoa===false)add('HOA','None reported (unverified)');
- else if(p.hoaInfo?.fee)add('HOA',p.hoaInfo.fee+' / '+(p.hoaInfo.frequency||'period'));
- const drive=p.travelTimes?.kerrvilleVA;
- if(drive?.minutes)add('Kerrville VA drive',drive.minutes+' min'+(drive.miles?' · '+drive.miles+' miles':'')+' (estimate)');
- const risk=dreamPlain(p.risk);
- if(risk)add('Considerations',risk);
- return out.length?`<ul class="dream-facts">${out.join('')}</ul>`:'<p class="small">No additional property facts reported.</p>';
+ const d=p.details||{},st=d.structures||{},inc=d.income||{},rows=[],seen=new Set();
+ const add=(label,value)=>{if(value==null||typeof value==='object')return;const v=dreamPlain(value);if(!v||seen.has(v.toLowerCase()))return;seen.add(v.toLowerCase());rows.push(`<li><b>${esc(label)}:</b> ${esc(v)}</li>`)};
+ add('Overview',d.description||p.description);
+ add('Home',st.construction);if(p.sqft)add('Living area',Number(p.sqft).toLocaleString()+' sq ft');
+ add('Garage / workshop',st.garage);add('Utilities',st.utilities);
+ if(p.features?.length){const unique=[...new Set(p.features.map(dreamPlain).filter(Boolean))];if(unique.length)rows.push(`<li><b>Features:</b> ${esc(unique.join(' · '))}</li>`)}
+ add('Rental setup',inc.existing);add('Rental history',inc.history);
+ if(p.hoaInfo?.hasHoa===false)add('HOA','None reported (unverified)');else if(p.hoaInfo?.fee)add('HOA',p.hoaInfo.fee+' / '+(p.hoaInfo.frequency||'period'));
+ const trips=p.travelTimes||{};
+ const commuteRows=ROUTE_DESTINATIONS.map(([key,label])=>{const t=commuteRecord(trips,key);const available=t.minutes!=null||t.miles!=null;if(!available)return null;return `<div class="dream-commute-entry"><b>${esc(label)}:</b> ${esc([t.minutes!=null?t.minutes+' min':'',t.miles!=null?t.miles+' miles':''].filter(Boolean).join(' · '))}${t.source?` <small>(${esc(t.source)})</small>`:''}</div>`}).filter(Boolean);
+ if(commuteRows.length)rows.push(`<li><b>Commutes:</b><div class="dream-commute-list">${commuteRows.join('')}</div></li>`);
+ else rows.push('<li><b>Commutes:</b> Not Assessed for the three HQ destinations</li>');
+ add('Considerations',p.risk);add('Listing status',p.listingStatus);add('Last checked',p.researchLastChecked||p.lastVerified);
+ return '<p class="dream-research-disclaimer">Preliminary information only; unsupported findings remain Not Assessed.</p>'+(rows.length?`<ul class="dream-facts">${rows.join('')}</ul>`:'<p class="small">No additional facts available.</p>');
 }
-
 
 function hqGalleryPhotos(p){
  const seen=new Set(),out=[];
@@ -4394,40 +4434,104 @@ function dreamResearchSummary(p){
  for(const [key,v] of Object.entries(p.travelTimes||{}))if(v&&typeof v==='object')add('Commute · '+key,[v.minutes!=null?v.minutes+' min':'',v.miles!=null?v.miles+' miles':''].filter(Boolean).join(' · '));
  return '<p class="dream-research-disclaimer">Research snapshot, not a completed 72-criterion Master Assessment. Unverified findings need confirmation.</p>'+(rows.join('')||'<p>No additional research details available.</p>');
 }
+let dreamStatFilter="all";
 function renderDreamPreview(){
  const root=$('dreamCards');if(!root)return;
  const q=($('dreamSearch')?.value||'').toLowerCase(),f=$('dreamFilter')?.value||'all',sort=$('dreamSort')?.value||'rich';
  const rich=OWNER,tiffany=partnerUid&&partnerUid!==OWNER?partnerUid:null;
- let items=dreamState.properties.filter(p=>(p.address+' '+p.city+' '+(p.risk||'')+' '+dreamIncome(p)).toLowerCase().includes(q)&&(f==='all'||(f==='under800'?p.price<800000:dreamEvidence(p)===f)));
+ let items=dreamState.properties.filter(p=>(p.address+' '+p.city+' '+(p.risk||'')+' '+dreamIncome(p)).toLowerCase().includes(q)&&(f==='all'||(f==='under800'?p.price<800000:dreamEvidence(p)===f))&&(dreamStatFilter==='all'||(dreamStatFilter==='income'?dreamEvidence(p)==='verified':dreamStatFilter==='under800'?Number(p.price)<800000:dreamStatFilter==='drops'?p.priceReduced===true:true)));
  items.sort((a,b)=>sort==='price'?a.price-b.price:sort==='drop'?(Number(!!b.priceReduced)-Number(!!a.priceReduced)):((dreamRank(a.id,sort==='rich'?rich:tiffany)||999)-(dreamRank(b.id,sort==='rich'?rich:tiffany)||999))||a.price-b.price);
  const all=dreamState.properties,verified=all.filter(p=>dreamEvidence(p)==='verified').length,under=all.filter(p=>p.price<800000).length,drops=all.filter(p=>p.priceReduced===true).length;
  const stats=document.querySelectorAll('#dreamBigPreview .dream-stat strong');[all.length,verified+' / '+all.length,under,drops].forEach((v,i)=>{if(stats[i])stats[i].textContent=v});
+ document.querySelectorAll('#dreamBigPreview .dream-stat').forEach((el,i)=>{const kind=['all','income','under800','drops'][i];el.classList.toggle('dream-stat-selected',dreamStatFilter===kind);el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-pressed',String(dreamStatFilter===kind));el.onclick=()=>{dreamStatFilter=kind;if(kind==='all'){$('dreamSearch').value='';$('dreamFilter').value='all'}renderDreamPreview()};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}}});
  if(dreamCloudError)dreamStatusText('⚠ DREAM BIG cloud read failed ['+(dreamCloudError.code||'unknown')+']: '+dreamCloudError.message);else dreamStatusText(dreamLoaded?`${all.length} DREAM BIG records cloud-synced · rankings are separate from HQ`:(dreamUnsub?'Connecting to DREAM BIG cloud document…':'DREAM BIG cloud listener not started. Return to HQ and reopen DREAM BIG.'));
  root.innerHTML=items.length?items.map(p=>{const rr=dreamRank(p.id,rich),tr=dreamRank(p.id,tiffany),ev=dreamEvidence(p),photo=safeUrl(p.photoUrl),history=dreamHistory(p);return `<article class="dream-card">
  <div class="dream-photo">${p.photoUrl?`<img src="${photo}" alt="${esc(p.address)}" loading="lazy" style="width:100%;height:100%;min-height:170px;object-fit:cover;border-radius:9px">`:'<div class="dream-photo-art"><div class="dream-photo-hills"></div><div class="dream-photo-label">NO VERIFIED LISTING PHOTO</div></div>'}</div>
  <div class="dream-property"><div class="dream-top-entry"><span class="dream-demo">RESEARCH CANDIDATE · ${esc(p.listingStatus||'Unverified')}</span></div><h3>${esc(p.address)}</h3><div class="dream-price">${dreamMoney(p.price)}</div><div class="dream-tags"><span class="dream-tag">🌲 ${esc(p.acres)} acres</span><span class="dream-tag">⌂ ${esc(p.beds??'—')} beds · ${esc(p.baths??'—')} baths</span></div><p class="dream-city">${esc(p.city)}, TX</p><div class="dream-primary-actions">${hqGalleryPhotos(p).length?`<button class="btn hq-gallery-open" type="button" data-dream-gallery="${esc(p.id)}">📸 View Photos (${hqGalleryPhotos(p).length})</button>`:''}<a class="btn primary" href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">Open Original Listing ↗</a></div></div>
  
- <div class="dream-investment"><div class="dream-income-head"><span class="dream-tag ${ev==='verified'?'dream-verified':'dream-claimed'}">${ev==='verified'?'Documentary evidence mentioned':ev==='claimed'?'Rental use claimed · unverified':'Income not established'}</span><button type="button" data-dream-facts="${esc(p.id)}" class="dream-detail-button">Property Details</button><span class="dream-income">${esc(dreamPlain(dreamIncome(p)))}</span></div><div class="dream-ranks"><div class="dream-rank rich">Rich<strong>${rr?'#'+rr:'—'}</strong><small>DREAM BIG rank</small></div><div class="dream-rank tiffany">Tiffany<strong>${tr?'#'+tr:'—'}</strong><small>DREAM BIG rank</small></div></div><div class="dream-actions"><div class="dream-rank-controls"><button type="button" data-dream-rank-step="${esc(p.id)}" data-step="-1">↑</button><input type="number" min="1" max="999" aria-label="My DREAM BIG rank" data-dream-rank-input="${esc(p.id)}" value="${dreamRank(p.id,me?.uid)||''}" placeholder="Rank"><button type="button" data-dream-rank-step="${esc(p.id)}" data-step="1">↓</button><button type="button" data-dream-rank-clear="${esc(p.id)}">Clear</button></div><button type="button" data-dream-promote="${esc(p.id)}" ${me?.uid!==OWNER?'disabled title="Rich only"':''}>↗ Move to Watchlist</button><button type="button" data-dream-history="${esc(p.id)}">◷ Price history</button><button type="button" data-dream-assess="${esc(p.id)}">⚔ Property Summary</button></div></div></article>`}).join(''):'<div class="dream-empty">No DREAM BIG records match. Import your research JSON to begin.</div>';
+ <div class="dream-investment"><div class="dream-income-head"><span class="dream-tag ${ev==='verified'?'dream-verified':'dream-claimed'}">${ev==='verified'?'Documentary evidence mentioned':ev==='claimed'?'Rental use claimed · unverified':'Income not established'}</span><button type="button" data-dream-facts="${esc(p.id)}" class="dream-detail-button">Prelim Assessment</button><span class="dream-income">${esc(dreamPlain(dreamIncome(p)))}</span></div><div class="dream-ranking-row"><div class="dream-rank-controls"><button type="button" data-dream-rank-step="${esc(p.id)}" data-step="-1">↑</button><input type="number" min="1" max="999" aria-label="My DREAM BIG rank" data-dream-rank-input="${esc(p.id)}" value="${dreamRank(p.id,me?.uid)||''}" placeholder="Rank"><button type="button" data-dream-rank-step="${esc(p.id)}" data-step="1">↓</button><button type="button" data-dream-rank-clear="${esc(p.id)}">Clear</button></div><div class="dream-ranks"><div class="dream-rank rich">Rich<strong>${rr?'#'+rr:'—'}</strong><small>DREAM BIG rank</small></div><div class="dream-rank tiffany">Tiffany<strong>${tr?'#'+tr:'—'}</strong><small>DREAM BIG rank</small></div></div></div><div class="dream-actions"><button type="button" data-dream-promote="${esc(p.id)}" ${me?.uid!==OWNER?'disabled title="Rich only"':''}>↗ Move to Watchlist</button><button type="button" data-dream-history="${esc(p.id)}">◷ Price history</button><button type="button" data-dream-reject="${esc(p.id)}">✕ Reject</button></div></div></article>`}).join(''):'<div class="dream-empty">No DREAM BIG records match. Import your research JSON to begin.</div>';
  root.querySelectorAll('[data-dream-gallery]').forEach(b=>b.onclick=()=>{const p=dreamState.properties.find(x=>x.id===b.dataset.dreamGallery);if(p)hqOpenGallery(p)});
  root.querySelectorAll('[data-dream-rank-input]').forEach(b=>b.onchange=()=>setDreamRank(b.dataset.dreamRankInput,b.value));
  root.querySelectorAll('[data-dream-rank-step]').forEach(b=>b.onclick=()=>{const id=b.dataset.dreamRankStep,current=dreamRank(id,me?.uid),size=Object.keys(dreamState.ranks?.[me?.uid]||{}).length;setDreamRank(id,b.dataset.step==='-1'?Math.max(1,(current||size+1)-1):Math.min(size+1,(current||size)+1))});
  root.querySelectorAll('[data-dream-rank-clear]').forEach(b=>b.onclick=()=>setDreamRank(b.dataset.dreamRankClear,null));
- root.querySelectorAll('[data-dream-facts]').forEach(b=>b.onclick=()=>{const p=dreamState.properties.find(x=>x.id===b.dataset.dreamFacts);if(p)dreamShowModal('Property Details · '+p.address,dreamBullets(p),true)});
+ root.querySelectorAll('[data-dream-facts]').forEach(b=>b.onclick=()=>{const p=dreamState.properties.find(x=>x.id===b.dataset.dreamFacts);if(p)dreamShowModal('Prelim Assessment · '+p.address,dreamBullets(p),true)});
  
  root.querySelectorAll('[data-dream-promote]').forEach(b=>b.onclick=()=>promoteDream(b.dataset.dreamPromote));
  root.querySelectorAll('[data-dream-history]').forEach(b=>b.onclick=()=>{let p=dreamState.properties.find(x=>x.id===b.dataset.dreamHistory);dreamShowModal('Price History · '+p.address,dreamHistory(p))});
- root.querySelectorAll('[data-dream-assess]').forEach(b=>b.onclick=()=>{let p=dreamState.properties.find(x=>x.id===b.dataset.dreamAssess);dreamShowModal('Property Summary · '+p.address,dreamResearchSummary(p),true)});
+ root.querySelectorAll('[data-dream-reject]').forEach(b=>b.onclick=()=>rejectDream(b.dataset.dreamReject));
 }
 async function setDreamRank(id,provided){if(!ready||dreamBusy)return;const uid=me.uid,old=dreamRank(id,uid);const n=provided!==undefined?(provided===null?'':String(provided)):prompt('Your independent DREAM BIG rank (1 = highest priority; blank to unrank):',old||'');if(n===null)return;const rank=String(n).trim()===''?null:Number(n);if(rank!==null&&(!Number.isInteger(rank)||rank<1||rank>999)){alert('Enter a whole-number rank from 1 to 999.');return}
  dreamBusy=true;try{await runTransaction(db,async tx=>{const snap=await tx.get(dreamRef);const d=snap.exists()?snap.data():{properties:[],ranks:{}};if(!d.properties?.some(p=>p.id===id))throw Error('This DREAM BIG property is no longer present.');const all={...(d.ranks?.[uid]||{})};const sorted=Object.entries(all).filter(([key,value])=>key!==id&&Number.isInteger(value)&&value>0).sort((a,b)=>a[1]-b[1]).map(([key])=>key);if(rank!==null)sorted.splice(Math.min(rank-1,sorted.length),0,id);const normalized={};sorted.forEach((key,i)=>normalized[key]=i+1);tx.set(dreamRef,{...d,ranks:{...(d.ranks||{}),[uid]:normalized},updatedAt:new Date().toISOString()})});}catch(e){alert('Could not save DREAM BIG rank: '+e.message)}finally{dreamBusy=false}}
 function validateDreamFile(d){if(d?.format!=='homestead-dream-big-research-v1'||d.collection!=='DREAM BIG'||!Array.isArray(d.properties))throw Error('Expected an original homestead-dream-big-research-v1 file.');if(d.properties.length>100)throw Error('Import limited to 100 properties.');const seen=new Set();for(const p of d.properties){if(!p.id||!p.address||!p.city||!/^https:\/\//.test(p.url||''))throw Error('Missing ID, address, city or HTTPS listing URL.');if(seen.has(p.id))throw Error('Duplicate ID in file: '+p.id);seen.add(p.id)}return d.properties;}
 async function importDreamFile(file){if(!dreamLoaded){alert('DREAM BIG cloud has not finished its initial read. '+(dreamCloudError?'Cloud error ['+(dreamCloudError.code||'unknown')+']: '+dreamCloudError.message:'Wait for the DREAM BIG cloud status to say synced, then retry.'));return}if(me?.uid!==OWNER){alert('Only Rich can import DREAM BIG research.');return}if(file.size>2000000){alert('DREAM BIG file exceeds 2MB.');return}try{const data=JSON.parse(await file.text()),incoming=validateDreamFile(data);const existing=new Set(dreamState.properties.map(p=>p.id));const fresh=incoming.filter(p=>!existing.has(p.id));const regular=new Set(shared.map(p=>(p.url||'').toLowerCase()));const collisions=fresh.filter(p=>regular.has((p.url||'').toLowerCase()));if(collisions.length)throw Error('Already in regular HQ: '+collisions.map(p=>p.address).join(', '));if(!confirm(`Import ${fresh.length} new DREAM BIG candidates? ${incoming.length-fresh.length} existing DREAM BIG records will remain unchanged. Regular HQ properties and both rankings will be untouched.`))return;
  dreamBusy=true;await runTransaction(db,async tx=>{const snap=await tx.get(dreamRef);const d=snap.exists()?snap.data():{properties:[],ranks:{}};const ids=new Set((d.properties||[]).map(p=>p.id));tx.set(dreamRef,{...d,properties:[...(d.properties||[]),...incoming.filter(p=>!ids.has(p.id))],ranks:d.ranks||{},updatedAt:new Date().toISOString()})});dreamStatusText('✓ DREAM BIG research saved independently to Firebase.');}catch(e){alert('DREAM BIG import stopped ['+(e.code||'unknown')+']: '+e.message+'\nCloud read status: '+(dreamLoaded?'connected':'not connected'))}finally{dreamBusy=false}}
+async function rejectDream(id){
+ if(me?.uid!==OWNER||dreamBusy)return;
+ const p=dreamState.properties.find(x=>x.id===id);if(!p)return;
+ if(!confirm('Send '+p.address+' to the Hall of the Fallen? It will leave DREAM BIG and join the regular HQ archive.'))return;
+ if(saveBusy||dirtyShared||dirtyMine){alert('Wait for pending HQ changes to save first.');return}
+ dreamBusy=true;
+ try{await runTransaction(db,async tx=>{
+  const [mainSnap,dreamSnap]=await Promise.all([tx.get(sharedRef),tx.get(dreamRef)]);
+  const main=mainSnap.exists()?mainSnap.data():{properties:[]},d=dreamSnap.exists()?dreamSnap.data():{properties:[],ranks:{}};
+  const target=d.properties?.find(x=>x.id===id);if(!target)throw Error('Property is no longer in DREAM BIG.');
+  if((main.properties||[]).some(x=>x.id===id||(x.url&&x.url===target.url)))throw Error('Property already exists in HQ.');
+  const archived={...target,groups:['Watchlist'],decision:'Rejected',decisionReason:'Rejected from DREAM BIG',status:'Unverified',gradeEvidence:[],researchSource:'DREAM BIG preliminary assessment',dreamBigOrigin:true,dreamBigPendingResearch:false,dreamBigRejectedAt:new Date().toISOString()};
+  tx.set(sharedRef,{...main,properties:[...(main.properties||[]),...encodeSharedForFirestore([archived])],updatedAt:new Date().toISOString()});
+  const ranks={};for(const [uid,mapping]of Object.entries(d.ranks||{})){const order=Object.entries(mapping).filter(([key])=>key!==id).sort((a,b)=>a[1]-b[1]);ranks[uid]=Object.fromEntries(order.map(([key],i)=>[key,i+1]))}
+  tx.set(dreamRef,{...d,properties:d.properties.filter(x=>x.id!==id),ranks,updatedAt:new Date().toISOString()});
+ });}catch(e){alert('Could not reject DREAM BIG property; no changes saved: '+e.message)}finally{dreamBusy=false}
+}
 async function promoteDream(id){if(me?.uid!==OWNER||dreamBusy)return;const p=dreamState.properties.find(x=>x.id===id);if(!p)return;if(!confirm('Move '+p.address+' into regular HQ New Discoveries? This will remove it from DREAM BIG and its independent ranking.'))return;
  if(saveBusy||dirtyShared||dirtyMine){alert('Wait for pending HQ changes to save first.');return}dreamBusy=true;try{await runTransaction(db,async tx=>{const [mainSnap,dreamSnap]=await Promise.all([tx.get(sharedRef),tx.get(dreamRef)]);const main=mainSnap.exists()?mainSnap.data():{properties:[]},d=dreamSnap.exists()?dreamSnap.data():{properties:[],ranks:{}};const target=d.properties?.find(x=>x.id===id);if(!target)throw Error('Candidate was already moved or deleted.');if((main.properties||[]).some(x=>x.id===id||(x.url&&x.url===target.url)))throw Error('Already present in regular HQ.');const newProperty={...target,groups:['Watchlist','New discovery'],decision:'Active',status:'Unverified',gradeEvidence:[],researchSource:'DREAM BIG promotion',dreamBigOrigin:true,dreamBigPendingResearch:true,dreamBigPromotedAt:new Date().toISOString(),researchLastChecked:target.researchLastChecked||new Date().toISOString()};tx.set(sharedRef,{...main,properties:[...(main.properties||[]),...encodeSharedForFirestore([newProperty])],updatedAt:new Date().toISOString()});const ranks={};for(const [uid,mapping]of Object.entries(d.ranks||{})){const order=Object.entries(mapping).filter(([key])=>key!==id).sort((a,b)=>a[1]-b[1]);ranks[uid]=Object.fromEntries(order.map(([key],i)=>[key,i+1]))}tx.set(dreamRef,{...d,properties:d.properties.filter(x=>x.id!==id),ranks,updatedAt:new Date().toISOString()})});setTimeout(()=>hqOpenPendingDreamQueue(),400);}catch(e){alert('Promotion failed; no records were moved: '+e.message)}finally{dreamBusy=false}}
 function toggleDreamPreview(show){const page=$('dreamBigPreview');if(!page)return;page.classList.toggle('hidden',!show);$('myPropertiesSection')?.classList.toggle('hidden',show);if(show){$('collectionsPage')?.classList.add('hidden');$('propertyDetails')?.classList.add('hidden');if(ready)watchDream();renderDreamPreview();page.scrollIntoView({block:'start'});}else $('myPropertiesSection')?.scrollIntoView({block:'start'});}
 $('dreamOpen')?.addEventListener('click',()=>toggleDreamPreview(true));$('dreamBack')?.addEventListener('click',()=>toggleDreamPreview(false));
 $('dreamSearch')?.addEventListener('input',renderDreamPreview);$('dreamFilter')?.addEventListener('change',renderDreamPreview);$('dreamSort')?.addEventListener('change',renderDreamPreview);
+/* DREAM BIG-only map and manual listing entry; neither reads nor writes HQ shared properties. */
+let dreamMapInstance=null;
+function dreamCloseOverlay(){
+ const overlay=document.getElementById('dreamUtilityOverlay');if(!overlay)return;
+ if(dreamMapInstance){dreamMapInstance.remove?.();dreamMapInstance=null;}
+ overlay.remove();
+}
+function dreamUtilityOverlay(title,body){
+ dreamCloseOverlay();const overlay=document.createElement('div');overlay.id='dreamUtilityOverlay';overlay.className='dream-utility-overlay';overlay.setAttribute('role','presentation');
+ overlay.innerHTML='<section class="dream-utility-dialog" role="dialog" aria-modal="true" aria-label="'+esc(title)+'"><div class="dream-utility-head"><h3>'+esc(title)+'</h3><button class="btn" id="dreamUtilityClose" type="button">✕ Close</button></div>'+body+'</section>';
+ document.body.appendChild(overlay);overlay.querySelector('#dreamUtilityClose').onclick=dreamCloseOverlay;
+ overlay.addEventListener('click',e=>{if(e.target===overlay)dreamCloseOverlay()});
+ overlay.addEventListener('keydown',e=>{if(e.key==='Escape')dreamCloseOverlay()});
+ overlay.querySelector('#dreamUtilityClose').focus();return overlay;
+}
+function dreamOpenMap(){
+ const list=dreamState.properties.filter(p=>mapCoords(p));
+ const overlay=dreamUtilityOverlay('DREAM BIG · Property Map','<p class="small">Only DREAM BIG candidates are displayed. Pins use saved approximate locations or GIS boundaries, not legal surveys.</p><div id="dreamMapCanvas" class="dream-map-canvas"></div><div id="dreamMapSelection" class="dream-map-selection small">Select a pin to view its listing.</div>');
+ if(!list.length){overlay.querySelector('#dreamMapCanvas').innerHTML='<p class="small" style="padding:20px">No DREAM BIG properties have verified or saved coordinates yet.</p>';return;}
+ try{
+  const points=list.map(p=>{const c=mapCoords(p);return hqMerc(c[1],c[0])});
+  const rect=hqMapRect(points,1.6,1.3);
+  dreamMapInstance=createHQGeoMap(overlay.querySelector('#dreamMapCanvas'),{initial:rect,points:list,polygons:list,showPolygons:()=>true,maxWorldWidth:Math.max(250000,rect.width*4),panLimit:Math.max(150000,rect.width*2),regionCenter:[rect.cx,rect.cy],minWidth:100,onMarker:p=>{overlay.querySelector('#dreamMapSelection').innerHTML='<strong>'+esc(p.address)+', '+esc(p.city)+'</strong> · '+dreamMoney(p.price)+' <a href="'+safeUrl(p.url)+'" target="_blank" rel="noopener noreferrer">Original listing ↗</a>';},onCluster:items=>{overlay.querySelector('#dreamMapSelection').innerHTML=items.map(p=>'<div>'+esc(p.address)+', '+esc(p.city)+'</div>').join('')}});
+ }catch(e){overlay.querySelector('#dreamMapCanvas').textContent='Map unavailable: '+e.message;}
+}
+function dreamOpenAdd(){
+ if(me?.uid!==OWNER){alert('Only Rich can add DREAM BIG listings.');return;}
+ const overlay=dreamUtilityOverlay('DREAM BIG · Add New Listing',`<p class="small">Adds a preliminary candidate only to DREAM BIG. Missing details remain unverified; research can be imported later.</p><form id="dreamManualForm" class="dream-manual-form"><label>Street address <input name="address" required maxlength="160" placeholder="Street address"></label><label>City <input name="city" required maxlength="90" placeholder="City"></label><label>Original listing URL (HTTPS) <input name="url" type="url" required placeholder="https://..."></label><label>Asking price ($) <input name="price" type="number" min="0" step="1" required></label><label>Acres <input name="acres" type="number" min="0" step="0.001" required></label><label>Bedrooms <input name="beds" type="number" min="0" step="1"></label><label>Bathrooms <input name="baths" type="number" min="0" step="0.5"></label><label>Latitude (optional) <input name="lat" type="number" min="-90" max="90" step="any"></label><label>Longitude (optional) <input name="lon" type="number" min="-180" max="180" step="any"></label><div class="dream-manual-footer"><button type="submit" class="btn primary">Add to DREAM BIG</button><span id="dreamManualStatus" class="small" role="status"></span></div></form>`);
+ overlay.querySelector('#dreamManualForm').onsubmit=async e=>{
+  e.preventDefault();if(!dreamLoaded||dreamBusy){overlay.querySelector('#dreamManualStatus').textContent='Wait for cloud sync.';return;}
+  const form=e.currentTarget,fd=new FormData(form),get=k=>String(fd.get(k)||'').trim();
+  const url=get('url');if(!/^https:\/\//i.test(url)){overlay.querySelector('#dreamManualStatus').textContent='A valid HTTPS listing URL is required.';return;}
+  const address=get('address'),city=get('city'),price=Number(get('price')),acres=Number(get('acres'));
+  if(!address||!city||!Number.isFinite(price)||!Number.isFinite(acres)){overlay.querySelector('#dreamManualStatus').textContent='Complete the required fields.';return;}
+  const id='dream-manual-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+  const entry={id,address,city,url,price,acres,listingStatus:'Unverified',researchSource:'Manual DREAM BIG entry',researchLastChecked:null,createdAt:new Date().toISOString()};
+  for(const k of ['beds','baths','lat','lon'])if(get(k)!=='')entry[k]=Number(get(k));
+  dreamBusy=true;form.querySelector('button[type="submit"]').disabled=true;
+  try{await runTransaction(db,async tx=>{const snap=await tx.get(dreamRef);const d=snap.exists()?snap.data():{properties:[],ranks:{}};if((d.properties||[]).some(p=>p.url?.trim().toLowerCase()===url.toLowerCase()))throw Error('This listing is already in DREAM BIG.');tx.set(dreamRef,{...d,properties:[...(d.properties||[]),entry],ranks:d.ranks||{},updatedAt:new Date().toISOString()})});dreamCloseOverlay();dreamStatusText('✓ DREAM BIG listing added.');}
+  catch(err){overlay.querySelector('#dreamManualStatus').textContent='Could not add: '+err.message;form.querySelector('button[type="submit"]').disabled=false;}
+  finally{dreamBusy=false;}
+ };
+}
+$('dreamMapOpen')?.addEventListener('click',dreamOpenMap);
+$('dreamAddOpen')?.addEventListener('click',dreamOpenAdd);
 $('dreamImport')?.addEventListener('click',()=>{if(!ready||me?.uid!==OWNER){alert('Only Rich can import DREAM BIG research.');return}$('dreamFile').value='';$('dreamFile').click()});
 $('dreamFile')?.addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importDreamFile(file)});
 
