@@ -1905,9 +1905,58 @@ body.hq-details-active #propertyDetails>.hq-detail-scroll{
 #hqCollectionContents .hq-fallen-group>h3{font-size:15px;color:#e4c998;border-bottom:1px solid #5d705f;padding-bottom:8px}
 #hqCollectionContents .hq-fallen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px}
 @media(max-width:700px){#dreamBigPreview .dream-hq-rank-row{grid-template-columns:52px minmax(0,1fr) 28px 28px 40px 55px!important}#cards .card-rank-column>.rankrow{width:100%!important}}
+</style><style id="hq-v45-universal-ranks-and-fallen">
+/* Matching, vertically aligned rank control rows on every viewport. */
+#cards .rankrow,#cards .rankrow.hq-joint-rank,
+#dreamBigPreview .dream-prelim-ranking>.dream-hq-rank-row{
+ display:grid!important;grid-template-columns:clamp(51px,13%,70px) minmax(0,1fr) clamp(32px,9%,44px) clamp(32px,9%,44px) clamp(45px,12%,59px)!important;
+ align-items:center!important;gap:5px!important;width:100%!important;max-width:100%!important;
+ box-sizing:border-box!important;min-width:0!important;margin:4px 0!important;
+ padding:7px!important;border-radius:8px!important;min-height:48px!important;
+}
+#cards .rankrow:not(.hq-joint-rank),#dreamBigPreview .dream-hq-rank-row.hq-rich-rank{
+ background:#33291d!important;border:1px solid #ac7d38!important;
+}
+#cards .rankrow.hq-joint-rank,#dreamBigPreview .dream-hq-rank-row.hq-tiffany-rank{
+ background:#30263a!important;border:1px solid #9465b2!important;
+}
+#cards .rankrow>label,#dreamBigPreview .dream-hq-rank-row>label{
+ margin:0!important;padding:0!important;text-align:left!important;white-space:nowrap!important;
+ font-size:clamp(10px,1vw,12px)!important;
+}
+#cards .rankrow>input,#cards .rankrow>button,
+#dreamBigPreview .dream-hq-rank-row>input,#dreamBigPreview .dream-hq-rank-row>button{
+ width:100%!important;min-width:0!important;max-width:none!important;height:36px!important;
+ min-height:36px!important;box-sizing:border-box!important;margin:0!important;
+ padding:3px!important;font-size:12px!important;text-align:center!important;
+}
+#cards .rankrow>input,#dreamBigPreview .dream-hq-rank-row>input{appearance:textfield!important;-moz-appearance:textfield!important}
+#cards .rankrow>input::-webkit-inner-spin-button,#dreamBigPreview .dream-hq-rank-row>input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+/* DREAM BIG keeps a compact owner rank badge aligned at the end. */
+#dreamBigPreview .dream-prelim-ranking>.dream-hq-rank-row{
+ grid-template-columns:clamp(51px,12%,65px) minmax(0,1fr) clamp(29px,8%,40px) clamp(29px,8%,40px) clamp(41px,11%,54px) clamp(54px,15%,76px)!important;
+}
+#dreamBigPreview .dream-hq-rank-row>.dream-rank{height:36px!important;box-sizing:border-box!important;min-width:0!important}
+/* Archive sections span full width, each with its own true responsive grid. */
+#collectionsPage .hq-collection-column[data-collection-section="Archive"] .hq-collection-items,
+#hqCollectionContents:has(.hq-fallen-group){display:block!important;width:100%!important}
+#collectionsPage .hq-fallen-group,#hqCollectionContents .hq-fallen-group{display:block!important;width:100%!important;grid-column:1/-1!important;margin:0 0 20px!important}
+#collectionsPage .hq-fallen-grid,#hqCollectionContents .hq-fallen-grid{
+ display:grid!important;grid-template-columns:repeat(auto-fill,minmax(min(100%,225px),1fr))!important;
+ gap:12px!important;width:100%!important;align-items:start!important;
+}
+#dreamBigPreview .dream-card .dream-income,#dreamBigPreview .dream-card .dream-price,
+#dreamBigPreview .dream-card .dream-location{font-size:inherit}
+#dreamBigPreview .dream-property-card{font-size:14px!important;line-height:1.5!important}
+#dreamBigPreview .dream-property-card .dream-income{font-size:13px!important;line-height:1.5!important}
+@media(max-width:420px){
+ #cards .rankrow,#cards .rankrow.hq-joint-rank{gap:3px!important;padding:5px!important;grid-template-columns:48px minmax(0,1fr) 29px 29px 43px!important}
+ #dreamBigPreview .dream-prelim-ranking>.dream-hq-rank-row{gap:3px!important;padding:5px!important;grid-template-columns:45px minmax(0,1fr) 27px 27px 39px 49px!important}
+ #cards .rankrow>input,#cards .rankrow>button,#dreamBigPreview .dream-hq-rank-row>input,#dreamBigPreview .dream-hq-rank-row>button{font-size:11px!important}
+}
 </style></head><body>
-<div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br/>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.4</span><button aria-controls="hqWhatsNew" aria-expanded="false" aria-label="View version history" class="hq-version-info" id="hqWhatsNewToggle" title="View version history" type="button">ⓘ</button><details aria-label="Version history" class="hq-whatsnew-popover" id="hqWhatsNew">
-<summary class="hq-whatsnew-title">What’s New · v4.3</summary>
+<div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br/>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.5</span><button aria-controls="hqWhatsNew" aria-expanded="false" aria-label="View version history" class="hq-version-info" id="hqWhatsNewToggle" title="View version history" type="button">ⓘ</button><details aria-label="Version history" class="hq-whatsnew-popover" id="hqWhatsNew">
+<summary class="hq-whatsnew-title">What’s New · v4.5</summary>
 <div id="hqChangeHistory"><details open><summary>v4.3 — Refinements to Couch Mode, rankings, comments and map clusters</summary><p>Single header Couch toggle; matching Rich/Her rank rows; owner-colored tools; compact paired fire levels with popup comments; shared collection reviews; map cluster interest flags; consistent DREAM BIG ranks; mobile assessment layout refinements.</p></details><details><details><summary>v4.3 — Ranking, Couch Mode and assessment refinements</summary><p>Updated Rich/Tiffany rank labels and controls, review actions, map cluster indicators, Master Assessment flame and note layout, and DREAM BIG mobile presentation. Browser and Firestore behavior require live verification.</p></details><summary>v4.2 — Unified Couch Mode, compact War Council, DREAM BIG layout and improved maps</summary><p>Owner-only Couch Mode exposes Rich and Tiffany’s grades, ranks, notes, highlights and classifications simultaneously, without an account selector, and resets on reload. Unified backups include HQ, DREAM BIG, both personal profiles and discussion exports, with a guarded restore preview (discussion comments are preserved but not re-imported). DREAM BIG promotions, pending research returns and archive restorations preserve listing information, photos and saved DREAM BIG ranks. The details workspace gains a draggable independent-pane divider, Compare opens in a responsive popup, Collections use desktop grid dialogs, conflict/highlight popups show full details, Raven’s View uses a road-first basemap with fallback, prominent town labels, blue property pins, and fixed-size clustered markers on both maps. War Council mobile sections are compact and DREAM BIG listing actions align beside the property information on desktop and mobile. Verify authenticated saves in your own Firebase session before deploying.</p></details><details open=""><summary>v4.0.21 — DREAM BIG controls and toolbar framing</summary><p>Removed native spinner arrows from editable DREAM BIG rank fields while retaining external rank arrows. Grouped Search &amp; Filter and Explore inside a shared bordered toolbar, preserving their responsive two-column arrangement. Increased the gap above the first property cards. No research or Firestore behavior changed.</p></details><details open=""><summary>v4.0.20 — DREAM BIG balanced ranking controls</summary><p>Reduced the Prelim Assessment button to its text width and distributed the remaining row space evenly among rank arrows, rank input, Clear, Rich, and Tiffany on desktop and mobile. Preserved the three-row card structure and existing ranking behavior.</p></details><details open=""><summary>v4.0.19 — DREAM BIG touch controls and price badge</summary><p>Widened rank arrows and numeric input for easier tapping, expanded the Prelim button into remaining space with the full label on desktop, and tightened rental-use status beside the asking price. Maintained separate Rich/Tiffany rank displays and the three-row card layout.</p></details><details open=""><summary>v4.0.18 — DREAM BIG card row structure corrected</summary><p>Fixed desktop and mobile card layout: Prelim and all ranking controls occupy one row, rental information occupies a separate full-width row, and Move to Watchlist, Price History and Reject share an equal-width action row. Rental-use status now sits closer to the price. Preserved existing card features and rankings.</p></details><details open=""><summary>v4.0.16 — DREAM BIG mobile controls, Raven’s View and preliminary ordering</summary><p>Compact single-row Rich/Tiffany ranking controls on mobile and desktop; mobile two-column Search &amp; Filter / Explore panels; stacked Explore buttons; side-by-side Return and separate-watchlist information controls; clearer yellow Move to Watchlist and bold red Reject actions; Raven’s View (Property Map) naming; commute popup hides raw source links while retaining research metadata; newly imported unranked properties receive a preliminary relevance-based display order without modifying personal rankings or assessment grades.</p></details><details><summary>v4.0.15 — DREAM BIG assessments, archive and Norse titles</summary><p>DREAM BIG: centered desktop rank controls and displays; interactive Properties, Income Evidence, Under $800k, and Price Drops statistics; merged Property Details and Property Summary into compact Prelim Assessment with three commute destinations; added Reject to the shared HQ archive. HQ: unified Rejected/Sold/Archived status filtering as Hall of the Fallen. Norse-inspired visible labels include Uncharted Lands (New Discoveries), Valhalla’s Chosen (Favorites), Loki’s Shortlist (Serious Inquiry), The Merchant’s Watch (Price Watch), and Hall of the Fallen (Rejected/Sold/Archived). Original statuses and storage identifiers are preserved. Layout adjustments remain desktop-specific.</p></details><details open=""><summary>v4.0.14 — DREAM BIG desktop Explore and ranking alignment</summary><p>Desktop Search &amp; Filter and Explore panels, DREAM BIG-only property map and manual listing entry, and aligned ranking controls. Mobile layout remains unchanged.</p></details>
 <details open=""><summary>v4.0.13 — DREAM BIG desktop card layout</summary><p>Desktop-only: two-column cards on wide screens, larger button labels, compact ranking boxes with rank controls alongside, and Property Summary naming. Mobile layout preserved.</p></details>
 <details open=""><summary>v4.0.12 — Corrected version display and release history</summary><p>Updated the header version and restored missing release notes; no dashboard behavior changed in this revision.</p></details>
@@ -2749,6 +2798,7 @@ function setDecision(id,value){
  const now=new Date().toISOString();
  if(value==='Manual Archive'&&previous!=='Manual Archive')p.archiveInfo={...(p.archiveInfo||{}),previousDecision:previous==='Sold Archive'?(p.archiveInfo?.previousDecision||'Active'):previous,manualArchivedAt:now};
  if(value==='Active'&&p.archiveInfo)p.archiveInfo={...p.archiveInfo,manuallyRestoredAt:now};
+ if(['Rejected','Sold Archive','Manual Archive'].includes(value)&&!['Rejected','Sold Archive','Manual Archive'].includes(previous))p.archiveEnteredAt=now;
  p.decision=value;p.decisionDate=now.slice(0,10);
  if(value==='Rejected')p.decisionReason=prompt('Optional shared reason for rejecting this property:','')||'';
  if(value==='Active')p.decisionReason='';
@@ -3242,8 +3292,10 @@ function renderCollections(){
    if(key==='New discovery')return discoveryTagged(p)&&!hasReviewed(mine,p.id);
    return personalClass(richAccount(),p.id)===key;
   }).sort((a,b)=>personRank(a)-personRank(b)||partnerRank(a)-partnerRank(b)||(a.price??Infinity)-(b.price??Infinity)||a.address.localeCompare(b.address));
-  const archiveDream=key==='Archive'?items.filter(p=>p.dreamBigOrigin===true):[];
-  const archiveMain=key==='Archive'?items.filter(p=>p.dreamBigOrigin!==true):[];
+  const archiveStamp=p=>{const dates=[p.archiveEnteredAt,p.archiveInfo?.manualArchivedAt,p.archiveInfo?.archivedAt,p.dreamBigRejectedAt,p.decisionDate].filter(x=>x&&!Number.isNaN(Date.parse(x)));return dates.length?Math.max(...dates.map(x=>Date.parse(x))):0};
+  const archiveNewest=(a,b)=>archiveStamp(b)-archiveStamp(a);
+  const archiveDream=key==='Archive'?items.filter(p=>p.dreamBigOrigin===true).sort(archiveNewest):[];
+  const archiveMain=key==='Archive'?items.filter(p=>p.dreamBigOrigin!==true).sort(archiveNewest):[];
   const cardsById=new Map();
   const cards=items.map(p=>{
    const r=rankOf(richAccount(),p.id),t=rankOf(tiffanyAccount(),p.id);
