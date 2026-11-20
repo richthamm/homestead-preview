@@ -1954,6 +1954,48 @@ body.hq-details-active #propertyDetails>.hq-detail-scroll{
  #dreamBigPreview .dream-prelim-ranking>.dream-hq-rank-row{gap:3px!important;padding:5px!important;grid-template-columns:45px minmax(0,1fr) 27px 27px 39px 49px!important}
  #cards .rankrow>input,#cards .rankrow>button,#dreamBigPreview .dream-hq-rank-row>input,#dreamBigPreview .dream-hq-rank-row>button{font-size:11px!important}
 }
+</style><style id="hq-v47-unified-dashboard">
+/* v4.7 — Main HQ arrangement, DREAM BIG desktop scale; compact mobile retained. */
+#dreamBigPreview .dream-dashboard-menu,#dreamBigPreview .dream-dashboard-filter{box-sizing:border-box;min-width:0;width:100%;}
+#dreamBigPreview .dream-dashboard-menu{background:#182721;border:1px solid #476657;border-radius:14px;padding:13px 16px;margin:14px 0 12px;display:flex;flex-direction:column;gap:8px}
+#dreamBigPreview .dream-dashboard-menu-row{min-width:0;display:grid;gap:9px;align-items:stretch}
+#dreamBigPreview .dream-dashboard-explore{order:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+#dreamBigPreview .dream-dashboard-views{order:1;grid-template-columns:repeat(4,minmax(0,1fr))}
+#dreamBigPreview .dream-dashboard-label{grid-column:1/-1;text-transform:uppercase;letter-spacing:.08em;color:#d2e7d8;font-weight:700;font-size:12px}
+#dreamBigPreview .dream-dashboard-menu-row>.btn{min-width:0;width:100%;box-sizing:border-box;min-height:47px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;font-size:13px;line-height:1.2;padding:9px 7px;white-space:normal}
+#dreamBigPreview .dream-dashboard-menu-row>.btn small{font-size:11px}
+#dreamBigPreview .dream-active-view{border-color:#e4c875!important;background:#3d422b!important;color:#ffe5a0!important}
+#dreamBigPreview .dream-dashboard-filter{background:#182721;border:1px solid #476657;border-radius:14px;padding:16px;margin:0 0 20px}
+#dreamBigPreview .dream-dashboard-filter-title{font-size:17px;font-weight:750;margin-bottom:9px;color:#f0f2e9}
+#dreamBigPreview .dream-dashboard-filter-heading{font-size:13px;font-weight:700;margin:8px 0 5px;color:#e9eee6}
+#dreamBigPreview .dream-dashboard-filter-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#dreamBigPreview .dream-dashboard-sort-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#dreamBigPreview .dream-dashboard-filter select,#dreamBigPreview .dream-dashboard-filter input{box-sizing:border-box;min-width:0;width:100%;max-width:100%;border:1px solid #476657;background:#1b2a26;color:#e7eee8;border-radius:8px;padding:11px 10px;font-size:14px;min-height:46px}
+#dreamBigPreview .dream-dashboard-filter input{margin-top:9px}
+/* Desktop only: lift Main HQ control dimensions toward DREAM BIG's desktop scale. */
+@media(min-width:701px){
+ .hq-menu-columns>.hq-menu-row>.btn{min-height:49px;font-size:13px;padding:9px 10px}
+ .hq-filter-panel{padding:16px 18px}
+ .hq-filter-panel select,.hq-filter-panel input{min-height:46px;font-size:14px}
+ .hq-menu .hq-menu-label,.hq-filter-panel .hq-filter-title{font-size:14px}
+ .metrics .metric{padding:15px}
+ .metrics .metric strong{font-size:25px}
+}
+/* Mobile: preserve compact Main HQ layout, never borrow desktop sizing. */
+@media(max-width:700px){
+ #dreamBigPreview .dream-dashboard-menu{padding:9px 9px;gap:5px;margin:9px 0 11px}
+ #dreamBigPreview .dream-dashboard-menu-row{gap:6px}
+ #dreamBigPreview .dream-dashboard-menu-row>.btn{font-size:10px;padding:6px 3px;min-height:42px;line-height:1.13;overflow-wrap:normal}
+ #dreamBigPreview .dream-dashboard-menu-row>.btn small{font-size:9px}
+ #dreamBigPreview .dream-dashboard-label{font-size:10px}
+ #dreamBigPreview .dream-dashboard-filter{padding:9px 10px;margin-bottom:12px}
+ #dreamBigPreview .dream-dashboard-filter-title{font-size:13px;max-width:100%;margin-bottom:5px}
+ #dreamBigPreview .dream-dashboard-filter-heading{font-size:11px;margin:6px 0 4px}
+ #dreamBigPreview .dream-dashboard-filter-controls,#dreamBigPreview .dream-dashboard-sort-controls{gap:5px}
+ #dreamBigPreview .dream-dashboard-filter select,#dreamBigPreview .dream-dashboard-filter input{font-size:10px;min-height:34px;padding:7px 5px;text-overflow:ellipsis}
+ #dreamBigPreview .dream-dashboard-filter input{margin-top:6px}
+}
+@media(max-width:370px){#dreamBigPreview .dream-dashboard-menu-row>.btn{font-size:9px;padding:5px 2px}#dreamBigPreview .dream-dashboard-filter select{font-size:9px;padding-left:3px;padding-right:3px}}
 </style></head><body>
 <div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br/>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.6</span><button aria-controls="hqWhatsNew" aria-expanded="false" aria-label="View version history" class="hq-version-info" id="hqWhatsNewToggle" title="View version history" type="button">ⓘ</button><details aria-label="Version history" class="hq-whatsnew-popover" id="hqWhatsNew">
 <summary class="hq-whatsnew-title">What’s New · v4.6</summary>
@@ -2009,7 +2051,35 @@ body.hq-details-active #propertyDetails>.hq-detail-scroll{
 </div>
 <div class="hq-search-row"><input aria-label="Search address and property details" id="search" placeholder="Search address, town, features, notes…" type="search"/></div>
 </div>
-<section aria-label="Dream Big collection preview" class="hidden" id="dreamBigPreview"><div class="dream-head"><div class="dream-brand"><div class="dream-demo">INDEPENDENT RESEARCH COLLECTION</div><div class="dream-title-line"><h2>✦ DREAM BIG</h2><div class="dream-owner-wrap"><button aria-controls="dreamOwnerPanel" aria-expanded="false" class="btn" id="dreamOwnerTools" type="button">⚙ Owner Tools ▾</button><div aria-label="DREAM BIG owner tools" class="dream-owner-panel hidden" id="dreamOwnerPanel" role="group"><button class="btn primary" id="dreamImport" type="button">📥 Import DREAM BIG JSON</button><button class="btn" id="dreamExport" type="button">Download DREAM BIG backup</button><button class="btn" id="dreamGalleryImport" type="button">📷 Import Gallery URLs</button></div></div></div><p class="dream-sub">10+ acres · $600,001–$1,000,000 · Established on-property rentals · Independent rankings</p><div class="dream-header-bottom"><button id="dreamBack" type="button">← Return to HQ</button><button aria-expanded="false" aria-haspopup="dialog" class="dream-info-btn" id="dreamInfo" type="button">ⓘ Separate from your regular watchlist</button></div></div></div><div class="dream-upload-inputs"><input accept=".json,application/json" class="hidden" id="dreamGalleryFile" type="file"/><input accept=".json,application/json" class="hidden" id="dreamFile" type="file"/></div><div class="small" id="dreamStatus" role="status"></div><div class="dream-stats"><div class="dream-stat">Properties<strong>3</strong><small>Research candidates</small></div><div class="dream-stat">Income evidence<strong>1 / 3</strong><small>Evidence classification</small></div><div class="dream-stat">Under $800k<strong>1</strong><small>Closer-look target</small></div><div class="dream-stat">Price drops<strong>2</strong><small>Recorded changes</small></div></div><div class="dream-desktop-toolbar"><div class="dream-desktop-panel dream-search-panel"><h3>Search &amp; Filter</h3><div class="dream-controls"><input aria-label="Search Dream Big" id="dreamSearch" placeholder="Search" type="search"/><select aria-hidden="true" class="hidden" id="dreamFilter" tabindex="-1"><option value="all">All opportunities</option><option value="verified">Documented income</option><option value="claimed">Claimed income</option><option value="under800">Under $800k</option></select><select id="dreamSort"><option value="rich">Rich's Rank</option><option value="tiffany">Tiffany's Rank</option><option value="price">Price: low to high</option></select></div></div><div class="dream-desktop-panel dream-explore-panel"><h3>Explore</h3><div class="dream-explore-actions"><button type="button" class="btn" id="dreamMapOpen"><span class="hq-raven-label">🐦‍⬛ Raven’s View</span><small>Property Map</small></button><button type="button" class="btn" id="dreamAddOpen">Add new listing</button></div></div></div><div class="dream-grid" id="dreamCards"></div><div class="dream-info-overlay hidden" id="dreamInfoOverlay" role="presentation"><div aria-labelledby="dreamInfoTitle" aria-modal="true" class="dream-info-dialog" role="dialog"><button class="btn" id="dreamInfoClose" type="button">✕ Close</button><h3 id="dreamInfoTitle">Separate from your regular watchlist</h3><p>DREAM BIG research and rankings are stored independently in the cloud. Only Rich can import or promote listings. Verify income claims before relying on them.</p></div></div></section><section aria-label="Property collections overview" class="workspace-panel hidden" id="collectionsPage"><div class="sectionbar"><h2>♥ Collections</h2><button class="btn" id="closeCollections" type="button">← Back to properties</button></div><div class="hq-collections-grid" id="collectionsColumns"></div><div class="hq-modal-backdrop hidden" id="hqCollectionOverlay"><section class="hq-modal-dialog hq-collection-dialog" role="dialog" aria-modal="true" aria-labelledby="hqCollectionTitle"><div class="hq-modal-header"><h2 id="hqCollectionTitle">Collection</h2><button class="btn" id="hqCollectionClose" type="button">✕ Close</button></div><div id="hqCollectionContents" class="hq-collection-modal-grid"></div></section></div></section>
+<section aria-label="Dream Big collection preview" class="hidden" id="dreamBigPreview"><div class="dream-head"><div class="dream-brand"><div class="dream-demo">INDEPENDENT RESEARCH COLLECTION</div><div class="dream-title-line"><h2>✦ DREAM BIG</h2><div class="dream-owner-wrap"><button aria-controls="dreamOwnerPanel" aria-expanded="false" class="btn" id="dreamOwnerTools" type="button">⚙ Owner Tools ▾</button><div aria-label="DREAM BIG owner tools" class="dream-owner-panel hidden" id="dreamOwnerPanel" role="group"><button class="btn primary" id="dreamImport" type="button">📥 Import DREAM BIG JSON</button><button class="btn" id="dreamExport" type="button">Download DREAM BIG backup</button><button class="btn" id="dreamGalleryImport" type="button">📷 Import Gallery URLs</button></div></div></div><p class="dream-sub">10+ acres · $600,001–$1,000,000 · Established on-property rentals · Independent rankings</p><div class="dream-header-bottom"><button id="dreamBack" type="button">← Return to HQ</button><button aria-expanded="false" aria-haspopup="dialog" class="dream-info-btn" id="dreamInfo" type="button">ⓘ Separate from your regular watchlist</button></div></div></div><div class="dream-upload-inputs"><input accept=".json,application/json" class="hidden" id="dreamGalleryFile" type="file"/><input accept=".json,application/json" class="hidden" id="dreamFile" type="file"/></div><div class="small" id="dreamStatus" role="status"></div><div class="dream-stats"><div class="dream-stat">Properties<strong>3</strong><small>Research candidates</small></div><div class="dream-stat">Income evidence<strong>1 / 3</strong><small>Evidence classification</small></div><div class="dream-stat">Under $800k<strong>1</strong><small>Closer-look target</small></div><div class="dream-stat">Price drops<strong>2</strong><small>Recorded changes</small></div></div><div class="dream-dashboard-menu" aria-label="DREAM BIG dashboard navigation">
+ <div class="dream-dashboard-menu-row dream-dashboard-explore" role="group" aria-label="Explore">
+  <span class="dream-dashboard-label">Explore</span>
+  <button type="button" class="btn" id="dreamMapOpen"><span class="hq-raven-label">🐦‍⬛ Raven’s View</span><small>Property Map</small></button>
+  <button type="button" class="btn" id="dreamAddOpen">Add new listing</button>
+ </div>
+ <div class="dream-dashboard-menu-row dream-dashboard-views" role="group" aria-label="Views">
+  <span class="dream-dashboard-label">Views</span>
+  <button type="button" class="btn" data-dream-go="properties">🏡 My Properties</button>
+  <button type="button" class="btn" data-dream-go="council">⚔️ War Council</button>
+  <button type="button" class="btn" data-dream-go="collections">♥ Collections</button>
+  <button type="button" class="btn dream-toggle dream-active-view" data-dream-go="dream">✦ DREAM BIG</button>
+ </div>
+</div>
+<div class="dream-dashboard-filter" aria-label="DREAM BIG search and filters">
+ <div class="dream-dashboard-filter-title">Search &amp; Filter Properties</div>
+ <div class="dream-dashboard-filter-heading">Filter</div>
+ <div class="dream-dashboard-filter-controls">
+  <select id="dreamFilter" aria-label="DREAM BIG income and price filter"><option value="all">Collections: All</option><option value="verified">Documented income</option><option value="claimed">Claimed income</option><option value="under800">Under $800k</option></select>
+  <select id="dreamRankFilter" aria-label="DREAM BIG ranked status"><option value="all">Ranked Status: All</option><option value="rich">Ranked by Rich</option><option value="tiffany">Ranked by Tiffany</option><option value="both">Ranked by both</option><option value="unranked">Unranked by both</option></select>
+  <select id="dreamStatusFilter" aria-label="DREAM BIG listing status"><option value="all">Status: All</option><option value="active">Active</option><option value="pending">Pending / Contingent</option><option value="sold">Sold</option></select>
+ </div>
+ <div class="dream-dashboard-filter-heading">Sort By</div>
+ <div class="dream-dashboard-sort-controls">
+  <select id="dreamSort" aria-label="DREAM BIG sort category"><option value="rich">Rank: Rich</option><option value="tiffany">Rank: Tiffany</option><option value="price">Price</option></select>
+  <select id="dreamSortDirection" aria-label="DREAM BIG sort direction"><option value="asc">Low to High / Ascending</option><option value="desc">High to Low / Descending</option></select>
+ </div>
+ <input aria-label="Search Dream Big" id="dreamSearch" placeholder="Search address, town, features, notes…" type="search"/>
+</div><div class="dream-grid" id="dreamCards"></div><div class="dream-info-overlay hidden" id="dreamInfoOverlay" role="presentation"><div aria-labelledby="dreamInfoTitle" aria-modal="true" class="dream-info-dialog" role="dialog"><button class="btn" id="dreamInfoClose" type="button">✕ Close</button><h3 id="dreamInfoTitle">Separate from your regular watchlist</h3><p>DREAM BIG research and rankings are stored independently in the cloud. Only Rich can import or promote listings. Verify income claims before relying on them.</p></div></div></section><section aria-label="Property collections overview" class="workspace-panel hidden" id="collectionsPage"><div class="sectionbar"><h2>♥ Collections</h2><button class="btn" id="closeCollections" type="button">← Back to properties</button></div><div class="hq-collections-grid" id="collectionsColumns"></div><div class="hq-modal-backdrop hidden" id="hqCollectionOverlay"><section class="hq-modal-dialog hq-collection-dialog" role="dialog" aria-modal="true" aria-labelledby="hqCollectionTitle"><div class="hq-modal-header"><h2 id="hqCollectionTitle">Collection</h2><button class="btn" id="hqCollectionClose" type="button">✕ Close</button></div><div id="hqCollectionContents" class="hq-collection-modal-grid"></div></section></div></section>
 <section aria-label="Lightweight regional property map" class="hidden" id="propertyMapPage"><div class="sectionbar"><h2>🗺️ Property Map</h2><button class="btn" id="closeMap" type="button">← Back to properties</button></div><div class="small">Interactive regional road map: zoom and drag to separate property markers. Nearby properties group into numbered clusters; click a cluster to zoom in. If the interactive map cannot load, HQ restores the previous static map. Coordinates are approximate, not legal boundaries.</div><div class="offline-map-legend"><span><i class="legend-dot watchlist"></i> Watchlist</span><span><i class="legend-dot favorite"></i> HQ Favorite</span><span><i class="legend-dot serious"></i> Serious Inquiry</span></div><div class="offline-map-toolbar"><button aria-label="Zoom out" class="btn" id="offlineMapZoomOut" type="button">−</button><button aria-label="Zoom in" class="btn" id="offlineMapZoomIn" type="button">＋</button><button class="btn" id="offlineMapReset" type="button">Show all properties</button><button class="btn primary" id="autoFindParcels" type="button">🔎 Auto-find missing parcels</button><label class="map-boundary-toggle"><input id="mapBoundaryToggle" type="checkbox"/> Show parcel boundaries</label><span class="small" id="offlineMapZoomLabel">100%</span></div><div aria-label="Central Texas map with interactive property locations" class="offline-map-canvas" id="propertyMapCanvas"></div><div aria-live="polite" class="small" id="parcelBatchStatus" role="status"></div><div aria-live="polite" class="offline-map-selection small" id="offlineMapSelection">Select a pin to see property details. Listing status describes market availability, not pin accuracy.</div><p class="small" id="mapNeedsLocation"></p><div aria-live="polite" class="small" id="mapLocationFallback"></div></section><section aria-label="War Council" class="workspace-panel hidden" id="warCouncil">
 <div class="sectionbar">
 <h2>⚔️ The War Council <small class="hq-war-subtitle">Partner Debate</small></h2>
@@ -5091,10 +5161,15 @@ window.addEventListener('resize',()=>{const now=window.matchMedia('(max-width:70
 
 function renderDreamPreview(){
  const root=$('dreamCards');if(!root)return;
- const q=($('dreamSearch')?.value||'').toLowerCase(),f=$('dreamFilter')?.value||'all',sort=$('dreamSort')?.value||'rich';
+ const q=($('dreamSearch')?.value||'').toLowerCase(),f=$('dreamFilter')?.value||'all',sort=$('dreamSort')?.value||'rich',rankFilter=$('dreamRankFilter')?.value||'all',statusFilter=$('dreamStatusFilter')?.value||'all',sortDir=$('dreamSortDirection')?.value||'asc';
  const rich=OWNER,tiffany=partnerUid&&partnerUid!==OWNER?partnerUid:null;
- let items=dreamState.properties.filter(p=>(p.address+' '+p.city+' '+(p.risk||'')+' '+dreamIncome(p)).toLowerCase().includes(q)&&(f==='all'||(f==='under800'?p.price<800000:dreamEvidence(p)===f))&&(dreamStatFilter==='all'||(dreamStatFilter==='income'?dreamEvidence(p)==='verified':dreamStatFilter==='under800'?Number(p.price)<800000:dreamStatFilter==='drops'?p.priceReduced===true:true)));
- items.sort((a,b)=>sort==='price'?a.price-b.price:sort==='drop'?(Number(!!b.priceReduced)-Number(!!a.priceReduced)):((dreamRank(a.id,sort==='rich'?rich:tiffany)||999)-(dreamRank(b.id,sort==='rich'?rich:tiffany)||999))||hqPreliminaryInterest(b)-hqPreliminaryInterest(a)||a.price-b.price);
+ let items=dreamState.properties.filter(p=>{
+  const rr=dreamRank(p.id,rich),tr=dreamRank(p.id,tiffany),ls=String(p.listingStatus||'').toLowerCase();
+  const rankOK=rankFilter==='all'||(rankFilter==='rich'?!!rr:rankFilter==='tiffany'?!!tr:rankFilter==='both'?!!rr&&!!tr:!rr&&!tr);
+  const statusOK=statusFilter==='all'||(statusFilter==='active'?/active|for sale|available/.test(ls):statusFilter==='pending'?/pending|contingent|under contract/.test(ls):/sold|closed/.test(ls));
+  return rankOK&&statusOK&&(p.address+' '+p.city+' '+(p.risk||'')+' '+dreamIncome(p)).toLowerCase().includes(q)&&(f==='all'||(f==='under800'?p.price<800000:dreamEvidence(p)===f))&&(dreamStatFilter==='all'||(dreamStatFilter==='income'?dreamEvidence(p)==='verified':dreamStatFilter==='under800'?Number(p.price)<800000:dreamStatFilter==='drops'?p.priceReduced===true:true));
+ });
+ items.sort((a,b)=>{const base=sort==='price'?Number(a.price)-Number(b.price):((dreamRank(a.id,sort==='rich'?rich:tiffany)||999)-(dreamRank(b.id,sort==='rich'?rich:tiffany)||999));return (sortDir==='desc'?-base:base)||hqPreliminaryInterest(b)-hqPreliminaryInterest(a)||Number(a.price)-Number(b.price)});
  const all=dreamState.properties,verified=all.filter(p=>dreamEvidence(p)==='verified').length,under=all.filter(p=>p.price<800000).length,drops=all.filter(p=>p.priceReduced===true).length;
  const stats=document.querySelectorAll('#dreamBigPreview .dream-stat strong');[all.length,verified+' / '+all.length,under,drops].forEach((v,i)=>{if(stats[i])stats[i].textContent=v});
  document.querySelectorAll('#dreamBigPreview .dream-stat').forEach((el,i)=>{const kind=['all','income','under800','drops'][i];el.classList.toggle('dream-stat-selected',dreamStatFilter===kind);el.setAttribute('role','button');el.setAttribute('tabindex','0');el.setAttribute('aria-pressed',String(dreamStatFilter===kind));el.onclick=()=>{dreamStatFilter=kind;if(kind==='all'){$('dreamSearch').value='';$('dreamFilter').value='all'}renderDreamPreview()};el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}}});
@@ -5198,6 +5273,14 @@ async function hqRestoreArchived(id,destination){
 
 function toggleDreamPreview(show){const page=$('dreamBigPreview');if(!page)return;page.classList.toggle('hidden',!show);$('myPropertiesSection')?.classList.toggle('hidden',show);if(show){$('collectionsPage')?.classList.add('hidden');$('propertyDetails')?.classList.add('hidden');if(ready)watchDream();renderDreamPreview();page.scrollIntoView({block:'start'});}else $('myPropertiesSection')?.scrollIntoView({block:'start'});}
 $('dreamOpen')?.addEventListener('click',()=>toggleDreamPreview(true));$('dreamBack')?.addEventListener('click',()=>toggleDreamPreview(false));
+document.querySelectorAll('[data-dream-go]').forEach(button=>button.addEventListener('click',()=>{
+ const target=button.dataset.dreamGo;
+ if(target==='dream')return;
+ toggleDreamPreview(false);
+ const nav={properties:'showProperties',council:'showWarCouncil',collections:'showCollections'};
+ $(nav[target])?.click();
+}));
+['dreamRankFilter','dreamStatusFilter','dreamSortDirection'].forEach(id=>$(id)?.addEventListener('change',renderDreamPreview));
 $('dreamSearch')?.addEventListener('input',renderDreamPreview);$('dreamFilter')?.addEventListener('change',renderDreamPreview);$('dreamSort')?.addEventListener('change',renderDreamPreview);
 /* DREAM BIG-only map and manual listing entry; neither reads nor writes HQ shared properties. */
 let dreamMapInstance=null;
