@@ -2208,9 +2208,43 @@ body.hq-details-active #propertyDetails>.hq-detail-scroll{
 </style>
 <style id="hq-v495-step-d">
 #dreamBigPreview .dream-investment>.hq495-dream-highlights{grid-column:1/-1;order:-2;display:block;width:100%;min-height:38px;background:#352e21;border:1px solid #b98a46;color:#f5d392;font-weight:800;text-align:center;padding:7px 8px}
-</style></head><body>
-<div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br/>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.9.5</span><button aria-controls="hqWhatsNew" aria-expanded="false" aria-label="View version history" class="hq-version-info" id="hqWhatsNewToggle" title="View version history" type="button">ⓘ</button><details aria-label="Version history" class="hq-whatsnew-popover" id="hqWhatsNew">
-<summary class="hq-whatsnew-title">What’s New · v4.9.5</summary>
+</style>
+<style id="hq-v496-refinements">
+/* 4.9.6: distinguish the quick-read Master Grades from the editable Details Assessment. */
+#cards .card-rank-column>.hq495-card-highlights.card-progress{order:1!important}
+#cards .card-rank-column>.hq-card-rankgrid{order:2!important}
+#cards .card-rank-column>.hq-personal-controls{order:0!important}
+#cards .card-rank-column>.card-progress:not(.hq495-card-highlights){order:4!important}
+
+.hq496-card-evidence .hq496-card-grade{display:block!important;grid-template-columns:none!important;padding:10px 8px!important;margin:0!important;border-bottom:1px solid #43574b;min-width:0}
+.hq496-card-grade-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;min-width:0}
+.hq496-card-grade-heading strong{flex:1;min-width:0;font-size:12px;line-height:1.35}
+.hq496-card-grade-heading .wishlist-evidence-score{flex:0 0 auto}
+.hq496-card-grade .card-grade-description{display:block!important;grid-column:auto!important;grid-row:auto!important;white-space:normal!important;overflow-wrap:anywhere;font-size:12px;line-height:1.4;margin:5px 0}
+.hq496-card-comment{font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45;padding:6px 0;margin:3px 0 8px;color:#d5e0d6}
+.hq496-card-grade .flame-controls{display:block!important;grid-column:auto!important;grid-row:auto!important;width:100%;min-width:0}
+.hq496-criterion-heading{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:10px}
+.hq496-criterion-heading strong{flex:1;min-width:0}
+.hq496-criterion-heading .grade-reset{flex:0 0 auto;margin:0!important}
+.master-grade-row .hq496-score-controls{display:block!important;width:100%!important;min-width:0!important}
+.master-grade-row .hq496-score-controls .hq495-grade-picker{display:block!important;width:100%!important;max-width:100%!important;white-space:normal!important;text-align:left!important;overflow-wrap:anywhere!important;line-height:1.45!important;min-height:44px}
+.master-grade-row .master-grade-result{width:100%!important;min-width:0!important}
+.master-grade-row .master-item-comment{width:100%!important;box-sizing:border-box!important}
+.hq496-alert-list{margin:0;padding-left:20px;line-height:1.55}.hq496-alert-list li{margin-bottom:9px}
+button[data-decision="Rejected"],button[data-dream-reject],.hq492-reject,button[data-reject],button[data-card-reject],.hq-card-action-reject,button[id*="Reject"],button[id*="reject"]{background:#6d2c30!important;border-color:#d57878!important;color:#fff0f0!important}
+.hq495-highlights-dialog{width:min(700px,100%)}
+.hq495-highlights-content{padding:10px!important}
+.hq495-highlight-entry{padding:10px!important;margin:0 0 9px!important}
+.hq495-highlight-entry h3{font-size:13px!important;margin:0 0 4px!important}
+.hq495-highlight-definition{font-size:11px!important;margin:0 0 7px!important;line-height:1.35!important}
+.hq495-highlight-person{padding:7px 9px!important;margin:3px 0!important;font-size:12px!important}
+.hq495-highlight-person p{margin:3px 0 0!important;line-height:1.3!important}
+@media(min-width:560px){.hq495-highlight-entry{display:grid!important;grid-template-columns:1fr 1fr;gap:5px 8px}.hq495-highlight-entry h3,.hq495-highlight-definition{grid-column:1/-1}}
+@media(max-width:480px){.hq495-highlights-content{padding:7px!important}.hq495-highlight-entry{padding:8px!important}.hq496-card-evidence .hq496-card-grade{padding:8px 4px!important}}
+</style>
+</head><body>
+<div id="cloudgate" style="position:fixed;inset:0;z-index:999;background:#101716;color:#eef2eb;display:flex;align-items:center;justify-content:center;padding:20px"><div style="max-width:540px;background:#1b2624;padding:30px;border:1px solid #52725e;border-radius:14px"><h2>Hill Country Homestead HQ</h2><p id="gateMessage">Connecting securely…</p><div id="gateActions"></div></div></div><header><div class="hq-header-content"><div class="hq-header-title"><div class="eyebrow">Private property headquarters · two-person edition</div><h1>Hill Country<br/>Homestead HQ</h1><p>One shared watchlist. Two independent opinions. A future village built together.</p><div class="hq-header-meta"><button class="btn hq-refresh-top" id="refreshDashboard" type="button">🔄 Refresh Dashboard</button><span class="hq-version-badge">⚔️ Homestead HQ · v4.9.6</span><button aria-controls="hqWhatsNew" aria-expanded="false" aria-label="View version history" class="hq-version-info" id="hqWhatsNewToggle" title="View version history" type="button">ⓘ</button><details aria-label="Version history" class="hq-whatsnew-popover" id="hqWhatsNew">
+<summary class="hq-whatsnew-title">What’s New · v4.9.6</summary>
 <div id="hqChangeHistory"><details open><summary>v4.9.5 — Mobile grading and Highlights fixes</summary><p>Responsive wrapped grade selector; independent Rich/Tiffany highlights editor; combined read-only property highlights; listing history popups; cleaned research notes and About Property; Owner Tools layout polish.</p></details><details open><summary>v4.9.4 — Integrated assessment and Owner Tools preview</summary><p>Manual-only grading with revised, split and merged criteria; informational reference, research-backed comment fields, simplified Details, photo carousel, ALERT rename, and Owner Tools assessment management.</p></details><details open><summary>v4.9 — Dashboard and ranking control refinement</summary><p>Moved Pending Research to the header and hid it when empty; enlarged desktop header actions and summary metrics; expanded navigation buttons while retaining section boundaries; standardized equal-width editable rank, up, down, and Clear controls across HQ, DREAM BIG and details, including Couch Mode.</p></details><details open><summary>v4.8 — Desktop dashboard sizing and navigation stability</summary><p>Unified the Main HQ and DREAM BIG desktop dashboard proportions, expanded navigation and filter controls for laptop viewing, and stopped DREAM BIG navigation from scrolling past the dashboard. Mobile dashboard sizing and property cards remain unchanged.</p></details><details open><summary>v4.7 — Unified dashboard navigation and layout</summary><p>Matched Main HQ and DREAM BIG dashboard arrangement, added Views navigation to DREAM BIG, and retained compact mobile sizing.</p></details><details open><summary>v4.3 — Refinements to Couch Mode, rankings, comments and map clusters</summary><p>Single header Couch toggle; matching Rich/Her rank rows; owner-colored tools; compact paired fire levels with popup comments; shared collection reviews; map cluster interest flags; consistent DREAM BIG ranks; mobile assessment layout refinements.</p></details><details><details><summary>v4.3 — Ranking, Couch Mode and assessment refinements</summary><p>Updated Rich/Tiffany rank labels and controls, review actions, map cluster indicators, Master Assessment flame and note layout, and DREAM BIG mobile presentation. Browser and Firestore behavior require live verification.</p></details><summary>v4.2 — Unified Couch Mode, compact War Council, DREAM BIG layout and improved maps</summary><p>Owner-only Couch Mode exposes Rich and Tiffany’s grades, ranks, notes, highlights and classifications simultaneously, without an account selector, and resets on reload. Unified backups include HQ, DREAM BIG, both personal profiles and discussion exports, with a guarded restore preview (discussion comments are preserved but not re-imported). DREAM BIG promotions, pending research returns and archive restorations preserve listing information, photos and saved DREAM BIG ranks. The details workspace gains a draggable independent-pane divider, Compare opens in a responsive popup, Collections use desktop grid dialogs, conflict/highlight popups show full details, Raven’s View uses a road-first basemap with fallback, prominent town labels, blue property pins, and fixed-size clustered markers on both maps. War Council mobile sections are compact and DREAM BIG listing actions align beside the property information on desktop and mobile. Verify authenticated saves in your own Firebase session before deploying.</p></details><details open=""><summary>v4.0.21 — DREAM BIG controls and toolbar framing</summary><p>Removed native spinner arrows from editable DREAM BIG rank fields while retaining external rank arrows. Grouped Search &amp; Filter and Explore inside a shared bordered toolbar, preserving their responsive two-column arrangement. Increased the gap above the first property cards. No research or Firestore behavior changed.</p></details><details open=""><summary>v4.0.20 — DREAM BIG balanced ranking controls</summary><p>Reduced the Prelim Assessment button to its text width and distributed the remaining row space evenly among rank arrows, rank input, Clear, Rich, and Tiffany on desktop and mobile. Preserved the three-row card structure and existing ranking behavior.</p></details><details open=""><summary>v4.0.19 — DREAM BIG touch controls and price badge</summary><p>Widened rank arrows and numeric input for easier tapping, expanded the Prelim button into remaining space with the full label on desktop, and tightened rental-use status beside the asking price. Maintained separate Rich/Tiffany rank displays and the three-row card layout.</p></details><details open=""><summary>v4.0.18 — DREAM BIG card row structure corrected</summary><p>Fixed desktop and mobile card layout: Prelim and all ranking controls occupy one row, rental information occupies a separate full-width row, and Move to Watchlist, Price History and Reject share an equal-width action row. Rental-use status now sits closer to the price. Preserved existing card features and rankings.</p></details><details open=""><summary>v4.0.16 — DREAM BIG mobile controls, Raven’s View and preliminary ordering</summary><p>Compact single-row Rich/Tiffany ranking controls on mobile and desktop; mobile two-column Search &amp; Filter / Explore panels; stacked Explore buttons; side-by-side Return and separate-watchlist information controls; clearer yellow Move to Watchlist and bold red Reject actions; Raven’s View (Property Map) naming; commute popup hides raw source links while retaining research metadata; newly imported unranked properties receive a preliminary relevance-based display order without modifying personal rankings or assessment grades.</p></details><details><summary>v4.0.15 — DREAM BIG assessments, archive and Norse titles</summary><p>DREAM BIG: centered desktop rank controls and displays; interactive Properties, Income Evidence, Under $800k, and Price Drops statistics; merged Property Details and Property Summary into compact Prelim Assessment with three commute destinations; added Reject to the shared HQ archive. HQ: unified Rejected/Sold/Archived status filtering as Hall of the Fallen. Norse-inspired visible labels include Uncharted Lands (New Discoveries), Valhalla’s Chosen (Favorites), Loki’s Shortlist (Serious Inquiry), The Merchant’s Watch (Price Watch), and Hall of the Fallen (Rejected/Sold/Archived). Original statuses and storage identifiers are preserved. Layout adjustments remain desktop-specific.</p></details><details open=""><summary>v4.0.14 — DREAM BIG desktop Explore and ranking alignment</summary><p>Desktop Search &amp; Filter and Explore panels, DREAM BIG-only property map and manual listing entry, and aligned ranking controls. Mobile layout remains unchanged.</p></details>
 <details open=""><summary>v4.0.13 — DREAM BIG desktop card layout</summary><p>Desktop-only: two-column cards on wide screens, larger button labels, compact ranking boxes with rank controls alongside, and Property Summary naming. Mobile layout preserved.</p></details>
 <details open=""><summary>v4.0.12 — Corrected version display and release history</summary><p>Updated the header version and restored missing release notes; no dashboard behavior changed in this revision.</p></details>
@@ -3050,6 +3084,11 @@ function closeDetailResearchAlert(){
  if(overlay)overlay.remove();
  document.body.classList.remove('hq-detail-alert-open');
 }
+function hq496AlertBullets(reason){
+ const raw=String(reason||'').trim();
+ const chunks=raw.split(/(?:\n+|(?<=[.!?])\s+(?=[A-Z]))/).map(x=>x.trim()).filter(Boolean);
+ return '<ul class="hq496-alert-list">'+chunks.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';
+}
 function openDetailResearchAlert(id){
  closeDetailResearchAlert();
  const p=shared.find(x=>x.id===id);if(!p)return;
@@ -3060,7 +3099,7 @@ function openDetailResearchAlert(id){
  const overlay=document.createElement('div');overlay.id='hqDetailAlertOverlay';overlay.className='hq-detail-alert-overlay';
  overlay.innerHTML=`<section class="hq-detail-alert-dialog ${critical?'critical':active?'caution':'resolved'}" role="dialog" aria-modal="true" aria-labelledby="hqDetailAlertTitle" tabindex="-1">
  <div class="hq-detail-alert-head"><h3 id="hqDetailAlertTitle">${critical?'Critical Alert':active?'Research Alert':'Resolved Research Alert'}</h3><button type="button" class="btn" id="hqDetailAlertClose" aria-label="Close research alert">✕ Close</button></div>
- <div class="hq-detail-alert-body"><p class="hq-detail-alert-reason">${esc(record.reason||'Research discrepancy requires review.')}</p>
+ <div class="hq-detail-alert-body"><div class="hq-detail-alert-reason">${hq496AlertBullets(record.reason||'Research discrepancy requires review.')}</div>
  <p class="small">Source: ${esc(record.source||'Research import')}</p>
  ${active?'<p class="small">This alert concerns conflicting research information, not routine unverified listing claims.</p>':`<p class="small">Resolution: ${esc(record.resolution||'Not recorded')}</p><p class="small">Resolved: ${esc(record.resolvedAt||'Not recorded')}</p>`}
  <div class="hq-detail-alert-actions"><button type="button" class="btn ${active?'primary':''}" id="hqDetailAlertAction">${active?'✓ Mark resolved with evidence':'Reopen alert'}</button></div></div></section>`;
@@ -4219,30 +4258,24 @@ function hq492OpenEditor(){if(me?.uid!==OWNER)return;let box=document.createElem
 // Card-only read-only summary: labels and grades, with manual values highlighted.
 // Evidence details, automatic sources, and the edit controls remain in Property Details.
 function wishlistEvidenceCard(p, openCardEvidence){
-  // A compact summary: scored criteria plus any criterion carrying a shared
-  // comment or either person's flame/highlight note.
-  const entries=wishlistFeatures.map(([key,label])=>{
-    const auto=automaticWishlist(p,key);
-    const override=ratingOverride(hqEditingTiffany()?partnerRatings:myRatings,p,key);
-    const grade=override===null?auto.value:override;
-    const comment=String(p.assessmentComments?.[key]||'').trim();
-    const own=flameData(hqRankAccount(),p.id,key),partner=flameData(hqEditingTiffany()?mine:other,p.id,key);
-    if(grade===null&&!comment&&!own.level&&!own.note.trim()&&!partner.level&&!partner.note.trim())return null;
-    return {key,label,grade,overridden:override!==null,comment,own,partner};
-  }).filter(Boolean);
-  const rows=entries.map(e=>{
-    const hasFlame=e.own.level||e.own.note.trim()||e.partner.level||e.partner.note.trim();
-    const ownName=hqEditingTiffany()?'Tiffany':me.uid===OWNER?'Rich':'Tiffany',partnerName=hqEditingTiffany()?'Rich':me.uid===OWNER?'Tiffany':'Rich';
-    return `<div class="wishlist-evidence-row hq-quick-criterion">
-      <span class="wishlist-feature-name">${esc(e.label)}</span>
-      <span class="wishlist-evidence-score${e.overridden?' overridden':''}">${e.grade===null?'N/A':e.grade+'/5'}</span>
-      <span class="card-grade-description">${e.grade===null?'Comment / highlight only':esc(masterGradeDescription(criterionByKey[e.key],e.grade))}</span>
-      ${e.comment?`<span class="hq-quick-general-comment"><button type="button" class="hq-quick-icon" data-quick-comment title="${esc(e.comment)}" aria-label="Read general comment for ${esc(e.label)}">💬</button><span class="hq-quick-tip" role="tooltip">${esc(e.comment)}</span></span>`:''}
-    </div>`;
-  }).join('');
-  return `<div class="card-evidence-panel" id="card-wishlist-${esc(p.id)}" data-evidence-panel="${esc(p.id)}:wishlist" ${openCardEvidence.has(p.id+':wishlist')?'':'hidden'}><div class="card-evidence-heading">Master grades · ${entries.filter(e=>e.grade!==null).length} rated · ${entries.length} shown</div><div class="card-grade-legend"><span class="card-grade-origin manual">MANUAL</span><span class="card-grade-definition">Rich’s assessment grades</span></div>${rows||'<p class="card-evidence-empty">No grades, comments, or flames yet.</p>'}</div>`;
+ const scores=(me?.uid===OWNER?myRatings:partnerRatings)?.ratings?.[p.id]||{};
+ const entries=masterSections.flatMap(sec=>sec.criteria).map(c=>{
+  const grade=c.type==='scored'?explicitScore(scores[c.key]):null;
+  const comment=hq492CommentValue(p,c);
+  const rich=flameData(richAccount(),p.id,c.key),tiff=flameData(tiffanyAccount(),p.id,c.key);
+  if(grade===null&&!comment&&!rich.level&&!rich.note.trim()&&!tiff.level&&!tiff.note.trim())return null;
+  return {c,grade,comment};
+ }).filter(Boolean);
+ const rows=entries.map(({c,grade,comment})=>`<div class="wishlist-evidence-row hq496-card-grade">
+  <div class="hq496-card-grade-heading"><strong>${esc(c.label)}</strong><span class="wishlist-evidence-score">${grade===null?'N/A':grade+'/5'}</span></div>
+  <div class="card-grade-description">${grade===null?'Informational assessment':esc(masterGradeDescription(c,grade))}</div>
+  ${comment?`<div class="hq496-card-comment">${esc(comment)}</div>`:''}
+  ${flameControls(p,c)}
+ </div>`).join('');
+ return `<div class="card-evidence-panel hq496-card-evidence" id="card-wishlist-${esc(p.id)}" data-evidence-panel="${esc(p.id)}:wishlist" ${openCardEvidence.has(p.id+':wishlist')?'':'hidden'}><div class="card-evidence-heading">Master Grades · ${entries.filter(e=>e.grade!==null).length} rated · ${entries.length} shown</div>${rows||'<p class="card-evidence-empty">No grades, comments, or highlights yet.</p>'}</div>`;
 }
 function wireQuickAssessment(panel,p){
+  hq495BindFlameControls(panel,p);
   panel.addEventListener('click',e=>{
     const comment=e.target.closest('[data-quick-comment]');
     if(comment){comment.classList.toggle('hq-quick-tip-open');return;}
@@ -4449,8 +4482,9 @@ function hq495OpenListingHistory(pid){
   add(e.date||e.observedAt,title,e.date?'Listing/MLS event':'Observed by HQ research');
  }
  rows.sort((a,b)=>a.day.localeCompare(b.day));
+ const grouped=[];for(const row of rows){let group=grouped.find(x=>x.day===row.day);if(!group){group={day:row.day,items:[]};grouped.push(group)}if(!group.items.some(x=>x.title===row.title&&x.where===row.where))group.items.push(row)}
  const overlay=document.createElement('div');overlay.className='hq-modal-backdrop hq495-history-overlay';
- overlay.innerHTML=`<section class="hq495-history-dialog" role="dialog" aria-modal="true" aria-label="Listing history"><header><h2>🕒 Listing History · ${esc(p.address)}</h2><button class="btn" type="button" data-hq-history-close>✕ Close</button></header><p class="small">${esc(ageClocks(p))} · ${esc(listingStatus(p))}</p><ol>${rows.map(r=>`<li><strong>${esc(r.day)}</strong> — ${esc(r.title)}<small>${esc(r.where)}</small></li>`).join('')||'<li>No dated listing changes recorded.</li>'}</ol></section>`;
+ overlay.innerHTML=`<section class="hq495-history-dialog" role="dialog" aria-modal="true" aria-label="Listing history"><header><h2>🕒 Listing History · ${esc(p.address)}</h2><button class="btn" type="button" data-hq-history-close>✕ Close</button></header><p class="small">${esc(ageClocks(p))} · ${esc(listingStatus(p))}</p><ol>${grouped.map(g=>`<li><strong>${esc(g.day)}</strong><ul>${g.items.map(r=>`<li>${esc(r.title)}<small>${esc(r.where)}</small></li>`).join('')}</ul></li>`).join('')||'<li>No dated listing changes recorded.</li>'}</ol></section>`;
  const close=()=>{overlay.remove();document.removeEventListener('keydown',key)};const key=e=>{if(e.key==='Escape')close()};
  document.addEventListener('keydown',key);overlay.onclick=e=>{if(e.target===overlay||e.target.closest('[data-hq-history-close]'))close()};document.body.append(overlay);
  overlay.querySelector('[data-hq-history-close]').focus();
@@ -4575,8 +4609,9 @@ function hq492CommentValue(p,c){
 }
 function hq492CriterionRow(p,c,scores){
  const grade=explicitScore(scores[c.key]);const text=hq492CommentValue(p,c);const canGrade=me?.uid===OWNER;
- const choices=c.type==='scored'?`<div class="score-controls"><span class="score-origin ${grade===null?'is-unassessed':'is-manual'}">${grade===null?'Not Assessed':'Manual'}</span><select id="detail-score-${esc(c.key)}" data-wishlist="${esc(c.key)}" aria-label="${esc(c.label)} grade" ${canGrade?'':'disabled'}>${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${grade===n?'selected':''}>${n} / 5 — ${esc(masterGradeDescription(c,n))}</option>`).join('')}<option value="" ${grade===null?'selected':''}>Not Assessed</option></select><button type="button" class="btn hq495-grade-picker" data-grade-picker="${esc(c.key)}" ${canGrade?'':'disabled'} aria-label="Choose grade for ${esc(c.label)}">${grade===null?'Not Assessed':grade+' / 5 · '+esc(masterGradeDescription(c,grade))} ▾</button><button class="btn grade-reset" type="button" data-reset-wishlist="${esc(c.key)}" ${grade===null||!canGrade?'disabled':''}>↺ Reset</button></div>`:'<span class="master-legacy">Information · not graded</span>';
- return `<div class="master-grade-row ${c.type==='scored'?'':'informational'}"><div class="master-grade-title"><strong>${c.display_number}. ${esc(c.label)}</strong></div><div class="master-grade-result">${choices}<textarea class="master-item-comment" data-assessment-comment="${esc(c.key)}" rows="3" placeholder="Property research and your observations…">${esc(text)}</textarea></div>${flameControls(p,c)}</div>`;
+ const reset=c.type==='scored'?`<button class="btn grade-reset" type="button" data-reset-wishlist="${esc(c.key)}" ${grade===null||!canGrade?'disabled':''}>↺ Reset</button>`:'';
+ const choices=c.type==='scored'?`<div class="score-controls hq496-score-controls"><select id="detail-score-${esc(c.key)}" data-wishlist="${esc(c.key)}" aria-label="${esc(c.label)} grade" ${canGrade?'':'disabled'}>${[5,4,3,2,1,0].map(n=>`<option value="${n}" ${grade===n?'selected':''}>${n} / 5 — ${esc(masterGradeDescription(c,n))}</option>`).join('')}<option value="" ${grade===null?'selected':''}>Not Assessed</option></select><button type="button" class="btn hq495-grade-picker" data-grade-picker="${esc(c.key)}" ${canGrade?'':'disabled'} aria-label="Choose grade for ${esc(c.label)}">${grade===null?'Not Assessed':grade+' / 5 · '+esc(masterGradeDescription(c,grade))} ▾</button></div>`:'';
+ return `<div class="master-grade-row ${c.type==='scored'?'':'informational'}"><div class="master-grade-title hq496-criterion-heading"><strong>${c.display_number}. ${esc(c.label)}</strong>${reset}</div><div class="master-grade-result">${choices}<textarea class="master-item-comment" data-assessment-comment="${esc(c.key)}" rows="3" placeholder="Property research and your observations…">${esc(text)}</textarea></div>${flameControls(p,c)}</div>`;
 }
 function hq495OpenGradePicker(p,key,selected){
  if(me?.uid!==OWNER)return;
